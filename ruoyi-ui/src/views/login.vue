@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
-      <h3 class="title">若依后台管理系统</h3>
+      <h3 class="title">网盾探隅——智能靶场测试平台</h3>
       <el-form-item prop="username">
         <el-input
           v-model="loginForm.username"
@@ -54,10 +54,6 @@
         </div>
       </el-form-item>
     </el-form>
-    <!--  底部  -->
-    <div class="el-login-footer">
-      <span>Copyright © 2018-2024 ruoyi.vip All Rights Reserved.</span>
-    </div>
   </div>
 </template>
 
@@ -161,18 +157,22 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-image: url("../assets/images/login-background.jpg");
+  background: url("../assets/images/login-background.jpg");
   background-size: cover;
 }
-.title {
-  margin: 0px auto 30px auto;
-  text-align: center;
-  color: #707070;
+.title {  
+  margin: 0px auto 30px auto;  
+  text-align: center;  
+  color: #3a77d9;  
+  font-family: 'Montserrat', sans-serif; /* 添加你选择的字体 */  
+  font-size: 2em; /* 可以根据需要调整字体大小 */  
+  text-transform: uppercase; /* 可选：将文字变为大写 */  
+  letter-spacing: 1px; /* 可选：增加字间距 */  
+  text-shadow: 1px 1px 2px rgba(13, 121, 210, 0.2); /* 可选：添加文字阴影 */  
 }
-
 .login-form {
   border-radius: 6px;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.575);
   width: 400px;
   padding: 25px 25px 5px 25px;
   .el-input {
