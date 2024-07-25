@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@jiaminghi/data-view": "^2.10.0",
+    "vue-awesome": "^4.5.0"
+  }
+}

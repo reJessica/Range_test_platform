@@ -10,6 +10,7 @@ import '@/assets/styles/ruoyi.scss' // ruoyi css
 import App from './App'
 import store from './store'
 import router from './router'
+import dataV from '@jiaminghi/data-view';
 import directive from './directive' // directive
 import plugins from './plugins' // plugins
 import { download } from '@/utils/request'
@@ -37,7 +38,17 @@ import DictTag from '@/components/DictTag'
 import VueMeta from 'vue-meta'
 // 字典数据组件
 import DictData from '@/components/DictData'
+// 引入全局css
+import './assets/scss/style.scss';
+// 按需引入vue-awesome图标
+import Icon from 'vue-awesome/components/Icon';
+import 'vue-awesome/icons/chart-bar.js';
+import 'vue-awesome/icons/chart-area.js';
+import 'vue-awesome/icons/chart-pie.js';
+import 'vue-awesome/icons/chart-line.js';
+import 'vue-awesome/icons/align-left.js';
 
+import echarts from 'echarts'
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts
 Vue.prototype.getConfigKey = getConfigKey
@@ -57,10 +68,12 @@ Vue.component('Editor', Editor)
 Vue.component('FileUpload', FileUpload)
 Vue.component('ImageUpload', ImageUpload)
 Vue.component('ImagePreview', ImagePreview)
+Vue.component('icon', Icon);
 
 Vue.use(directive)
 Vue.use(plugins)
 Vue.use(VueMeta)
+Vue.use(dataV);
 DictData.install()
 
 /**
@@ -76,11 +89,12 @@ Vue.use(Element, {
   size: Cookies.get('size') || 'medium' // set element-ui default size
 })
 
+Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
 
-new Vue({
-  el: '#app',
-  router,
-  store,
-  render: h => h(App)
-})
+new Vue({  
+  el: '#app',  
+  router,  
+  store,  
+  render: h => h(App)  
+});
