@@ -155,7 +155,7 @@ export default {
             name: "数字货币",
             value: 415
           },{
-            name: "酷屏",
+            name: "网盾探隅",
             value: 253
           },{
             name: "可视化",

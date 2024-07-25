@@ -71,6 +71,8 @@ export default {
   left: 0;
   top: 0;
   width: 100%;
+  margin-left:-1.7%;
+  // padding-bottom:10px;
   height: 100%;
   .wrap {
     transform-origin: 0px 0px 0px;

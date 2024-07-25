@@ -7,7 +7,7 @@
 <template>
   <div class="wrap-container sn-container"> 
     <div class="sn-content"> 
-      <div class="sn-title">动态折线图</div> 
+      <div class="sn-title">动态折</div> 
       <div class="sn-body"> 
         <div class="wrap-container"> 
           <div class="chartsdom" id="chart_dt"></div> 
