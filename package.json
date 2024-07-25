@@ -12,6 +12,7 @@
     "echarts": "4.7",
     "iconfont": "^0.4.1",
     "jquery": "^3.7.1",
+    "particles.js": "^2.0.0",
     "sass-loader": "^15.0.0",
     "style-loader": "^4.0.0",
     "vue-loader": "^17.4.2",

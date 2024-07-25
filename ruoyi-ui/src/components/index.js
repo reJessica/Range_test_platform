@@ -54,7 +54,6 @@ const components = {
   pyramidTrend,
   staffMix,
   flashCloud,
-  colorfulRadar,
   ringPie,
   colorfulRadar,
   dynamicList,
