@@ -7,12 +7,19 @@ import './assets/styles/element-variables.scss'
 
 import '@/assets/styles/index.scss' // global css
 import '@/assets/styles/ruoyi.scss' // ruoyi css
+import '@/assets/styles/base.scss'
+import '@/assets/styles/common.scss'
+import '@/assets/iconfont/iconfont.css'
+
 import App from './App'
 import store from './store'
 import router from './router'
 import directive from './directive' // directive
 import plugins from './plugins' // plugins
 import { download } from '@/utils/request'
+import vueParticles from 'vue-particles'
+import Vcomp from './components/index'
+import Toast from './components/toast'
 
 import './assets/icons' // icon
 import './permission' // permission control
@@ -61,6 +68,9 @@ Vue.component('ImagePreview', ImagePreview)
 Vue.use(directive)
 Vue.use(plugins)
 Vue.use(VueMeta)
+Vue.use(vueParticles)
+Vue.use(Vcomp)
+
 DictData.install()
 
 /**
@@ -77,6 +87,14 @@ Vue.use(Element, {
 })
 
 Vue.config.productionTip = false
+Vue.prototype.$Toast = Toast
+
+router.beforeEach((to, from, next) => {
+	if (to.meta.title) {
+	  document.title = to.meta.title;
+	}
+	next();
+})
 
 new Vue({
   el: '#app',
