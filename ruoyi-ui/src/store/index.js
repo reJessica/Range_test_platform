@@ -8,9 +8,16 @@ import permission from './modules/permission'
 import settings from './modules/settings'
 import getters from './getters'
 
+
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
+  state: {
+  },
+  mutations: {
+  },
+  actions: {
+  },
   modules: {
     app,
     dict,

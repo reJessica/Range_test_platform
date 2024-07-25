@@ -196,13 +196,28 @@
   </style>
   </head>
   <body>
+    <!-- Loading Screen -->
     <div id="app">
-	    <div id="loader-wrapper">
-		    <div id="loader"></div>
-		    <div class="loader-section section-left"></div>
-		    <div class="loader-section section-right"></div>
-		    <div class="load_title">正在加载系统资源，请耐心等待</div>
-        </div>
-	</div>
+      <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+        <div class="load_title">正在加载系统资源，请耐心等待</div>
+      </div>
+    </div>
+  
+    <!-- Vue App -->
+    <div id="app"></div>
+  
+    <!-- Scripts -->
+    <script src="//cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/echarts-liquidfill@3.1.0/dist/echarts-liquidfill.min.js"></script>
+    <script src="//cdn.staticfile.org/axios/0.19.0/axios.min.js"></script>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <!-- built files will be auto injected -->
   </body>
 </html>
