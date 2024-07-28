@@ -44,6 +44,8 @@ import DictTag from '@/components/DictTag'
 import VueMeta from 'vue-meta'
 // 字典数据组件
 import DictData from '@/components/DictData'
+import axios from 'axios'
+Vue.prototype.$axios = axios
 
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts
@@ -100,5 +102,6 @@ new Vue({
   el: '#app',
   router,
   store,
+  axios,
   render: h => h(App)
 })
