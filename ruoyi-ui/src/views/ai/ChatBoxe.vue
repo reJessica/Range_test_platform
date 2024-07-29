@@ -2,7 +2,7 @@
     <div class="ChatBoxe">
       <div class="content">
         <div :class="displayStyle(index)" v-for="(item, index) in msgList" :key="index">
-          <img src="../assets/ai/ai-header.jpeg" alt="">
+          <img src="@/assets/ai/ai-header.jpeg" alt="">
           <div class="con">
             {{ item.msg }}
           </div>
@@ -16,7 +16,7 @@
       </div>
     </div>
   </template>
-  
+
   <script>
   export default {
     name: 'ChatBoxe',
@@ -96,7 +96,7 @@
       clearMsg() {
         this.msgList = [{
           my: false,
-          msg: "你好我是网盾探隅的AI机器人,请问有什么问题可以帮助您?"
+          msg: '你好我是网盾探隅的AI机器人,请问有什么问题可以帮助您?'
         }];
         this.msgForPost = [{
           role : "system",
@@ -111,7 +111,7 @@
     }
   }
   </script>
-  
+
   <style scoped>
   .ChatBoxe {
     width: 90vw;
@@ -121,14 +121,14 @@
     overflow: hidden;
     padding: 1%;
   }
-  
+
   .question {
     width: 100%;
     background: #ffffffd8;
     border-radius: 1rem;
     overflow: hidden;
   }
-  
+
   .question input {
     width: 80%;
     margin-left: 15px;
@@ -138,7 +138,7 @@
     font-size: 1.2rem;
     outline: none;
   }
-  
+
   .question button {
     width: 8%;
     height: 60px;
@@ -148,26 +148,26 @@
     font-weight: 600;
     color: #cd22eb;
   }
-  
+
   .content {
     height: 90%;
     font-size: 1.2rem;
     overflow: auto;
   }
-  
+
   .content img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
   }
-  
+
   .show {
     color: #000;
     display: flex;
     margin-bottom: 1rem;
     /* align-items: center; */
   }
-  
+
   .onshow {
     display: flex;
     color: #cd22eb;
@@ -175,20 +175,19 @@
     margin-bottom: 1rem;
     /* align-items: center; */
   }
-  
+
   .con {
     background: #fff;
     padding: 1rem;
     margin: 1rem;
     border-radius: 0px 30px 30px 30px;
   }
-  
+
   .show>.con {
     border-radius: 0px 30px 30px 30px;
   }
-  
+
   .onshow>.con {
     border-radius: 30px 0px 30px 30px;
   }
   </style>
-  
