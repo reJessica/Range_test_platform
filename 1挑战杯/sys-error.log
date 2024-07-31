@@ -3592,7 +3592,6 @@ java.sql.SQLException: Access denied for user 'root'@'localhost' (using password
 	at com.alibaba.druid.pool.DruidAbstractDataSource.createPhysicalConnection(DruidAbstractDataSource.java:1687)
 	at com.alibaba.druid.pool.DruidAbstractDataSource.createPhysicalConnection(DruidAbstractDataSource.java:1803)
 	at com.alibaba.druid.pool.DruidDataSource$CreateConnectionThread.run(DruidDataSource.java:2914)
-<<<<<<< Updated upstream
 17:44:48.683 [restartedMain] ERROR o.s.b.SpringApplication - [reportFailure,870] - Application run failed
 java.lang.Error: Unresolved compilation problems: 
 	The import com.ruoyi.common cannot be resolved
@@ -3630,118 +3629,6 @@ java.lang.Error: Unresolved compilation problems:
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
 	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
-=======
-17:58:42.221 [http-nio-8080-exec-32] ERROR c.r.f.w.e.GlobalExceptionHandler - [handleMethodArgumentNotValidException,132] - Validation failed for argument [0] in public com.ruoyi.common.core.domain.AjaxResult com.ruoyi.web.controller.system.SysMenuController.edit(com.ruoyi.common.core.domain.entity.SysMenu): [Field error in object 'sysMenu' on field 'path': rejected value [https://blog.csdn.net/weixin_44957042/article/details/140799298?spm=1000.2115.3001.6382&utm_medium=distribute.pc_feed_v2.none-task-blog-hot-1-140799298-null-null.329^v9^%E4%B8%AA%E6%8E%A8pc%E9%A6%96%E9%A1%B5%E6%8E%A8%E8%8D%90%E2%80%94%E6%A1%B69&depth_1-utm_source=distribute.pc_feed_v2.none-task-blog-hot-1-140799298-null-null.329^v9^%E4%B8%AA%E6%8E%A8pc%E9%A6%96%E9%A1%B5%E6%8E%A8%E8%8D%90%E2%80%94%E6%A1%B69]; codes [Size.sysMenu.path,Size.path,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [sysMenu.path,path]; arguments []; default message [path],200,0]; default message [路由地址不能超过200个字符]] 
-org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public com.ruoyi.common.core.domain.AjaxResult com.ruoyi.web.controller.system.SysMenuController.edit(com.ruoyi.common.core.domain.entity.SysMenu): [Field error in object 'sysMenu' on field 'path': rejected value [https://blog.csdn.net/weixin_44957042/article/details/140799298?spm=1000.2115.3001.6382&utm_medium=distribute.pc_feed_v2.none-task-blog-hot-1-140799298-null-null.329^v9^%E4%B8%AA%E6%8E%A8pc%E9%A6%96%E9%A1%B5%E6%8E%A8%E8%8D%90%E2%80%94%E6%A1%B69&depth_1-utm_source=distribute.pc_feed_v2.none-task-blog-hot-1-140799298-null-null.329^v9^%E4%B8%AA%E6%8E%A8pc%E9%A6%96%E9%A1%B5%E6%8E%A8%E8%8D%90%E2%80%94%E6%A1%B69]; codes [Size.sysMenu.path,Size.path,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [sysMenu.path,path]; arguments []; default message [path],200,0]; default message [路由地址不能超过200个字符]] 
-	at org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor.resolveArgument(RequestResponseBodyMethodProcessor.java:141)
-	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:122)
-	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:179)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:146)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:903)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:809)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1072)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:965)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
-	at org.springframework.web.servlet.FrameworkServlet.doPut(FrameworkServlet.java:920)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:558)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:209)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:111)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:111)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:114)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at com.ruoyi.common.filter.RepeatableFilter.doFilter(RepeatableFilter.java:43)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:337)
-	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:96)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:122)
-	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126)
-	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at com.ruoyi.framework.security.filter.JwtAuthenticationTokenFilter.doFilterInternal(JwtAuthenticationTokenFilter.java:42)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:111)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
-	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
-	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112)
-	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221)
-	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186)
-	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
-	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at com.ruoyi.common.filter.XssFilter.doFilter(XssFilter.java:55)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:926)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1791)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.base/java.lang.Thread.run(Thread.java:1623)
->>>>>>> Stashed changes
 20:13:19.220 [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - [report,40] - 
 
 ***************************
@@ -3866,8 +3753,8 @@ com.ruoyi.common.exception.user.CaptchaExpireException: 验证码已失效
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.base/java.lang.Thread.run(Thread.java:1623)
-21:19:08.187 [http-nio-8080-exec-7] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - [log,175] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
-org.springframework.security.web.firewall.RequestRejectedException: The request was rejected because the header value "username=admin; rememberMe=true; password=As/bPexWft1ilky2u8M3VERi8PmXRiNF3rdARaiT/2WQ0+djwbXqZSFy9InPxpEXbxJRDBGRGBPrh3A5v6Uh6w==; Admin-Token=eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6ImEzZTdkYjBlLTU2NzUtNDYwYi1iOGYwLWY2YWM3NDRhYmZhOSJ9.ZfpKLKN-D70EhWJH7Lqg5CaR_azK7l160q9AdVuh7NaUJq75bKIWeTb0BoH1QV7H3SwsRG5LyAHk7ZAKt0Pj3w; sidebarStatus=0; [{"my":false,"msg":"ä½ å¥½ææ¯ç½ç¾æ¢éçAIæºå¨äºº,è¯·é®æä»ä¹é®é¢å¯ä»¥å¸®å©æ¨?"},{"msg":"ä½ å¥½ï¼è¯·é®ä½ æä»ä¹åè½ï¼","my":true},{"msg":"ä½ å¥½ï¼ä½ä¸ºä¸åç½ç»å®å¨å·¥ç¨å¸ï¼æçä¸»è¦åè½åæ¬ï¼\n\n1. è®¾è®¡åå®æ½ç½ç»å®å¨ç­ç¥ï¼å¸®å©ä¼ä¸åç»ç»å»ºç«å¼ºå¤§çç½ç»å®å¨é²å¾¡ä½ç³»ï¼ç¡®ä¿ä»ä»¬çä¿¡æ¯åæ°æ®ä¸åæªç»ææçè®¿é®åæ»å»ã\n\n2. ç½ç»å®å¨çæ§ï¼æç»­çæ§ç½ç»æ´»å¨ï¼ä»¥ä¾¿åæ¶åç°æ½å¨çå®å¨å¨èåå¼å¸¸è¡ä¸ºã\n\n3. åºæ¥ååºï¼å¨åçå®å¨äºä»¶æ¶ï¼ç«å³éåè¡å¨ï¼åè½»æå¤±ï¼å¹¶æ¢å¤ç³»ç»æ­£å¸¸è¿è¡ã\n\n4. é£é©è¯ä¼°åæ¼æ´æ«æï¼å®æè¿è¡é£é©è¯ä¼°åæ¼æ´æ«æï¼ä»¥è¯å«ç½ç»ä¸­çæ½å¨å¼±ç¹åé£é©ã\n\n5. å®å¨å¹è®­åæè¯æåï¼æä¾å®å¨å¹è®­ï¼å¸®å©åå·¥äºè§£ç½ç»å®å¨æä½³å®è·µï¼æé«ä»ä»¬çå®å¨æè¯ã\n\n6. å®å¨è®¾å¤åå®å¨è½¯ä»¶çé¨ç½²åç»´æ¤ï¼è´è´£å®è£ãéç½®åç»´æ¤ç½ç»å®å¨è®¾å¤åå®å¨è½¯ä»¶ï¼å¦é²ç«å¢ãå¥ä¾µæ£æµç³»ç»ãçæ¯é²æ¤è½¯ä»¶ç­ã\n\n7. æ¸éæµè¯ï¼éè¿æ¨¡æé»å®¢æ»å»ï¼æµè¯ç½ç»çå®å¨æ§ï¼æ¾åºæ¼æ´å¹¶å ä»¥ä¿®å¤ã\n\n8. å®å¨åè§æ§æ£æ¥ï¼ç¡®ä¿ä¼ä¸çç½ç»å®å¨å®è·µç¬¦åç¸å³æ³å¾æ³è§åè¡ä¸æ åã\n\n9. ä¿¡æ¯å å¯åä¿æ¤ï¼ä½¿ç¨åè¿çå å¯ææ¯ä¿æ¤æ°æ®çå®å¨æ§åå®æ´æ§ã\n\n10. å®å¨å®¡è®¡åæ¥åï¼å®æè¿è¡å®å¨å®¡è®¡ï¼å¹¶åç®¡çå±æä¾æå³ç½ç»å®å¨ç¶æçè¯¦ç»æ¥åã\n\næè´åäºä¿æ¤ä¼ä¸çç½ç»å®å¨ï¼é²æ­¢æ°æ®æ³é²åç½ç»æ»å»ï¼ç¡®ä¿ä¼ä¸çæ­£å¸¸è¿è¥åä¿¡æ¯çå®å¨ã","my":false}]" is not allowed.
+23:16:17.338 [http-nio-8080-exec-6] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - [log,175] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+org.springframework.security.web.firewall.RequestRejectedException: The request was rejected because the header value "username=admin; rememberMe=true; password=As/bPexWft1ilky2u8M3VERi8PmXRiNF3rdARaiT/2WQ0+djwbXqZSFy9InPxpEXbxJRDBGRGBPrh3A5v6Uh6w==; Admin-Token=eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6ImEzZTdkYjBlLTU2NzUtNDYwYi1iOGYwLWY2YWM3NDRhYmZhOSJ9.ZfpKLKN-D70EhWJH7Lqg5CaR_azK7l160q9AdVuh7NaUJq75bKIWeTb0BoH1QV7H3SwsRG5LyAHk7ZAKt0Pj3w; [{"my":false,"msg":"ä½ å¥½ææ¯ç½ç¾æ¢éçAIæºå¨äºº,è¯·é®æä»ä¹é®é¢å¯ä»¥å¸®å©æ¨?"},{"msg":"ä½ å¥½ï¼è¯·é®ä½ æä»ä¹åè½ï¼","my":true},{"msg":"ä½ å¥½ï¼ä½ä¸ºä¸åç½ç»å®å¨å·¥ç¨å¸ï¼æçä¸»è¦åè½åæ¬ï¼\n\n1. è®¾è®¡åå®æ½ç½ç»å®å¨ç­ç¥ï¼å¸®å©ä¼ä¸åç»ç»å»ºç«å¼ºå¤§çç½ç»å®å¨é²å¾¡ä½ç³»ï¼ç¡®ä¿ä»ä»¬çä¿¡æ¯åæ°æ®ä¸åæªç»ææçè®¿é®åæ»å»ã\n\n2. ç½ç»å®å¨çæ§ï¼æç»­çæ§ç½ç»æ´»å¨ï¼ä»¥ä¾¿åæ¶åç°æ½å¨çå®å¨å¨èåå¼å¸¸è¡ä¸ºã\n\n3. åºæ¥ååºï¼å¨åçå®å¨äºä»¶æ¶ï¼ç«å³éåè¡å¨ï¼åè½»æå¤±ï¼å¹¶æ¢å¤ç³»ç»æ­£å¸¸è¿è¡ã\n\n4. é£é©è¯ä¼°åæ¼æ´æ«æï¼å®æè¿è¡é£é©è¯ä¼°åæ¼æ´æ«æï¼ä»¥è¯å«ç½ç»ä¸­çæ½å¨å¼±ç¹åé£é©ã\n\n5. å®å¨å¹è®­åæè¯æåï¼æä¾å®å¨å¹è®­ï¼å¸®å©åå·¥äºè§£ç½ç»å®å¨æä½³å®è·µï¼æé«ä»ä»¬çå®å¨æè¯ã\n\n6. å®å¨è®¾å¤åå®å¨è½¯ä»¶çé¨ç½²åç»´æ¤ï¼è´è´£å®è£ãéç½®åç»´æ¤ç½ç»å®å¨è®¾å¤åå®å¨è½¯ä»¶ï¼å¦é²ç«å¢ãå¥ä¾µæ£æµç³»ç»ãçæ¯é²æ¤è½¯ä»¶ç­ã\n\n7. æ¸éæµè¯ï¼éè¿æ¨¡æé»å®¢æ»å»ï¼æµè¯ç½ç»çå®å¨æ§ï¼æ¾åºæ¼æ´å¹¶å ä»¥ä¿®å¤ã\n\n8. å®å¨åè§æ§æ£æ¥ï¼ç¡®ä¿ä¼ä¸çç½ç»å®å¨å®è·µç¬¦åç¸å³æ³å¾æ³è§åè¡ä¸æ åã\n\n9. ä¿¡æ¯å å¯åä¿æ¤ï¼ä½¿ç¨åè¿çå å¯ææ¯ä¿æ¤æ°æ®çå®å¨æ§åå®æ´æ§ã\n\n10. å®å¨å®¡è®¡åæ¥åï¼å®æè¿è¡å®å¨å®¡è®¡ï¼å¹¶åç®¡çå±æä¾æå³ç½ç»å®å¨ç¶æçè¯¦ç»æ¥åã\n\næè´åäºä¿æ¤ä¼ä¸çç½ç»å®å¨ï¼é²æ­¢æ°æ®æ³é²åç½ç»æ»å»ï¼ç¡®ä¿ä¼ä¸çæ­£å¸¸è¿è¥åä¿¡æ¯çå®å¨ã","my":false}]; sidebarStatus=1" is not allowed.
 	at org.springframework.security.web.firewall.StrictHttpFirewall$StrictFirewalledRequest.validateAllowedHeaderValue(StrictHttpFirewall.java:833)
 	at org.springframework.security.web.firewall.StrictHttpFirewall$StrictFirewalledRequest.access$000(StrictHttpFirewall.java:687)
 	at org.springframework.security.web.firewall.StrictHttpFirewall$StrictFirewalledRequest$1.nextElement(StrictHttpFirewall.java:737)
@@ -3925,3 +3812,267 @@ org.springframework.security.web.firewall.RequestRejectedException: The request 
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.base/java.lang.Thread.run(Thread.java:1623)
+23:17:12.214 [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - [report,40] - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+23:17:21.482 [http-nio-8080-exec-8] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - [log,175] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+org.springframework.security.web.firewall.RequestRejectedException: The request was rejected because the header value "username=admin; rememberMe=true; password=As/bPexWft1ilky2u8M3VERi8PmXRiNF3rdARaiT/2WQ0+djwbXqZSFy9InPxpEXbxJRDBGRGBPrh3A5v6Uh6w==; Admin-Token=eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6ImEzZTdkYjBlLTU2NzUtNDYwYi1iOGYwLWY2YWM3NDRhYmZhOSJ9.ZfpKLKN-D70EhWJH7Lqg5CaR_azK7l160q9AdVuh7NaUJq75bKIWeTb0BoH1QV7H3SwsRG5LyAHk7ZAKt0Pj3w; [{"my":false,"msg":"ä½ å¥½ææ¯ç½ç¾æ¢éçAIæºå¨äºº,è¯·é®æä»ä¹é®é¢å¯ä»¥å¸®å©æ¨?"},{"msg":"ä½ å¥½ï¼è¯·é®ä½ æä»ä¹åè½ï¼","my":true},{"msg":"ä½ å¥½ï¼ä½ä¸ºä¸åç½ç»å®å¨å·¥ç¨å¸ï¼æçä¸»è¦åè½åæ¬ï¼\n\n1. è®¾è®¡åå®æ½ç½ç»å®å¨ç­ç¥ï¼å¸®å©ä¼ä¸åç»ç»å»ºç«å¼ºå¤§çç½ç»å®å¨é²å¾¡ä½ç³»ï¼ç¡®ä¿ä»ä»¬çä¿¡æ¯åæ°æ®ä¸åæªç»ææçè®¿é®åæ»å»ã\n\n2. ç½ç»å®å¨çæ§ï¼æç»­çæ§ç½ç»æ´»å¨ï¼ä»¥ä¾¿åæ¶åç°æ½å¨çå®å¨å¨èåå¼å¸¸è¡ä¸ºã\n\n3. åºæ¥ååºï¼å¨åçå®å¨äºä»¶æ¶ï¼ç«å³éåè¡å¨ï¼åè½»æå¤±ï¼å¹¶æ¢å¤ç³»ç»æ­£å¸¸è¿è¡ã\n\n4. é£é©è¯ä¼°åæ¼æ´æ«æï¼å®æè¿è¡é£é©è¯ä¼°åæ¼æ´æ«æï¼ä»¥è¯å«ç½ç»ä¸­çæ½å¨å¼±ç¹åé£é©ã\n\n5. å®å¨å¹è®­åæè¯æåï¼æä¾å®å¨å¹è®­ï¼å¸®å©åå·¥äºè§£ç½ç»å®å¨æä½³å®è·µï¼æé«ä»ä»¬çå®å¨æè¯ã\n\n6. å®å¨è®¾å¤åå®å¨è½¯ä»¶çé¨ç½²åç»´æ¤ï¼è´è´£å®è£ãéç½®åç»´æ¤ç½ç»å®å¨è®¾å¤åå®å¨è½¯ä»¶ï¼å¦é²ç«å¢ãå¥ä¾µæ£æµç³»ç»ãçæ¯é²æ¤è½¯ä»¶ç­ã\n\n7. æ¸éæµè¯ï¼éè¿æ¨¡æé»å®¢æ»å»ï¼æµè¯ç½ç»çå®å¨æ§ï¼æ¾åºæ¼æ´å¹¶å ä»¥ä¿®å¤ã\n\n8. å®å¨åè§æ§æ£æ¥ï¼ç¡®ä¿ä¼ä¸çç½ç»å®å¨å®è·µç¬¦åç¸å³æ³å¾æ³è§åè¡ä¸æ åã\n\n9. ä¿¡æ¯å å¯åä¿æ¤ï¼ä½¿ç¨åè¿çå å¯ææ¯ä¿æ¤æ°æ®çå®å¨æ§åå®æ´æ§ã\n\n10. å®å¨å®¡è®¡åæ¥åï¼å®æè¿è¡å®å¨å®¡è®¡ï¼å¹¶åç®¡çå±æä¾æå³ç½ç»å®å¨ç¶æçè¯¦ç»æ¥åã\n\næè´åäºä¿æ¤ä¼ä¸çç½ç»å®å¨ï¼é²æ­¢æ°æ®æ³é²åç½ç»æ»å»ï¼ç¡®ä¿ä¼ä¸çæ­£å¸¸è¿è¥åä¿¡æ¯çå®å¨ã","my":false}]; sidebarStatus=1" is not allowed.
+	at org.springframework.security.web.firewall.StrictHttpFirewall$StrictFirewalledRequest.validateAllowedHeaderValue(StrictHttpFirewall.java:833)
+	at org.springframework.security.web.firewall.StrictHttpFirewall$StrictFirewalledRequest.access$000(StrictHttpFirewall.java:687)
+	at org.springframework.security.web.firewall.StrictHttpFirewall$StrictFirewalledRequest$1.nextElement(StrictHttpFirewall.java:737)
+	at org.springframework.security.web.firewall.StrictHttpFirewall$StrictFirewalledRequest$1.nextElement(StrictHttpFirewall.java:727)
+	at org.springframework.http.server.ServletServerHttpRequest.getHeaders(ServletServerHttpRequest.java:146)
+	at org.springframework.web.cors.DefaultCorsProcessor.handleInternal(DefaultCorsProcessor.java:127)
+	at org.springframework.web.cors.DefaultCorsProcessor.processRequest(DefaultCorsProcessor.java:107)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:87)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:926)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1791)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:1623)
+23:17:49.176 [http-nio-8080-exec-2] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - [log,175] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+org.springframework.security.web.firewall.RequestRejectedException: The request was rejected because the header value "username=admin; rememberMe=true; password=As/bPexWft1ilky2u8M3VERi8PmXRiNF3rdARaiT/2WQ0+djwbXqZSFy9InPxpEXbxJRDBGRGBPrh3A5v6Uh6w==; Admin-Token=eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6ImEzZTdkYjBlLTU2NzUtNDYwYi1iOGYwLWY2YWM3NDRhYmZhOSJ9.ZfpKLKN-D70EhWJH7Lqg5CaR_azK7l160q9AdVuh7NaUJq75bKIWeTb0BoH1QV7H3SwsRG5LyAHk7ZAKt0Pj3w; [{"my":false,"msg":"ä½ å¥½ææ¯ç½ç¾æ¢éçAIæºå¨äºº,è¯·é®æä»ä¹é®é¢å¯ä»¥å¸®å©æ¨?"},{"msg":"ä½ å¥½ï¼è¯·é®ä½ æä»ä¹åè½ï¼","my":true},{"msg":"ä½ å¥½ï¼ä½ä¸ºä¸åç½ç»å®å¨å·¥ç¨å¸ï¼æçä¸»è¦åè½åæ¬ï¼\n\n1. è®¾è®¡åå®æ½ç½ç»å®å¨ç­ç¥ï¼å¸®å©ä¼ä¸åç»ç»å»ºç«å¼ºå¤§çç½ç»å®å¨é²å¾¡ä½ç³»ï¼ç¡®ä¿ä»ä»¬çä¿¡æ¯åæ°æ®ä¸åæªç»ææçè®¿é®åæ»å»ã\n\n2. ç½ç»å®å¨çæ§ï¼æç»­çæ§ç½ç»æ´»å¨ï¼ä»¥ä¾¿åæ¶åç°æ½å¨çå®å¨å¨èåå¼å¸¸è¡ä¸ºã\n\n3. åºæ¥ååºï¼å¨åçå®å¨äºä»¶æ¶ï¼ç«å³éåè¡å¨ï¼åè½»æå¤±ï¼å¹¶æ¢å¤ç³»ç»æ­£å¸¸è¿è¡ã\n\n4. é£é©è¯ä¼°åæ¼æ´æ«æï¼å®æè¿è¡é£é©è¯ä¼°åæ¼æ´æ«æï¼ä»¥è¯å«ç½ç»ä¸­çæ½å¨å¼±ç¹åé£é©ã\n\n5. å®å¨å¹è®­åæè¯æåï¼æä¾å®å¨å¹è®­ï¼å¸®å©åå·¥äºè§£ç½ç»å®å¨æä½³å®è·µï¼æé«ä»ä»¬çå®å¨æè¯ã\n\n6. å®å¨è®¾å¤åå®å¨è½¯ä»¶çé¨ç½²åç»´æ¤ï¼è´è´£å®è£ãéç½®åç»´æ¤ç½ç»å®å¨è®¾å¤åå®å¨è½¯ä»¶ï¼å¦é²ç«å¢ãå¥ä¾µæ£æµç³»ç»ãçæ¯é²æ¤è½¯ä»¶ç­ã\n\n7. æ¸éæµè¯ï¼éè¿æ¨¡æé»å®¢æ»å»ï¼æµè¯ç½ç»çå®å¨æ§ï¼æ¾åºæ¼æ´å¹¶å ä»¥ä¿®å¤ã\n\n8. å®å¨åè§æ§æ£æ¥ï¼ç¡®ä¿ä¼ä¸çç½ç»å®å¨å®è·µç¬¦åç¸å³æ³å¾æ³è§åè¡ä¸æ åã\n\n9. ä¿¡æ¯å å¯åä¿æ¤ï¼ä½¿ç¨åè¿çå å¯ææ¯ä¿æ¤æ°æ®çå®å¨æ§åå®æ´æ§ã\n\n10. å®å¨å®¡è®¡åæ¥åï¼å®æè¿è¡å®å¨å®¡è®¡ï¼å¹¶åç®¡çå±æä¾æå³ç½ç»å®å¨ç¶æçè¯¦ç»æ¥åã\n\næè´åäºä¿æ¤ä¼ä¸çç½ç»å®å¨ï¼é²æ­¢æ°æ®æ³é²åç½ç»æ»å»ï¼ç¡®ä¿ä¼ä¸çæ­£å¸¸è¿è¥åä¿¡æ¯çå®å¨ã","my":false}]; sidebarStatus=1" is not allowed.
+	at org.springframework.security.web.firewall.StrictHttpFirewall$StrictFirewalledRequest.validateAllowedHeaderValue(StrictHttpFirewall.java:833)
+	at org.springframework.security.web.firewall.StrictHttpFirewall$StrictFirewalledRequest.access$000(StrictHttpFirewall.java:687)
+	at org.springframework.security.web.firewall.StrictHttpFirewall$StrictFirewalledRequest$1.nextElement(StrictHttpFirewall.java:737)
+	at org.springframework.security.web.firewall.StrictHttpFirewall$StrictFirewalledRequest$1.nextElement(StrictHttpFirewall.java:727)
+	at org.springframework.http.server.ServletServerHttpRequest.getHeaders(ServletServerHttpRequest.java:146)
+	at org.springframework.web.cors.DefaultCorsProcessor.handleInternal(DefaultCorsProcessor.java:127)
+	at org.springframework.web.cors.DefaultCorsProcessor.processRequest(DefaultCorsProcessor.java:107)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:87)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:926)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1791)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:1623)
+23:17:51.765 [http-nio-8080-exec-5] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - [log,175] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+org.springframework.security.web.firewall.RequestRejectedException: The request was rejected because the header value "username=admin; rememberMe=true; password=As/bPexWft1ilky2u8M3VERi8PmXRiNF3rdARaiT/2WQ0+djwbXqZSFy9InPxpEXbxJRDBGRGBPrh3A5v6Uh6w==; Admin-Token=eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6ImEzZTdkYjBlLTU2NzUtNDYwYi1iOGYwLWY2YWM3NDRhYmZhOSJ9.ZfpKLKN-D70EhWJH7Lqg5CaR_azK7l160q9AdVuh7NaUJq75bKIWeTb0BoH1QV7H3SwsRG5LyAHk7ZAKt0Pj3w; [{"my":false,"msg":"ä½ å¥½ææ¯ç½ç¾æ¢éçAIæºå¨äºº,è¯·é®æä»ä¹é®é¢å¯ä»¥å¸®å©æ¨?"},{"msg":"ä½ å¥½ï¼è¯·é®ä½ æä»ä¹åè½ï¼","my":true},{"msg":"ä½ å¥½ï¼ä½ä¸ºä¸åç½ç»å®å¨å·¥ç¨å¸ï¼æçä¸»è¦åè½åæ¬ï¼\n\n1. è®¾è®¡åå®æ½ç½ç»å®å¨ç­ç¥ï¼å¸®å©ä¼ä¸åç»ç»å»ºç«å¼ºå¤§çç½ç»å®å¨é²å¾¡ä½ç³»ï¼ç¡®ä¿ä»ä»¬çä¿¡æ¯åæ°æ®ä¸åæªç»ææçè®¿é®åæ»å»ã\n\n2. ç½ç»å®å¨çæ§ï¼æç»­çæ§ç½ç»æ´»å¨ï¼ä»¥ä¾¿åæ¶åç°æ½å¨çå®å¨å¨èåå¼å¸¸è¡ä¸ºã\n\n3. åºæ¥ååºï¼å¨åçå®å¨äºä»¶æ¶ï¼ç«å³éåè¡å¨ï¼åè½»æå¤±ï¼å¹¶æ¢å¤ç³»ç»æ­£å¸¸è¿è¡ã\n\n4. é£é©è¯ä¼°åæ¼æ´æ«æï¼å®æè¿è¡é£é©è¯ä¼°åæ¼æ´æ«æï¼ä»¥è¯å«ç½ç»ä¸­çæ½å¨å¼±ç¹åé£é©ã\n\n5. å®å¨å¹è®­åæè¯æåï¼æä¾å®å¨å¹è®­ï¼å¸®å©åå·¥äºè§£ç½ç»å®å¨æä½³å®è·µï¼æé«ä»ä»¬çå®å¨æè¯ã\n\n6. å®å¨è®¾å¤åå®å¨è½¯ä»¶çé¨ç½²åç»´æ¤ï¼è´è´£å®è£ãéç½®åç»´æ¤ç½ç»å®å¨è®¾å¤åå®å¨è½¯ä»¶ï¼å¦é²ç«å¢ãå¥ä¾µæ£æµç³»ç»ãçæ¯é²æ¤è½¯ä»¶ç­ã\n\n7. æ¸éæµè¯ï¼éè¿æ¨¡æé»å®¢æ»å»ï¼æµè¯ç½ç»çå®å¨æ§ï¼æ¾åºæ¼æ´å¹¶å ä»¥ä¿®å¤ã\n\n8. å®å¨åè§æ§æ£æ¥ï¼ç¡®ä¿ä¼ä¸çç½ç»å®å¨å®è·µç¬¦åç¸å³æ³å¾æ³è§åè¡ä¸æ åã\n\n9. ä¿¡æ¯å å¯åä¿æ¤ï¼ä½¿ç¨åè¿çå å¯ææ¯ä¿æ¤æ°æ®çå®å¨æ§åå®æ´æ§ã\n\n10. å®å¨å®¡è®¡åæ¥åï¼å®æè¿è¡å®å¨å®¡è®¡ï¼å¹¶åç®¡çå±æä¾æå³ç½ç»å®å¨ç¶æçè¯¦ç»æ¥åã\n\næè´åäºä¿æ¤ä¼ä¸çç½ç»å®å¨ï¼é²æ­¢æ°æ®æ³é²åç½ç»æ»å»ï¼ç¡®ä¿ä¼ä¸çæ­£å¸¸è¿è¥åä¿¡æ¯çå®å¨ã","my":false}]; sidebarStatus=1" is not allowed.
+	at org.springframework.security.web.firewall.StrictHttpFirewall$StrictFirewalledRequest.validateAllowedHeaderValue(StrictHttpFirewall.java:833)
+	at org.springframework.security.web.firewall.StrictHttpFirewall$StrictFirewalledRequest.access$000(StrictHttpFirewall.java:687)
+	at org.springframework.security.web.firewall.StrictHttpFirewall$StrictFirewalledRequest$1.nextElement(StrictHttpFirewall.java:737)
+	at org.springframework.security.web.firewall.StrictHttpFirewall$StrictFirewalledRequest$1.nextElement(StrictHttpFirewall.java:727)
+	at org.springframework.http.server.ServletServerHttpRequest.getHeaders(ServletServerHttpRequest.java:146)
+	at org.springframework.web.cors.DefaultCorsProcessor.handleInternal(DefaultCorsProcessor.java:127)
+	at org.springframework.web.cors.DefaultCorsProcessor.processRequest(DefaultCorsProcessor.java:107)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:87)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:926)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1791)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:1623)
+23:20:08.257 [http-nio-8080-exec-9] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - [log,175] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+org.springframework.security.web.firewall.RequestRejectedException: The request was rejected because the header value "username=admin; rememberMe=true; password=As/bPexWft1ilky2u8M3VERi8PmXRiNF3rdARaiT/2WQ0+djwbXqZSFy9InPxpEXbxJRDBGRGBPrh3A5v6Uh6w==; Admin-Token=eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6ImEzZTdkYjBlLTU2NzUtNDYwYi1iOGYwLWY2YWM3NDRhYmZhOSJ9.ZfpKLKN-D70EhWJH7Lqg5CaR_azK7l160q9AdVuh7NaUJq75bKIWeTb0BoH1QV7H3SwsRG5LyAHk7ZAKt0Pj3w; [{"my":false,"msg":"ä½ å¥½ææ¯ç½ç¾æ¢éçAIæºå¨äºº,è¯·é®æä»ä¹é®é¢å¯ä»¥å¸®å©æ¨?"},{"msg":"ä½ å¥½ï¼è¯·é®ä½ æä»ä¹åè½ï¼","my":true},{"msg":"ä½ å¥½ï¼ä½ä¸ºä¸åç½ç»å®å¨å·¥ç¨å¸ï¼æçä¸»è¦åè½åæ¬ï¼\n\n1. è®¾è®¡åå®æ½ç½ç»å®å¨ç­ç¥ï¼å¸®å©ä¼ä¸åç»ç»å»ºç«å¼ºå¤§çç½ç»å®å¨é²å¾¡ä½ç³»ï¼ç¡®ä¿ä»ä»¬çä¿¡æ¯åæ°æ®ä¸åæªç»ææçè®¿é®åæ»å»ã\n\n2. ç½ç»å®å¨çæ§ï¼æç»­çæ§ç½ç»æ´»å¨ï¼ä»¥ä¾¿åæ¶åç°æ½å¨çå®å¨å¨èåå¼å¸¸è¡ä¸ºã\n\n3. åºæ¥ååºï¼å¨åçå®å¨äºä»¶æ¶ï¼ç«å³éåè¡å¨ï¼åè½»æå¤±ï¼å¹¶æ¢å¤ç³»ç»æ­£å¸¸è¿è¡ã\n\n4. é£é©è¯ä¼°åæ¼æ´æ«æï¼å®æè¿è¡é£é©è¯ä¼°åæ¼æ´æ«æï¼ä»¥è¯å«ç½ç»ä¸­çæ½å¨å¼±ç¹åé£é©ã\n\n5. å®å¨å¹è®­åæè¯æåï¼æä¾å®å¨å¹è®­ï¼å¸®å©åå·¥äºè§£ç½ç»å®å¨æä½³å®è·µï¼æé«ä»ä»¬çå®å¨æè¯ã\n\n6. å®å¨è®¾å¤åå®å¨è½¯ä»¶çé¨ç½²åç»´æ¤ï¼è´è´£å®è£ãéç½®åç»´æ¤ç½ç»å®å¨è®¾å¤åå®å¨è½¯ä»¶ï¼å¦é²ç«å¢ãå¥ä¾µæ£æµç³»ç»ãçæ¯é²æ¤è½¯ä»¶ç­ã\n\n7. æ¸éæµè¯ï¼éè¿æ¨¡æé»å®¢æ»å»ï¼æµè¯ç½ç»çå®å¨æ§ï¼æ¾åºæ¼æ´å¹¶å ä»¥ä¿®å¤ã\n\n8. å®å¨åè§æ§æ£æ¥ï¼ç¡®ä¿ä¼ä¸çç½ç»å®å¨å®è·µç¬¦åç¸å³æ³å¾æ³è§åè¡ä¸æ åã\n\n9. ä¿¡æ¯å å¯åä¿æ¤ï¼ä½¿ç¨åè¿çå å¯ææ¯ä¿æ¤æ°æ®çå®å¨æ§åå®æ´æ§ã\n\n10. å®å¨å®¡è®¡åæ¥åï¼å®æè¿è¡å®å¨å®¡è®¡ï¼å¹¶åç®¡çå±æä¾æå³ç½ç»å®å¨ç¶æçè¯¦ç»æ¥åã\n\næè´åäºä¿æ¤ä¼ä¸çç½ç»å®å¨ï¼é²æ­¢æ°æ®æ³é²åç½ç»æ»å»ï¼ç¡®ä¿ä¼ä¸çæ­£å¸¸è¿è¥åä¿¡æ¯çå®å¨ã","my":false}]; sidebarStatus=1" is not allowed.
+	at org.springframework.security.web.firewall.StrictHttpFirewall$StrictFirewalledRequest.validateAllowedHeaderValue(StrictHttpFirewall.java:833)
+	at org.springframework.security.web.firewall.StrictHttpFirewall$StrictFirewalledRequest.access$000(StrictHttpFirewall.java:687)
+	at org.springframework.security.web.firewall.StrictHttpFirewall$StrictFirewalledRequest$1.nextElement(StrictHttpFirewall.java:737)
+	at org.springframework.security.web.firewall.StrictHttpFirewall$StrictFirewalledRequest$1.nextElement(StrictHttpFirewall.java:727)
+	at org.springframework.http.server.ServletServerHttpRequest.getHeaders(ServletServerHttpRequest.java:146)
+	at org.springframework.web.cors.DefaultCorsProcessor.handleInternal(DefaultCorsProcessor.java:127)
+	at org.springframework.web.cors.DefaultCorsProcessor.processRequest(DefaultCorsProcessor.java:107)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:87)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:926)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1791)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:1623)
+23:24:12.402 [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - [report,40] - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
