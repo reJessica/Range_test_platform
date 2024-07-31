@@ -11,7 +11,11 @@
  Target Server Version : 80033
  File Encoding         : 65001
 
+<<<<<<< Updated upstream
  Date: 31/07/2024 18:24:57
+=======
+ Date: 31/07/2024 20:08:31
+>>>>>>> Stashed changes
 */
 
 SET NAMES utf8mb4;
