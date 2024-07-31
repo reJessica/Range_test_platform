@@ -2,7 +2,7 @@
   <div class="home-container">
   	<div class="wrap" ref="editor">
       <div class="top"></div>
-      
+
       <sinan />
       <seamless />
       <pyramid />
@@ -36,7 +36,7 @@
       <div class="divider"></div>
 
     </div>
-    
+
   </div>
 </template>
 
@@ -48,11 +48,11 @@ export default {
   components: {},
   data() {
   	return {
-  		
+
   	}
   },
   computed: {
-  	
+
   },
   created() {
   },
@@ -60,7 +60,7 @@ export default {
     screenSize(this.$refs.editor);
   },
   methods: {
-    
+
   }
 }
 </script>
@@ -87,14 +87,14 @@ export default {
     overflow: auto;
     .top {
       position: absolute;
-      left: 0; 
-      top: 0; 
-      width: 100%; 
-      height: 80px; 
-      background-color: transparent; 
-      background: url(../assets/img/top_nav.png) no-repeat; 
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 80px;
+      background-color: transparent;
+      background: url(../assets/img/top_nav.png) no-repeat;
       background-position: 65% 0;
-      border: none; 
+      border: none;
       overflow: hidden;
     }
     .divider {
@@ -109,5 +109,5 @@ export default {
     }
 
   }
-}	
+}
 </style>
