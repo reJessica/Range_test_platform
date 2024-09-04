@@ -17,43 +17,43 @@
 
 ## 系统说明
 
-#### 登录界面![屏幕截图 2024-07-31 201648](C:/Users/21936/Pictures/Screenshots/屏幕截图 2024-07-31 201648.png)
+#### 登录界面![屏幕截图 2024-07-31 201648](pictures/屏幕截图 2024-07-31 201648.png)
 
 #### 功能导航栏
 
-<img src="C:/Users/21936/Pictures/Screenshots/屏幕截图 2024-07-31 201946.png" alt="屏幕截图 2024-07-31 201946" style="zoom:50%;" />
+<img src="pictures/屏幕截图 2024-07-31 201946.png" alt="屏幕截图 2024-07-31 201946" style="zoom:50%;" />
 
 ### 可视化大屏
 
 “网盾探隅”的数据可视化主页提供了一个清晰、直观的界面，用于展示网络安全扫描结果、网络拓扑和相关分析数据。主页整合了多种可视化工具和功能，帮助用户快速了解和管理网络安全状况。
 
-![屏幕截图 2024-07-31 212520](C:/Users/21936/Pictures/Screenshots/屏幕截图 2024-07-31 212520.png)
+![屏幕截图 2024-07-31 212520](pictures/屏幕截图 2024-07-31 212520.png)
 
 #### 接入网络安全领域gpt
 
-<img src="C:/Users/21936/Pictures/Screenshots/屏幕截图 2024-07-31 211329.png" alt="屏幕截图 2024-07-31 211329" style="zoom:50%;" />
+<img src="pictures/屏幕截图 2024-07-31 211329.png" alt="屏幕截图 2024-07-31 211329" style="zoom:50%;" />
 
 #### 基本安全测试
 
 初步的网络扫描和评估识别常见的安全漏洞和配置问题。检查弱密码、开放端口、未更新的软件等基础安全风险。
 
-![image-20240904111126298](C:/Users/21936/AppData/Roaming/Typora/typora-user-images/image-20240904111126298.png)
+<img src="pictures/image-20240904111126298.png" alt="image-20240904111126298" style="zoom: 67%;" />
 
-![image-20240904111132198](C:/Users/21936/AppData/Roaming/Typora/typora-user-images/image-20240904111132198.png)
+<img src="pictures/image-20240904111132198.png" alt="image-20240904111132198" style="zoom: 67%;" />
 
 #### 进阶安全测试
 
 深入的安全分析高级漏洞扫描、渗透测试模拟、以及复杂威胁检测。评估潜在的高级攻击向量，如零日漏洞、SQL注入、跨站脚本攻击等。深入的安全分析高级漏洞扫描、渗透测试模拟、以及复杂威胁检测。评估潜在的高级攻击向量，如零日漏洞、SQL注入、跨站脚本攻击等。用户进行全面的安全事件筛选查询，以便于及时识别和处理可能的安全威胁。帮助用户高效识别、分析和处理安全威胁。
 
-<img src="C:/Users/21936/AppData/Roaming/Typora/typora-user-images/image-20240904111149576.png" alt="image-20240904111149576" style="zoom:50%;" />
+<img src="pictures/image-20240904111149576.png" alt="image-20240904111149576"  />
 
-<img src="C:/Users/21936/AppData/Roaming/Typora/typora-user-images/image-20240904111159097.png" alt="image-20240904111159097" style="zoom:50%;" />
+<img src="pictures/image-20240904111159097.png" alt="image-20240904111159097"  />
 
-<img src="C:/Users/21936/AppData/Roaming/Typora/typora-user-images/image-20240904111208418.png" alt="image-20240904111208418" style="zoom:50%;" />
+<img src="pictures/image-20240904111208418.png" alt="image-20240904111208418"  />
 
-<img src="C:/Users/21936/AppData/Roaming/Typora/typora-user-images/image-20240904111224382.png" alt="image-20240904111224382" style="zoom:50%;" />
+<img src="pictures/image-20240904111224382.png" alt="image-20240904111224382"  />
 
-<img src="C:/Users/21936/AppData/Roaming/Typora/typora-user-images/image-20240904111234915.png" alt="image-20240904111234915" style="zoom:50%;" />
+<img src="pictures/image-20240904111234915.png" alt="image-20240904111234915"  />
 
 
 
