@@ -92,7 +92,7 @@ export default {
       width: 100%;
       height: 80px;
       background-color: transparent;
-      background: url(../assets/img/top_nav.png) no-repeat;
+      background: url(../assets/img/top_nav_new.png) no-repeat;
       background-position: 65% 0;
       border: none;
       overflow: hidden;

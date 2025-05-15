@@ -1,27 +1,27 @@
 <template>
     <div id="app">
-      <ChatBoxe />
+        <ChatBoxe />
     </div>
-  </template>
+</template>
 
-  <script>
-  import ChatBoxe from './ChatBoxe.vue'
+<script>
+import ChatBoxe from './ChatBoxe.vue'
 
-  export default {
+export default {
     name: 'App',
     components: {
-      ChatBoxe
+        ChatBoxe
     }
-  }
-  </script>
+}
+</script>
 
-  <style>
-  * {
+<style>
+* {
     margin: 0;
     padding: 0;
-  }
+}
 
-  #app {
+#app {
     width: 100%;
     height: 100vh;
     display: flex;
@@ -29,13 +29,13 @@
     align-items: center;
     background: url(../../assets/ai/backround1.jpg) no-repeat;
     background-size: 100% 100%;
-  }
+}
 
-  @media screen and (max-width: 600px) {
+@media screen and (max-width: 600px) {
     #app {
-      background: url(../../assets/ai/backround2.jpeg) no-repeat;
-    background-size: 100% 100%;
+        background: url(../../assets/ai/backround2.jpeg) no-repeat;
+        background-size: 100% 100%;
 
     }
-  }
-  </style>
+}
+</style>
