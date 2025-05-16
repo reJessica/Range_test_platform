@@ -1,166 +1,135 @@
 <template>
   <div class="app-container">
-    <el-card class="box-card">
-      <div slot="header" class="clearfix">
-        <span>行为挖掘与威胁检测</span>
-      </div>
+    <div id="app1">
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+          <span>行为挖掘与威胁检测</span>
+        </div>
 
-      <!-- 搜索和过滤区域 -->
-      <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
-        <el-form-item label="威胁类型" prop="threatType">
-          <el-select v-model="queryParams.threatType" placeholder="请选择威胁类型" clearable size="small">
-            <el-option label="恶意软件" value="malware" />
-            <el-option label="网络攻击" value="attack" />
-            <el-option label="数据泄露" value="leak" />
-            <el-option label="异常行为" value="abnormal" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="风险等级" prop="riskLevel">
-          <el-select v-model="queryParams.riskLevel" placeholder="请选择风险等级" clearable size="small">
-            <el-option label="高" value="high" />
-            <el-option label="中" value="medium" />
-            <el-option label="低" value="low" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="时间范围" prop="timeRange">
-          <el-date-picker
-            v-model="queryParams.timeRange"
-            type="datetimerange"
-            size="small"
-            range-separator="至"
-            start-placeholder="开始时间"
-            end-placeholder="结束时间"
-          />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-        </el-form-item>
-      </el-form>
+        <!-- 搜索和过滤区域 -->
+        <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
+          <el-form-item label="威胁类型" prop="threatType">
+            <el-select v-model="queryParams.threatType" placeholder="请选择威胁类型" clearable size="small">
+              <el-option label="恶意软件" value="malware" />
+              <el-option label="网络攻击" value="attack" />
+              <el-option label="数据泄露" value="leak" />
+              <el-option label="异常行为" value="abnormal" />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="风险等级" prop="riskLevel">
+            <el-select v-model="queryParams.riskLevel" placeholder="请选择风险等级" clearable size="small">
+              <el-option label="高" value="high" />
+              <el-option label="中" value="medium" />
+              <el-option label="低" value="low" />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="时间范围" prop="timeRange">
+            <el-date-picker
+              v-model="queryParams.timeRange"
+              type="datetimerange"
+              size="small"
+              range-separator="至"
+              start-placeholder="开始时间"
+              end-placeholder="结束时间"
+            />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+          </el-form-item>
+        </el-form>
 
-      <!-- 操作按钮区域 -->
-      <el-row :gutter="10" class="mb8">
-        <el-col :span="1.5">
-          <el-button
-            type="danger"
-            plain
-            icon="el-icon-delete"
-            size="mini"
-            :disabled="multiple"
-            @click="handleDelete"
-            v-hasPermi="['security:threat:remove']"
-          >删除</el-button>
-        </el-col>
-        <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-      </el-row>
-
-      <!-- 威胁统计卡片 -->
-      <el-row :gutter="20" class="card-row">
-        <el-col :span="6">
-          <el-card shadow="hover" class="stat-card">
-            <div class="stat-header">
-              <div class="stat-title">总威胁数</div>
-              <div class="stat-icon">
-                <i class="el-icon-warning"></i>
-              </div>
-            </div>
-            <div class="stat-number">{{ statistics.total }}</div>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="hover" class="stat-card">
-            <div class="stat-header">
-              <div class="stat-title">高风险</div>
-              <div class="stat-icon red">
-                <i class="el-icon-danger"></i>
-              </div>
-            </div>
-            <div class="stat-number red">{{ statistics.high }}</div>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="hover" class="stat-card">
-            <div class="stat-header">
-              <div class="stat-title">中风险</div>
-              <div class="stat-icon orange">
-                <i class="el-icon-warning"></i>
-              </div>
-            </div>
-            <div class="stat-number orange">{{ statistics.medium }}</div>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="hover" class="stat-card">
-            <div class="stat-header">
-              <div class="stat-title">低风险</div>
-              <div class="stat-icon blue">
-                <i class="el-icon-info"></i>
-              </div>
-            </div>
-            <div class="stat-number blue">{{ statistics.low }}</div>
-          </el-card>
-        </el-col>
-      </el-row>
-
-      <!-- 威胁检测列表 -->
-      <el-table
-        v-loading="loading"
-        :data="threatList"
-        @selection-change="handleSelectionChange"
-      >
-        <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="序号" align="center" prop="id" width="80" />
-        <el-table-column label="威胁类型" align="center" prop="threatType" />
-        <el-table-column label="风险等级" align="center" prop="riskLevel">
-          <template slot-scope="scope">
-            <el-tag :type="scope.row.riskLevel === 'high' ? 'danger' : scope.row.riskLevel === 'medium' ? 'warning' : 'info'">
-              {{ scope.row.riskLevel === 'high' ? '高' : scope.row.riskLevel === 'medium' ? '中' : '低' }}
-            </el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column label="威胁描述" align="center" prop="description" :show-overflow-tooltip="true" />
-        <el-table-column label="源IP" align="center" prop="sourceIp" />
-        <el-table-column label="目标IP" align="center" prop="targetIp" />
-        <el-table-column label="发现时间" align="center" prop="time" width="180">
-          <template slot-scope="scope">
-            <span>{{ parseTime(scope.row.time) }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="状态" align="center" prop="status">
-          <template slot-scope="scope">
-            <el-tag :type="scope.row.status === '已处理' ? 'success' : 'danger'">
-              {{ scope.row.status }}
-            </el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-          <template slot-scope="scope">
+        <!-- 操作按钮区域 -->
+        <el-row :gutter="10" class="mb8">
+          <el-col :span="1.5">
             <el-button
+              type="danger"
+              plain
+              icon="el-icon-delete"
               size="mini"
-              type="text"
-              icon="el-icon-view"
-              @click="handleView(scope.row)"
-              v-hasPermi="['security:threat:query']"
-            >查看</el-button>
-            <el-button
-              size="mini"
-              type="text"
-              icon="el-icon-edit"
-              @click="handleUpdate(scope.row)"
-              v-hasPermi="['security:threat:handle']"
-            >处理</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      
-      <pagination
-        v-show="total>0"
-        :total="total"
-        :page.sync="queryParams.pageNum"
-        :limit.sync="queryParams.pageSize"
-        @pagination="getList"
-      />
-    </el-card>
+              :disabled="multiple"
+              @click="handleDelete"
+              v-hasPermi="['security:threat:remove']"
+            >删除</el-button>
+          </el-col>
+          <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+        </el-row>
+
+        <!-- 威胁统计卡片 -->
+        <el-row :gutter="20" class="card-row">
+          <el-col :span="6" v-for="(stat, index) in statistics" :key="index">
+            <el-card shadow="hover" class="stat-card">
+              <div class="stat-header">
+                <div class="stat-title">{{ stat.title }}</div>
+                <div class="stat-icon">
+                  <i :class="stat.icon"></i>
+                </div>
+              </div>
+              <div class="stat-number">{{ stat.value }}</div>
+            </el-card>
+          </el-col>
+        </el-row>
+
+        <!-- 威胁检测列表 -->
+        <el-table
+          v-loading="loading"
+          :data="threatList"
+          @selection-change="handleSelectionChange"
+        >
+          <el-table-column type="selection" width="55" align="center" />
+          <el-table-column label="序号" align="center" prop="id" width="80" />
+          <el-table-column label="威胁类型" align="center" prop="threatType" />
+          <el-table-column label="风险等级" align="center" prop="riskLevel">
+            <template slot-scope="scope">
+              <el-tag :type="scope.row.riskLevel === 'high' ? 'danger' : scope.row.riskLevel === 'medium' ? 'warning' : 'info'">
+                {{ scope.row.riskLevel === 'high' ? '高' : scope.row.riskLevel === 'medium' ? '中' : '低' }}
+              </el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column label="威胁描述" align="center" prop="description" :show-overflow-tooltip="true" />
+          <el-table-column label="源IP" align="center" prop="sourceIp" />
+          <el-table-column label="目标IP" align="center" prop="targetIp" />
+          <el-table-column label="发现时间" align="center" prop="time" width="180">
+            <template slot-scope="scope">
+              <span>{{ parseTime(scope.row.time) }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="状态" align="center" prop="status">
+            <template slot-scope="scope">
+              <el-tag :type="scope.row.status === '已处理' ? 'success' : 'danger'">
+                {{ scope.row.status }}
+              </el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+            <template slot-scope="scope">
+              <el-button
+                size="mini"
+                type="text"
+                icon="el-icon-view"
+                @click="handleView(scope.row)"
+                v-hasPermi="['security:threat:query']"
+              >查看</el-button>
+              <el-button
+                size="mini"
+                type="text"
+                icon="el-icon-edit"
+                @click="handleUpdate(scope.row)"
+                v-hasPermi="['security:threat:handle']"
+              >处理</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        
+        <pagination
+          v-show="total>0"
+          :total="total"
+          :page.sync="queryParams.pageNum"
+          :limit.sync="queryParams.pageSize"
+          @pagination="getList"
+        />
+      </el-card>
+    </div>
 
     <!-- 查看威胁详情对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="700px" append-to-body>
@@ -215,12 +184,28 @@ export default {
       // 表单参数
       form: {},
       // 统计数据
-      statistics: {
-        total: 156,
-        high: 23,
-        medium: 45,
-        low: 88
-      }
+      statistics: [
+        {
+          title: "总威胁数",
+          value: 156,
+          icon: "el-icon-warning"
+        },
+        {
+          title: "高风险",
+          value: 23,
+          icon: "el-icon-danger red"
+        },
+        {
+          title: "中风险",
+          value: 45,
+          icon: "el-icon-warning orange"
+        },
+        {
+          title: "低风险",
+          value: 88,
+          icon: "el-icon-info blue"
+        }
+      ]
     };
   },
   created() {
@@ -385,9 +370,19 @@ export default {
 
 <style lang="scss" scoped>
 .app-container {
-  background: linear-gradient(135deg, #1a2b3c 0%, #0c1620 100%);
-  min-height: 100vh;
+  height: calc(100vh - 84px);
+  overflow-y: auto;
+  padding: 0;
+  background: transparent;
+}
+
+#app1 {
+  min-height: 100%;
+  width: 100%;
+  background: linear-gradient(135deg, #0a192f 0%, #0d1b2a 100%);
+  position: relative;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .box-card {
@@ -395,6 +390,11 @@ export default {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+
+  .el-card__body {
+    padding: 20px;
+  }
 
   .clearfix {
     color: #fff;
@@ -456,9 +456,13 @@ export default {
 .el-table {
   background: transparent !important;
   margin-top: 20px;
+  height: auto !important;
+  max-height: none !important;
   
-  &::before {
-    display: none;
+  .el-table__body-wrapper {
+    height: auto !important;
+    max-height: none !important;
+    overflow-y: auto;
   }
 
   .el-table__header-wrapper {
@@ -490,8 +494,11 @@ export default {
 }
 
 .el-pagination {
-  text-align: center;
-  margin-top: 20px;
+  margin: 20px 0;
+  padding-bottom: 20px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
   
   .btn-prev,
   .btn-next,
@@ -602,5 +609,11 @@ export default {
       color: #fff;
     }
   }
+}
+
+.chart-container {
+  width: 100%;
+  height: 300px;
+  margin: 20px 0;
 }
 </style>

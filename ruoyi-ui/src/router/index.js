@@ -87,6 +87,20 @@ export const constantRoutes = [
         meta: { title: '个人中心', icon: 'user' }
       }
     ]
+  },
+  {
+    path: '/monitor',
+    component: Layout,
+    name: 'Monitor',
+    meta: { title: '监控管理', icon: 'monitor' },
+    children: [
+      {
+        path: 'nettraffic',
+        component: () => import('@/views/monitor/nettraffic/index'),
+        name: 'NetTraffic',
+        meta: { title: '网络流量监控', icon: 'chart' }
+      }
+    ]
   }
 ]
 
@@ -159,6 +173,27 @@ export const dynamicRoutes = [
         component: () => import('@/views/tool/gen/editTable'),
         name: 'GenEdit',
         meta: { title: '修改生成配置', activeMenu: '/tool/gen' }
+      }
+    ]
+  },
+  {
+    path: '/monitor',
+    component: Layout,
+    name: 'Monitor',
+    meta: { title: '监控管理', icon: 'monitor', permissions: ['monitor:nettraffic:list'] },
+    children: [
+      {
+        path: 'nettraffic',
+        component: () => import('@/views/monitor/nettraffic/index'),
+        name: 'NetTraffic',
+        meta: { title: '网络流量监控', icon: 'chart', permissions: ['monitor:nettraffic:list'] }
+      },
+      {
+        path: 'nettraffic/detail/:id',
+        component: () => import('@/views/monitor/nettraffic/detail'),
+        name: 'NetTrafficDetail',
+        meta: { title: '告警详情', activeMenu: '/monitor/nettraffic', permissions: ['monitor:nettraffic:detail'] },
+        hidden: true
       }
     ]
   }
