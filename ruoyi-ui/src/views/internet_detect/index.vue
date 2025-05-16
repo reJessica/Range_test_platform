@@ -1,17 +1,13 @@
 <template>
     <div id="app">
-        <ChatBoxe />
+        
     </div>
 </template>
 
 <script>
-import ChatBoxe from './ChatBoxe.vue'
 
 export default {
     name: 'App',
-    components: {
-        ChatBoxe
-    }
 }
 </script>
 
@@ -29,13 +25,5 @@ export default {
     align-items: center;
     background: url(../../assets/ai/backround1.jpg) no-repeat;
     background-size: 100% 100%;
-}
-
-@media screen and (max-width: 600px) {
-    #app {
-        background: url(../../assets/ai/backround2.jpeg) no-repeat;
-        background-size: 100% 100%;
-
-    }
 }
 </style>
