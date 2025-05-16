@@ -10,6 +10,7 @@ import sinan from './sinan' // 司南排名图
 import seamless from './seamless' // 新闻无缝滚动
 import pyramid from './pyramid' // 金字塔动画
 import scrollArc from './scrollArc' // 滚动弧形线
+import scrollArc2 from './scrollArc2' // 监测出漏洞数
 import szBar from './szBar' // 双轴柱状图
 import ringPin from './ringPin' // 环形气泡图
 import rotateColorful from './rotateColorful' // 旋转多彩图
