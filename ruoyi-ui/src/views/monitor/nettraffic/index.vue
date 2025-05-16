@@ -1,5 +1,27 @@
 <template>
   <div class="app-container">
+    <!-- 添加工具栏 -->
+    <div class="toolbar">
+      <el-button-group>
+        <el-button type="primary" size="small" icon="el-icon-refresh" @click="refreshData">刷新数据</el-button>
+        <el-button type="success" size="small" icon="el-icon-download" @click="exportData">导出报表</el-button>
+        <el-button type="warning" size="small" icon="el-icon-setting" @click="showSettings">监控设置</el-button>
+      </el-button-group>
+      
+      <div class="time-range">
+        <el-date-picker
+          v-model="timeRange"
+          type="datetimerange"
+          size="small"
+          range-separator="至"
+          start-placeholder="开始时间"
+          end-placeholder="结束时间"
+          :picker-options="pickerOptions"
+          @change="handleTimeRangeChange">
+        </el-date-picker>
+      </div>
+    </div>
+
     <!-- 顶部统计卡片 -->
     <div class="stat-cards">
       <div class="stat-card">
@@ -163,6 +185,37 @@
       <div class="loading-dot"></div>
       <div class="loading-dot"></div>
     </div>
+
+    <!-- 设置对话框 -->
+    <el-dialog title="监控设置" :visible.sync="settingsVisible" width="500px">
+      <el-form :model="monitorSettings" label-width="120px">
+        <el-form-item label="更新频率(秒)">
+          <el-input-number v-model="monitorSettings.updateInterval" :min="1" :max="60"></el-input-number>
+        </el-form-item>
+        <el-form-item label="流量告警阈值">
+          <el-input-number v-model="monitorSettings.trafficThreshold" :min="100" :max="10000" label="Mbps"></el-input-number>
+        </el-form-item>
+        <el-form-item label="告警等级">
+          <el-select v-model="monitorSettings.alertLevel" placeholder="请选择告警等级">
+            <el-option label="低" value="low"></el-option>
+            <el-option label="中" value="medium"></el-option>
+            <el-option label="高" value="high"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="监控项">
+          <el-checkbox-group v-model="monitorSettings.enabledMonitors">
+            <el-checkbox label="traffic">流量监控</el-checkbox>
+            <el-checkbox label="dns">DNS监控</el-checkbox>
+            <el-checkbox label="port">端口监控</el-checkbox>
+            <el-checkbox label="ip">IP监控</el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+      </el-form>
+      <div slot="footer">
+        <el-button @click="settingsVisible = false">取消</el-button>
+        <el-button type="primary" @click="saveSettings">保存</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -212,6 +265,41 @@ export default {
       isUpdating: false,
       activeTab: 'events',
       isRefreshing: false,
+      settingsVisible: false,
+      timeRange: [],
+      monitorSettings: {
+        updateInterval: 5,
+        trafficThreshold: 1000,
+        alertLevel: 'medium',
+        enabledMonitors: ['traffic', 'dns', 'port', 'ip']
+      },
+      pickerOptions: {
+        shortcuts: [{
+          text: '最近1小时',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近6小时',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 6);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近24小时',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24);
+            picker.$emit('pick', [start, end]);
+          }
+        }]
+      },
       sankeyData: {
         events: {
           nodes: [
@@ -608,68 +696,105 @@ export default {
     },
     switchTab(tab) {
       this.activeTab = tab;
+      // 根据不同tab加载相应数据
+      switch(tab) {
+        case 'events':
+          this.loadEventData();
+          break;
+        case 'threats':
+          this.loadThreatData();
+          break;
+        case 'security':
+          this.loadSecurityData();
+          break;
+        case 'analysis':
+          this.loadAnalysisData();
+          break;
+      }
+    },
+
+    refreshData() {
       this.isRefreshing = true;
-      
-      // 更新桑基图数据
-      const option = {
-        tooltip: {
-          trigger: 'item',
-          triggerOn: 'mousemove'
-        },
-        series: {
-          type: 'sankey',
-          layout: 'none',
-          emphasis: {
-            focus: 'adjacency'
-          },
-          data: this.sankeyData[tab].nodes,
-          links: this.sankeyData[tab].links,
-          lineStyle: {
-            color: 'gradient',
-            curveness: 0.5
-          },
-          itemStyle: {
-            color: '#1890ff',
-            borderColor: '#1890ff'
-          },
-          label: {
-            color: '#fff',
-            fontWeight: 'bold'
-          }
-        }
-      };
-      
-      this.charts.sankey.setOption(option, true);
-      
-      // 更新趋势图数据
-      const trendOption = {
-        series: [
-          {
-            data: this.generateRandomData()
-          },
-          {
-            data: this.generateRandomData()
-          }
-        ]
-      };
-      this.charts.trend.setOption(trendOption);
+      // 更新所有数据
+      this.updateTrafficData();
+      this.updateStats();
+      this.detectAnomalies();
+      this.updateCharts();
       
       setTimeout(() => {
         this.isRefreshing = false;
-      }, 500);
+        this.$message.success('数据已更新');
+      }, 1000);
     },
-    
-    generateRandomData() {
-      const now = new Date();
-      const data = [];
-      for (let i = 0; i < 10; i++) {
-        const time = new Date(now - (10 - i) * 1000 * 60);
-        data.push([
-          time,
-          Math.floor(Math.random() * 1000)
-        ]);
+
+    exportData() {
+      // 导出当前数据为Excel
+      const data = {
+        stats: this.stats,
+        events: this.events,
+        trafficData: this.trafficData
+      };
+      
+      // 这里应该调用后端API进行导出
+      this.$message.success('报表导出中，请稍候...');
+    },
+
+    showSettings() {
+      this.settingsVisible = true;
+    },
+
+    saveSettings() {
+      // 保存设置
+      if (this.updateInterval) {
+        clearInterval(this.updateInterval);
       }
-      return data;
+      
+      // 使用新的更新频率
+      this.updateInterval = setInterval(() => {
+        this.updateTrafficData();
+        this.updateStats();
+        this.detectAnomalies();
+        this.updateCharts();
+      }, this.monitorSettings.updateInterval * 1000);
+
+      // 更新告警阈值
+      this.alertThresholds.trafficSpike = this.monitorSettings.trafficThreshold;
+
+      this.settingsVisible = false;
+      this.$message.success('设置已保存');
+    },
+
+    handleTimeRangeChange(range) {
+      if (!range) return;
+      
+      const [start, end] = range;
+      // 根据时间范围加载历史数据
+      this.loadHistoricalData(start, end);
+    },
+
+    loadEventData() {
+      // 加载监控事件数据
+      this.$message.info('正在加载监控事件数据...');
+    },
+
+    loadThreatData() {
+      // 加载威胁数据
+      this.$message.info('正在加载威胁数据...');
+    },
+
+    loadSecurityData() {
+      // 加载安全检查数据
+      this.$message.info('正在加载安全检查数据...');
+    },
+
+    loadAnalysisData() {
+      // 加载安全性分析数据
+      this.$message.info('正在加载安全性分析数据...');
+    },
+
+    loadHistoricalData(start, end) {
+      // 加载指定时间范围的历史数据
+      this.$message.info('正在加载历史数据...');
     }
   },
   beforeDestroy() {
@@ -1246,4 +1371,69 @@ export default {
     transform: rotate(360deg);
   }
 }
-</style> 
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: rgba(16, 36, 64, 0.8);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  .el-button-group {
+    .el-button {
+      background: transparent;
+      border-color: rgba(255, 255, 255, 0.2);
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      
+      &.el-button--primary {
+        background: #409EFF;
+        border-color: #409EFF;
+      }
+    }
+  }
+
+  .time-range {
+    .el-date-editor {
+      background: transparent;
+      border-color: rgba(255, 255, 255, 0.2);
+      
+      .el-range-input {
+        background: transparent;
+        color: #fff;
+      }
+      
+      .el-range-separator {
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+  }
+}
+
+:deep(.el-dialog) {
+  background: #0d1b2a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  .el-dialog__title {
+    color: #fff;
+  }
+  
+  .el-dialog__body {
+    color: #fff;
+  }
+  
+  .el-form-item__label {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .el-input-number,
+  .el-select {
+    width: 100%;
+  }
+}
+</style>

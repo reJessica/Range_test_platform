@@ -4,6 +4,23 @@
       <el-card class="box-card">
         <div slot="header" class="clearfix">
           <span>行为挖掘与威胁检测</span>
+          <div class="header-operations">
+            <span class="refresh-time">上次更新: {{ lastRefreshTime }}</span>
+            <el-tooltip content="自动刷新" placement="top">
+              <el-switch
+                v-model="autoRefresh"
+                @change="handleAutoRefreshChange"
+                class="refresh-switch"
+              />
+            </el-tooltip>
+            <el-tooltip content="立即刷新" placement="top">
+              <i 
+                class="el-icon-refresh refresh-icon" 
+                :class="{ 'is-loading': loading }"
+                @click="handleManualRefresh"
+              ></i>
+            </el-tooltip>
+          </div>
         </div>
 
         <!-- 搜索和过滤区域 -->
@@ -205,7 +222,12 @@ export default {
           value: 88,
           icon: "el-icon-info blue"
         }
-      ]
+      ],
+      // 新增数据
+      lastRefreshTime: this.formatDateTime(new Date()),
+      autoRefresh: false,
+      refreshInterval: null,
+      refreshRate: 30000, // 30秒刷新一次
     };
   },
   created() {
@@ -215,19 +237,22 @@ export default {
     this.getList();
     this.initBackgroundEffect();
   },
+  beforeDestroy() {
+    this.clearRefreshInterval();
+  },
   methods: {
     /** 查询威胁检测列表 */
-    getList() {
+    async getList() {
       this.loading = true;
-      // 这里添加获取数据的API调用
-      // listThreats(this.queryParams).then(response => {
-      //   this.threatList = response.rows;
-      //   this.total = response.total;
-      //   this.loading = false;
-      // });
-      
-      // 模拟数据
-      setTimeout(() => {
+      try {
+        // 这里添加获取数据的API调用
+        // await listThreats(this.queryParams).then(response => {
+        //   this.threatList = response.rows;
+        //   this.total = response.total;
+        // });
+        
+        // 模拟数据
+        await new Promise(resolve => setTimeout(resolve, 1000));
         this.threatList = [
           {
             id: 1,
@@ -242,8 +267,12 @@ export default {
           }
         ];
         this.total = 1;
+      } catch (error) {
+        console.error('获取数据失败:', error);
+        this.$message.error('获取数据失败，请稍后重试');
+      } finally {
         this.loading = false;
-      }, 1000);
+      }
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -363,7 +392,48 @@ export default {
             requestAnimationFrame(animate);
         }
         animate();
-    }
+    },
+    /** 格式化日期时间 */
+    formatDateTime(date) {
+      const pad = (num) => String(num).padStart(2, '0');
+      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+    },
+
+    /** 更新刷新时间 */
+    updateRefreshTime() {
+      this.lastRefreshTime = this.formatDateTime(new Date());
+    },
+
+    /** 手动刷新 */
+    async handleManualRefresh() {
+      if (this.loading) return;
+      await this.getList();
+      this.updateRefreshTime();
+      this.$message({
+        message: '数据已更新',
+        type: 'success'
+      });
+    },
+
+    /** 处理自动刷新变化 */
+    handleAutoRefreshChange(value) {
+      if (value) {
+        this.refreshInterval = setInterval(async () => {
+          await this.getList();
+          this.updateRefreshTime();
+        }, this.refreshRate);
+      } else {
+        this.clearRefreshInterval();
+      }
+    },
+
+    /** 清除刷新定时器 */
+    clearRefreshInterval() {
+      if (this.refreshInterval) {
+        clearInterval(this.refreshInterval);
+        this.refreshInterval = null;
+      }
+    },
   }
 };
 </script>
@@ -615,5 +685,57 @@ export default {
   width: 100%;
   height: 300px;
   margin: 20px 0;
+}
+
+.header-operations {
+  float: right;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  .refresh-time {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+  }
+
+  .refresh-switch {
+    margin: 0 10px;
+  }
+
+  .refresh-icon {
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: #409EFF;
+      transform: rotate(180deg);
+    }
+
+    &.is-loading {
+      animation: rotating 2s linear infinite;
+    }
+  }
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// 优化开关样式
+:deep(.el-switch__core) {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+:deep(.el-switch.is-checked .el-switch__core) {
+  background-color: #409EFF !important;
+  border-color: #409EFF !important;
 }
 </style>
