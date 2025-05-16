@@ -7,7 +7,7 @@
 <template>
   <div class="wrap-container sn-container"> 
     <div class="sn-content"> 
-      <div class="sn-title">多彩雷达</div> 
+      <div class="sn-title">安全能力评估</div> 
       <div class="sn-body"> 
         <div class="wrap-container"> 
           <div class="chartsdom" id="chart_radar"></div> 
@@ -23,7 +23,6 @@ export default {
   data() {
     return {
       option: null
-      
     }
   },
   mounted() {
@@ -34,96 +33,91 @@ export default {
       let myChart = echarts.init(document.getElementById('chart_radar'));
       this.option = {
         tooltip: {
-          trigger: 'axis'
+          trigger: 'item'
+        },
+        legend: {
+          data: ['当前水平', '行业标准'],
+          textStyle: {
+            color: '#fff'
+          },
+          right: '4%',
+          top: '4%'
         },
         radar: [{
           indicator: [
-            {text: '外观', max: 100},
-            {text: '拍照', max: 100},
-            {text: '系统', max: 100},
-            {text: '性能', max: 100},
-            {text: '屏幕', max: 100},
-            {text: '折叠', max: 100}
+            {text: '威胁检测', max: 100},
+            {text: '攻击防护', max: 100},
+            {text: '数据安全', max: 100},
+            {text: '访问控制', max: 100},
+            {text: '安全审计', max: 100},
+            {text: '应急响应', max: 100}
           ],
-          radius: '75%',
-          center: ['50%', '50%'],
+          radius: '65%',
+          center: ['50%', '55%'],
           name: {
             textStyle: {
-              color: '#1883ff'
+              color: '#fff',
+              fontSize: 14
             }
           },
-          axisTick: {
-            show: false
-          },
-          axisLabel: {
-            show: false
-          },
-          axisLine: {
-            show: true,
-            symbol: 'arrow',
-            symbolSize: [5, 7.5],
+          splitLine: {
             lineStyle: {
-              color: '#1883ff',
-              type: 'dashed'
+              color: 'rgba(255,255,255,0.2)'
             }
           },
           splitArea: {
-            show: false
+            show: true,
+            areaStyle: {
+              color: ['rgba(255,255,255,0.05)', 'rgba(255,255,255,0.02)']
+            }
           },
-          splitLine: {
-            show: false
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(255,255,255,0.2)'
+            }
           }
         }],
         series: [{
+          name: '安全能力评估',
           type: 'radar',
-          areaStyle: {},
-          symbol: 'none',
-          itemStyle: {
-            normal: {
-              areaStyle: {
-                type: 'default'
+          data: [
+            {
+              value: [85, 90, 78, 93, 83, 80],
+              name: '当前水平',
+              symbol: 'none',
+              itemStyle: {
+                normal: {
+                  color: '#ff4757',
+                  lineStyle: {
+                    color: 'rgba(255,71,87,0.8)',
+                    width: 2
+                  },
+                  areaStyle: {
+                    type: 'default',
+                    opacity: 0.5
+                  }
+                }
               }
-            }
-          },
-          lineStyle: {
-            opacity: 0,
-          },
-          data: [{
-            value: [35, 50, 30, 30, 40, 45],
-            name: '智能手机',
-            itemStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                  offset: 0, 
-                  color: '#9c6b4e'
-                },{
-                  offset: 1, 
-                  color: '#2a59ac'
-                }]),
-                lineStyle: {
-                  color: '#2a59ac'
+            },
+            {
+              value: [75, 65, 85, 82, 88, 75],
+              name: '行业标准',
+              symbol: 'none',
+              itemStyle: {
+                normal: {
+                  color: '#2ed573',
+                  lineStyle: {
+                    color: 'rgba(46,213,115,0.8)',
+                    width: 2
+                  },
+                  areaStyle: {
+                    type: 'default',
+                    opacity: 0.5
+                  }
                 }
               }
             }
-          },
-          {
-            value: [70, 40, 55, 55, 30, 55],
-            name: '5G手机',
-            itemStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                  offset: 0, 
-                  color: '#0855ca'
-                },{
-                  offset: 1, 
-                  color: '#36a6c7'
-                }]),
-                lineStyle: {
-                  color: '#36a6c7'
-                }
-              }
-            }
-          }]
+          ]
         }]
       }
 

@@ -48,17 +48,21 @@ export default {
     return {
       option: null,
       arrData: [{
-        post: '技术经理',
-        number: 158
+        post: '基础防护',
+        number: 1288,
+        color: '#24c4ff'
       },{
-        post: 'Java工程师',
-        number: 572
+        post: '威胁检测',
+        number: 986,
+        color: '#2867a8'
       },{
-        post: '前端工程师',
-        number: 826
+        post: '主动防御',
+        number: 756,
+        color: '#1b81bc'
       },{
-        post: '项目经理',
-        number: 66
+        post: '应急响应',
+        number: 468,
+        color: '#0084ff'
       }],
       color: ['#45fed4', '#84a9ef', '#f1e04f', '#dbfe73'],
       totalNum: [],

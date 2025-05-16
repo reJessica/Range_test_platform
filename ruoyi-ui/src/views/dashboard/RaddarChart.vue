@@ -49,8 +49,8 @@ export default {
       this.chart.setOption({
         tooltip: {
           trigger: 'axis',
-          axisPointer: { // 坐标轴指示器，坐标轴触发有效
-            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+          axisPointer: {
+            type: 'shadow'
           }
         },
         radar: {
@@ -68,18 +68,13 @@ export default {
             }
           },
           indicator: [
-            { name: 'Sales', max: 10000 },
-            { name: 'Administration', max: 20000 },
-            { name: 'Information Techology', max: 20000 },
-            { name: 'Customer Support', max: 20000 },
-            { name: 'Development', max: 20000 },
-            { name: 'Marketing', max: 20000 }
+            { name: '流量监控', max: 100 },
+            { name: '威胁检测', max: 100 },
+            { name: '自动防护', max: 100 },
+            { name: '攻防演练', max: 100 },
+            { name: '漏洞扫描', max: 100 },
+            { name: '安全评估', max: 100 }
           ]
-        },
-        legend: {
-          left: 'center',
-          bottom: '10',
-          data: ['Allocated Budget', 'Expected Spending', 'Actual Spending']
         },
         series: [{
           type: 'radar',
@@ -95,19 +90,20 @@ export default {
           },
           data: [
             {
-              value: [5000, 7000, 12000, 11000, 15000, 14000],
-              name: 'Allocated Budget'
+              value: [90, 85, 95, 80, 88, 92],
+              name: '当前能力值',
+              itemStyle: {
+                color: '#42b983'
+              }
             },
             {
-              value: [4000, 9000, 15000, 15000, 13000, 11000],
-              name: 'Expected Spending'
-            },
-            {
-              value: [5500, 11000, 12000, 15000, 12000, 12000],
-              name: 'Actual Spending'
+              value: [95, 90, 98, 85, 92, 95],
+              name: '目标能力值',
+              itemStyle: {
+                color: '#409eff'
+              }
             }
-          ],
-          animationDuration: animationDuration
+          ]
         }]
       })
     }

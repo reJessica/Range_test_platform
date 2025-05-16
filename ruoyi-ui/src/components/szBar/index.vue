@@ -7,7 +7,7 @@
 <template>
   <div class="wrap-container sn-container"> 
     <div class="sn-content"> 
-      <div class="sn-title">双轴柱状图</div> 
+      <div class="sn-title">攻击类型分布</div> 
       <div class="sn-body"> 
         <div class="wrap-container"> 
           <div class="chartsdom" id="chart_bar"></div>
@@ -23,9 +23,9 @@ export default {
   data() {
     return {
       option: null,
-      xAxisData: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-      yData1: [9, 12, 15, 18, 15, 12, 9, 12, 15, 18, 15, 12],
-      yData2: [-9, -12, -15, -18, -15, -12, -9, -12, -15, -18, -15, -12],
+      xAxisData: ['SQL注入', 'XSS攻击', '命令执行', '文件包含', '暴力破解', '敏感信息泄露'],
+      yData1: [92, 88, 95, 85, 78, 90],
+      yData2: [85, 80, 88, 75, 70, 82],
     }
   },
   mounted() {
@@ -34,148 +34,98 @@ export default {
   methods: {
     getEchart() {
       let myChart = echarts.init(document.getElementById('chart_bar'));
-      let barWidth = '10%';
-      let dataCoord = [
-        {coord: [0, 9]},
-        {coord: [1, 12]},
-        {coord: [2, 15]},
-        {coord: [3, 18]},
-        {coord: [4, 15]},
-        {coord: [5, 12]},
-        {coord: [6, 9]},
-        {coord: [7, 12]},
-        {coord: [8, 15]},
-        {coord: [9, 18]},
-        {coord: [10, 15]},
-        {coord: [11, 12]},
-      ];
-      let dataCoord2 = [
-        {coord: [0, -9]},
-        {coord: [1, -12]},
-        {coord: [2, -15]},
-        {coord: [3, -18]},
-        {coord: [4, -15]},
-        {coord: [5, -12]},
-        {coord: [6, -9]},
-        {coord: [7, -12]},
-        {coord: [8, -15]},
-        {coord: [9, -18]},
-        {coord: [10, -15]},
-        {coord: [11, -12]},
-      ];
-
+      let barWidth = '30%';
+      
       this.option = {
-        xAxis: {
-          data: this.xAxisData,
-          axisLabel: {
-            color: '#999',
-            formatter: '{value} 月'
-          },
-          axisTick: {
-            show: false
-          }, 
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: 'rgba(40, 103, 168, 0.3)',
-            }
-          },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
         },
-        yAxis: {
-          axisLabel: {
-            color: '#999'
+        legend: {
+          data: ['检出率', '防护率'],
+          textStyle: {
+            color: '#fff'
           },
-          axisTick: {
-            show: false
-          }, 
-          splitLine: {
-            show: false
-          },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: 'rgba(40, 103, 168, 0.3)'
-            }
-          },
+          top: 10
         },
         grid: {
-          top: 20,
-          left: 20,
-          right: 20,
-          bottom: 20,
+          top: '15%',
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
           containLabel: true
         },
-        series: [
-          {
-            name: '正值柱状图',
-            type: 'bar',
-            stack: 'one',
-            itemStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                  offset: 1, 
-                  color: 'rgba(0, 0, 0, 0)'
-                },{
-                  offset: 0.5, 
-                  color: '#466e71'
-                },{
-                  offset: 0, 
-                  color: '#eb9b44'
-                }])
-              }
-            },
-            barWidth: barWidth,
-            markPoint: {
-              symbol: 'circle',
-              itemStyle: {
-                normal: {
-                  color: '#eb9b44',
-                  shadowColor: '#eb9b44',
-                  shadowBlur: 20
-                }
-              },
-              symbolSize: [10, 10], // 容器大小
-              symbolOffset: [0, 0], // 位置偏移
-              data: dataCoord,
-            },
-            data: this.yData1
+        xAxis: [{
+          type: 'category',
+          data: this.xAxisData,
+          axisLine: {
+            lineStyle: {
+              color: '#fff'
+            }
           },
-          {
-            name: '负值柱状图',
-            type: 'bar',
-            stack: 'one',
-            itemStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                  offset: 0, 
-                  color: 'rgba(0, 0, 0, 0)'
-                },{
-                  offset: 0.5, 
-                  color: '#774a75'
-                },{
-                  offset: 1, 
-                  color: '#b34d69'
-                }])
-              }
-            },
-            barWidth: barWidth,
-            markPoint: {
-              symbol: 'circle',
-              itemStyle: {
-                normal: {
-                  color: '#b34d69',
-                  shadowColor: '#b34d69',
-                  shadowBlur: 20
-                }
-              },
-              symbolSize: [10, 10], 
-              symbolOffset: [0, 0],
-              data: dataCoord2,
-            },
-            data: this.yData2
+          axisLabel: {
+            interval: 0,
+            rotate: 30
           }
-        ]
+        }],
+        yAxis: [{
+          type: 'value',
+          name: '百分比',
+          min: 0,
+          max: 100,
+          interval: 20,
+          axisLine: {
+            lineStyle: {
+              color: '#fff'
+            }
+          },
+          splitLine: {
+            show: false
+          }
+        }],
+        series: [{
+          name: '检出率',
+          type: 'bar',
+          barWidth: barWidth,
+          data: this.yData1,
+          itemStyle: {
+            normal: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                offset: 0,
+                color: '#83bff6'
+              }, {
+                offset: 0.5,
+                color: '#188df0'
+              }, {
+                offset: 1,
+                color: '#188df0'
+              }])
+            }
+          }
+        }, {
+          name: '防护率',
+          type: 'bar',
+          barWidth: barWidth,
+          data: this.yData2,
+          itemStyle: {
+            normal: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                offset: 0,
+                color: '#25f3e6'
+              }, {
+                offset: 0.5,
+                color: '#4aff93'
+              }, {
+                offset: 1,
+                color: '#4aff93'
+              }])
+            }
+          }
+        }]
       };
+
       myChart.setOption(this.option, true);
 
       window.addEventListener('resize', () => {
@@ -191,13 +141,13 @@ export default {
 
 <style lang="scss" scoped>
 .sn-container {
-  left: 975px;
+  left: 974px;
   top: 690px;
   width: 895px;
   height: 400px;
   .chartsdom {
     width: 100%;
-    height: 95%;
+    height: 100%;
   }
 }
 </style>

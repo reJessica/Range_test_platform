@@ -49,8 +49,8 @@ export default {
       this.chart.setOption({
         tooltip: {
           trigger: 'axis',
-          axisPointer: { // 坐标轴指示器，坐标轴触发有效
-            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+          axisPointer: {
+            type: 'shadow'
           }
         },
         grid: {
@@ -62,38 +62,23 @@ export default {
         },
         xAxis: [{
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: ['Web应用', '数据库', '服务器', '网络设备', '物联网', 'API接口'],
           axisTick: {
             alignWithLabel: true
           }
         }],
         yAxis: [{
           type: 'value',
-          axisTick: {
-            show: false
-          }
+          name: '成功率(%)',
+          min: 0,
+          max: 100,
+          interval: 20
         }],
         series: [{
-          name: 'pageA',
+          name: '演练成功率',
           type: 'bar',
-          stack: 'vistors',
           barWidth: '60%',
-          data: [79, 52, 200, 334, 390, 330, 220],
-          animationDuration
-        }, {
-          name: 'pageB',
-          type: 'bar',
-          stack: 'vistors',
-          barWidth: '60%',
-          data: [80, 52, 200, 334, 390, 330, 220],
-          animationDuration
-        }, {
-          name: 'pageC',
-          type: 'bar',
-          stack: 'vistors',
-          barWidth: '60%',
-          data: [30, 52, 200, 334, 390, 330, 220],
-          animationDuration
+          data: [92, 88, 95, 85, 78, 90]
         }]
       })
     }

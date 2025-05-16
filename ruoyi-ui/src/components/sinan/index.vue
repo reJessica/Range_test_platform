@@ -7,7 +7,7 @@
 <template>
   <div class="wrap-container sn-container"> 
     <div class="sn-content"> 
-      <div class="sn-title">司南排名图</div> 
+      <div class="sn-title">安全威胁分布</div> 
       <div class="sn-body"> 
         <div class="wrap-container"> 
           <div class="pd-main"> 
@@ -69,31 +69,31 @@ export default {
         itemNum: 258,
         dataItem: 1288,
         dataSize: 12306,
-        workUnit: 'JS'
+        workUnit: 'SQL注入'
       },{
         id: 2,
         itemNum: 568,
         dataItem: 5623,
         dataSize: 12306,
-        workUnit: 'Nodejs'
+        workUnit: 'XSS攻击'
       },{
         id: 3,
         itemNum: 208,
         dataItem: 1755,
         dataSize: 12043,
-        workUnit: 'Vuejs'
+        workUnit: 'DDOS'
       },{
         id: 4,
         itemNum: 358,
         dataItem: 1812,
         dataSize: 12306,
-        workUnit: 'CSS3'
+        workUnit: '暴力破解'
       },{
         id: 5,
         itemNum: 128,
         dataItem: 4718,
         dataSize: 12580,
-        workUnit: 'jQuery'
+        workUnit: 'APT攻击'
       }]
     }
   },

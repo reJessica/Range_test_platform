@@ -7,7 +7,7 @@
 <template>
   <div class="wrap-container sn-container"> 
     <div class="sn-content"> 
-      <div class="sn-title">彩虹轨道</div> 
+      <div class="sn-title">网络安全威胁分布</div> 
       <div class="sn-body"> 
         <div class="wrap-container"> 
           <div class="chartsdom" id="chart_rbt"></div>
@@ -34,20 +34,20 @@ export default {
     return {
       option: null,
       arrData: [{
-        name: '食品类',
-        percent: 73
+        name: '高危威胁',
+        percent: 15
       },{
-        name: '工业类',
+        name: '中危威胁',
+        percent: 25
+      },{
+        name: '低危威胁',
+        percent: 30
+      },{
+        name: '可疑行为',
         percent: 20
       },{
-        name: '医疗类',
-        percent: 32
-      },{
-        name: '政务类',
-        percent: 60
-      },{
-        name: '金融类',
-        percent: 14
+        name: '正常流量',
+        percent: 10
       }]
     }
   },
@@ -64,9 +64,9 @@ export default {
       }
 
       this.option = {
-        color: ['#125ec1', '#3fa5c0', '#d68639', '#ad5b68', '#6082a5'],
+        color: ['#ff4d4f', '#faad14', '#1890ff', '#52c41a', '#13c2c2'],
         series: [{
-          name: '金融类',
+          name: '高危威胁',
           type: 'pie',
           clockWise: false,
           startAngle: 90,
@@ -84,7 +84,7 @@ export default {
             }
           },
           itemStyle: {
-            shadowColor: '#125ec1',
+            shadowColor: '#ff4d4f',
             shadowBlur: 15
           },
           data: [{
@@ -92,16 +92,16 @@ export default {
             name: '15%',
             itemStyle: {
               normal: {
-                color: '#125ec1'
+                color: '#ff4d4f'
               }
             }
           },{
             value: 85,
-            name: '50%',
+            name: '85%',
             itemStyle: itemStyle
           }]
         },{
-          name: '政务类',
+          name: '中危威胁',
           type: 'pie',
           clockWise: false,
           startAngle: 90,
@@ -119,24 +119,24 @@ export default {
             }
           },
           itemStyle: {
-            shadowColor: '#3fa5c0',
+            shadowColor: '#faad14',
             shadowBlur: 15
           },
           data: [{
-            value: 60,
-            name: '60%',
+            value: 25,
+            name: '25%',
             itemStyle: {
               normal: {
-                color: '#3fa5c0'
+                color: '#faad14'
               }
             }
           },{
-            value: 40,
-            name: '40%',
+            value: 75,
+            name: '75%',
             itemStyle: itemStyle
           }]
         },{
-          name: '医疗类',
+          name: '低危威胁',
           type: 'pie',
           clockWise: false,
           startAngle: 90,
@@ -154,24 +154,24 @@ export default {
             }
           },
           itemStyle: {
-            shadowColor: '#d68639',
+            shadowColor: '#1890ff',
             shadowBlur: 15
           },
           data: [{
-            value: 32,
-            name: '32%',
+            value: 30,
+            name: '30%',
             itemStyle: {
               normal: {
-                color: '#d68639'
+                color: '#1890ff'
               }
             }
           },{
-            value: 68,
-            name: '68%',
+            value: 70,
+            name: '70%',
             itemStyle: itemStyle
           }]
         },{
-          name: '工业类',
+          name: '可疑行为',
           type: 'pie',
           clockWise: false,
           startAngle: 90,
@@ -189,7 +189,7 @@ export default {
             }
           },
           itemStyle: {
-            shadowColor: '#ad5b68',
+            shadowColor: '#52c41a',
             shadowBlur: 15
           },
           data: [{
@@ -197,7 +197,7 @@ export default {
             name: '20%',
             itemStyle: {
               normal: {
-                color: '#ad5b68'
+                color: '#52c41a'
               }
             }
           },{
@@ -206,7 +206,7 @@ export default {
             itemStyle: itemStyle
           }]
         },{
-          name: '食品类',
+          name: '正常流量',
           type: 'pie',
           clockWise: false,
           startAngle: 90,
@@ -224,20 +224,20 @@ export default {
             }
           },
           itemStyle: {
-            shadowColor: '#6082a5',
+            shadowColor: '#13c2c2',
             shadowBlur: 15
           },
           data: [{
-            value: 73,
-            name: '73%',
+            value: 10,
+            name: '10%',
             itemStyle: {
               normal: {
-                color: '#6082a5'
+                color: '#13c2c2'
               }
             }
           },{
-            value: 27,
-            name: '27%',
+            value: 90,
+            name: '90%',
             itemStyle: itemStyle
           }]
         }]
@@ -260,13 +260,14 @@ export default {
 <style lang="scss" scoped>
 .sn-container {
   left: 50px;
-  top: 2838px;
-  width: 432px;
+  top: 1548px;
+  width: 586px;
   height: 400px;
   .chartsdom {
     width: 100%;
     height: 100%;
   }
+
 
   .preinfo {
     position: absolute;
@@ -286,23 +287,23 @@ export default {
       }
     }
     &.preinfo0 {
-      color: rgb(99, 139, 176); 
+      color: #ff4d4f; 
       margin-top: -65px;
     }
     &.preinfo1 {
-      color: rgb(180, 91, 111); 
+      color: #faad14; 
       margin-top: -87px;
     }
     &.preinfo2 {
-      color: rgb(232, 138, 50); 
+      color: #1890ff; 
       margin-top: -109px;
     }
     &.preinfo3 {
-      color: rgb(70, 179, 200); 
+      color: #52c41a; 
       margin-top: -131px;
     }
     &.preinfo4 {
-      color: rgb(19, 98, 201); 
+      color: #13c2c2; 
       margin-top: -153px;
     }
   }
@@ -313,7 +314,7 @@ export default {
     top: 50%;
     width: 1px;
     height: 58px;
-    background-color: rgb(99, 139, 176);
+    background-color: #ff4d4f;
     -webkit-transform-origin: 50% 0;
     -moz-transform-origin: 50% 0;
     -ms-transform-origin: 50% 0;
@@ -342,66 +343,66 @@ export default {
     }
     &.pre0 {
       height: 65px; 
-      background-color: rgb(99, 139, 176); 
+      background-color: #ff4d4f; 
       transform: rotate(-62.614deg);
       span {
         &:nth-child(1) {
-          background-color: rgb(99, 139, 176);
+          background-color: #ff4d4f;
         }
         &:nth-child(2) {
-          border-color: rgb(99, 139, 176) transparent transparent;
+          border-color: #ff4d4f transparent transparent;
         }
       }
     }
     &.pre1 {
       height: 87px; 
-      background-color: rgb(180, 91, 111); 
+      background-color: #faad14; 
       transform: rotate(125.593deg);
       span {
         &:nth-child(1) {
-          background-color: rgb(180, 91, 111);
+          background-color: #faad14;
         }
         &:nth-child(2) {
-          border-color: rgb(180, 91, 111) transparent transparent;
+          border-color: #faad14 transparent transparent;
         }
       }
     }
     &.pre2 {
       height: 109px; 
-      background-color: rgb(232, 138, 50); 
+      background-color: #1890ff; 
       transform: rotate(86.2006deg);
       span {
         &:nth-child(1) {
-          background-color: rgb(232, 138, 50);
+          background-color: #1890ff;
         }
         &:nth-child(2) {
-          border-color: rgb(232, 138, 50) transparent transparent;
+          border-color: #1890ff transparent transparent;
         }
       }
     }
     &.pre3 {
       height: 131px; 
-      background-color: rgb(70, 179, 200); 
+      background-color: #52c41a; 
       transform: rotate(-18.845deg);
       span {
         &:nth-child(1) {
-          background-color: rgb(70, 179, 200);
+          background-color: #52c41a;
         }
         &:nth-child(2) {
-          border-color: rgb(70, 179, 200) transparent transparent;
+          border-color: #52c41a transparent transparent;
         }
       }
     }
     &.pre4 {
       height: 153px; 
-      background-color: rgb(19, 98, 201); 
+      background-color: #13c2c2; 
       transform: rotate(149.666deg);
       span {
         &:nth-child(1) {
-          background-color: rgb(19, 98, 201);
+          background-color: #13c2c2;
         }
         &:nth-child(2) {
-          border-color: rgb(19, 98, 201) transparent transparent;
+          border-color: #13c2c2 transparent transparent;
         }
       }
     }

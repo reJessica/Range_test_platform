@@ -7,19 +7,19 @@
 <template>
   <div class="wrap-container sn-container"> 
     <div class="sn-content"> 
-      <div class="sn-title">环形气泡图</div> 
+      <div class="sn-title">攻防演练成果</div> 
       <div class="sn-body"> 
         <div class="wrap-container">
           <div class="chartsdom" id="chart_pin"></div>
           <div class="updef"></div>
-          <div class="definfo definfo0"><span>8个</span><span></span></div>
-          <div class="definfo definfo1"><span>10个</span><span></span></div>
-          <div class="definfo definfo2"><span>35个</span><span></span></div>
-          <div class="definfo definfo3"><span>38个</span><span></span></div>
-          <div class="definfo definfo4"><span>48个</span><span></span></div>
-          <div class="definfo definfo5"><span>55个</span><span></span></div>
-          <div class="definfo definfo6"><span>42个</span><span></span></div>
-          <div class="definfo definfo7"><span>95个</span><span></span></div>
+          <div class="definfo definfo0"><span>92%</span><span></span></div>
+          <div class="definfo definfo1"><span>88%</span><span></span></div>
+          <div class="definfo definfo2"><span>95%</span><span></span></div>
+          <div class="definfo definfo3"><span>87%</span><span></span></div>
+          <div class="definfo definfo4"><span>93%</span><span></span></div>
+          <div class="definfo definfo5"><span>89%</span><span></span></div>
+          <div class="definfo definfo6"><span>91%</span><span></span></div>
+          <div class="definfo definfo7"><span>94%</span><span></span></div>
         </div> 
       </div> 
     </div>   
@@ -31,8 +31,7 @@ export default {
   name: "ringPin",
   data() {
     return {
-      option: null,
-      
+      option: null
     }
   },
   mounted() {
@@ -121,7 +120,7 @@ export default {
           orient: 'vertical',
           left: '80%',
           top: 'middle',
-          data: ['2020年', '2019年', '2018年', '2017年', '2016年', '2015年', '2014年', '2013年'],
+          data: ['Web渗透', '主机安全', '应用防护', '数据安全', '网络设备', '云平台', '容器安全', '物联网安全'],
           textStyle: {
             color: '#fff',
             fontSize: 14,
@@ -130,7 +129,7 @@ export default {
           itemHeight: 10
         },
         series: [{
-          name: '2020年',
+          name: 'Web渗透',
           type: 'pie',
           clockWise: false,
           startAngle: 0,
@@ -140,7 +139,7 @@ export default {
           label: {
             normal: {
               show: false
-            },
+            }
           },
           labelLine: {
             normal: {
@@ -155,10 +154,10 @@ export default {
               }
             }
           },{
-            value: 270,
+            value: 280,
             itemStyle: linearGradient0
           },{
-            value: 30,
+            value: 20,
             itemStyle: {
               normal: {
                 color: '#053f67'
@@ -166,7 +165,7 @@ export default {
             }
           }]
         },{
-          name: '2019年',
+          name: '主机安全',
           type: 'pie',
           clockWise: false,
           startAngle: 0,
@@ -176,7 +175,7 @@ export default {
           label: {
             normal: {
               show: false
-            },
+            }
           },
           labelLine: {
             normal: {
@@ -202,7 +201,7 @@ export default {
             }
           }]
         },{
-          name: '2018年',
+          name: '应用防护',
           type: 'pie',
           clockWise: false,
           startAngle: 0,
@@ -212,7 +211,7 @@ export default {
           label: {
             normal: {
               show: false
-            },
+            }
           },
           labelLine: {
             normal: {
@@ -238,7 +237,7 @@ export default {
             }
           }]
         },{
-          name: '2017年',
+          name: '数据安全',
           type: 'pie',
           clockWise: false,
           startAngle: 0,
@@ -248,7 +247,7 @@ export default {
           label: {
             normal: {
               show: false
-            },
+            }
           },
           labelLine: {
             normal: {
@@ -274,7 +273,7 @@ export default {
             }
           }]
         },{
-          name: '2016年',
+          name: '网络设备',
           type: 'pie',
           clockWise: false,
           startAngle: 0,
@@ -284,7 +283,7 @@ export default {
           label: {
             normal: {
               show: false
-            },
+            }
           },
           labelLine: {
             normal: {
@@ -310,7 +309,7 @@ export default {
             }
           }]
         },{
-          name: '2015年',
+          name: '云平台',
           type: 'pie',
           clockWise: false,
           startAngle: 0,
@@ -320,7 +319,7 @@ export default {
           label: {
             normal: {
               show: false
-            },
+            }
           },
           labelLine: {
             normal: {
@@ -346,7 +345,7 @@ export default {
             }
           }]
         },{
-          name: '2014年',
+          name: '容器安全',
           type: 'pie',
           clockWise: false,
           startAngle: 0,
@@ -356,7 +355,7 @@ export default {
           label: {
             normal: {
               show: false
-            },
+            }
           },
           labelLine: {
             normal: {
@@ -382,7 +381,7 @@ export default {
             }
           }]
         },{
-          name: '2013年',
+          name: '物联网安全',
           type: 'pie',
           clockWise: false,
           startAngle: 0,
@@ -392,7 +391,7 @@ export default {
           label: {
             normal: {
               show: false
-            },
+            }
           },
           labelLine: {
             normal: {

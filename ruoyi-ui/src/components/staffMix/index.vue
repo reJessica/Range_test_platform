@@ -7,7 +7,7 @@
 <template>
   <div class="wrap-container sn-container"> 
     <div class="sn-content"> 
-      <div class="sn-title">人员占比</div> 
+      <div class="sn-title">团队组成</div> 
       <div class="sn-body"> 
         <div class="wrap-container"> 
           <div class="person"> 
@@ -74,8 +74,8 @@ export default {
         name: '安卓工程师',
         number: 1
       },{
-        name: 'IOS工程师',
-        number: 1
+        name: '安全工程师',
+        number: 5
       }]
       
     }

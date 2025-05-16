@@ -7,7 +7,7 @@
 <template>
   <div class="wrap-container sn-container"> 
     <div class="sn-content"> 
-      <div class="sn-title">环形跑道图</div> 
+      <div class="sn-title">资产安全评级</div> 
       <div class="sn-body"> 
         <div class="wrap-container">
           <div class="chartsdom" id="chart_run"></div>
@@ -30,15 +30,15 @@ export default {
     return {
       option: null,
       arrData: [{
-        name: '联盟链',
+        name: '网络攻击',
         number: 725,
         percentage: 41.50
       },{
-        name: '私有链',
+        name: '系统漏洞',
         number: 460,
         percentage: 30.95
       },{
-        name: '公有链',
+        name: '恶意代码',
         number: 382,
         percentage: 22.48
       }]
@@ -49,7 +49,6 @@ export default {
   },
   methods: {
     getEchart() {
-      // 初始化echarts实例
       let myChart = echarts.init(document.getElementById('chart_run'));
       let itemStyle = {
         normal: {
@@ -58,9 +57,9 @@ export default {
       }
 
       this.option = {
-        color: ['#0772bb', '#00ffff', '#f48b3b'],
+        color: ['#00ffff', '#00ff9d', '#ffeb3b'],
         series: [{
-          name: '联盟链',
+          name: '网络攻击',
           type: 'pie',
           clockWise: false,
           startAngle: 90,
@@ -82,7 +81,13 @@ export default {
             name: '50%',
             itemStyle: {
               normal: {
-                color: '#0772bb'
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                  offset: 0,
+                  color: '#00ffff'
+                }, {
+                  offset: 1,
+                  color: '#0066ff'
+                }])
               }
             }
           },{
@@ -91,7 +96,7 @@ export default {
             itemStyle: itemStyle
           }]
         },{
-          name: '私有链',
+          name: '系统漏洞',
           type: 'pie',
           clockWise: false,
           startAngle: 90,
@@ -113,7 +118,13 @@ export default {
             name: '50%',
             itemStyle: {
               normal: {
-                color: '#00ffff'
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                  offset: 0,
+                  color: '#00ff9d'
+                }, {
+                  offset: 1,
+                  color: '#00a872'
+                }])
               }
             }
           },{
@@ -122,7 +133,7 @@ export default {
             itemStyle: itemStyle
           }]
         },{
-          name: '公有链',
+          name: '恶意代码',
           type: 'pie',
           clockWise: false,
           startAngle: 90,
@@ -144,7 +155,13 @@ export default {
             name: '50%',
             itemStyle: {
               normal: {
-                color: '#f48b3b'
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                  offset: 0,
+                  color: '#ffeb3b'
+                }, {
+                  offset: 1,
+                  color: '#ff9800'
+                }])
               }
             }
           },{
@@ -155,14 +172,12 @@ export default {
         }]
       }
 
-      // 使用制定的配置项和数据显示图表
       myChart.setOption(this.option, true);
 
       window.addEventListener('resize', () => {
         myChart.resize();
       });
-
-    },
+    }
   },
   beforeDestroy() {
     
@@ -192,7 +207,7 @@ export default {
       margin-top: -160.5px;
       span {
         &:nth-child(1) {
-          background-color: rgb(0, 114, 188);
+          background-color: #00ffff;
         }
       }
     }
@@ -200,7 +215,7 @@ export default {
       margin-top: -128.5px;
       span {
         &:nth-child(1) {
-          background-color: rgb(0, 255, 255);
+          background-color: #00ff9d;
         }
       }
     }
@@ -208,7 +223,7 @@ export default {
       margin-top: -96.5px;
       span {
         &:nth-child(1) {
-          background-color: rgb(255, 146, 50);
+          background-color: #ffeb3b;
         }
       }
     }
@@ -222,12 +237,7 @@ export default {
         width: 12px;
         height: 12px;
         border-radius: 50%;
-        box-shadow: 0 0 2em, 0 0 4em, 0 0 6em, 0 0 8em, 0 0 10em, 0 0 0 0.5em rgba(255, 255, 0, 0.1);
-        text-decoration: underline;
-        cursor: pointer;
-        &:hover {
-          color: #00aeef;
-        }
+        box-shadow: 0 0 2em rgba(255, 255, 255, 0.2);
       }
       &:nth-child(2) {
         font-family: Arial;

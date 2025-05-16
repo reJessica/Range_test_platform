@@ -37,21 +37,25 @@ import PieChart from './dashboard/PieChart'
 import BarChart from './dashboard/BarChart'
 
 const lineChartData = {
-  newVisitis: {
-    expectedData: [100, 120, 161, 134, 105, 160, 165],
-    actualData: [120, 82, 91, 154, 162, 140, 145]
+  attackEvents: {
+    expectedData: [120, 140, 161, 134, 105, 160, 165],
+    actualData: [150, 182, 191, 154, 162, 140, 145],
+    title: '攻击事件趋势'
   },
-  messages: {
-    expectedData: [200, 192, 120, 144, 160, 130, 140],
-    actualData: [180, 160, 151, 106, 145, 150, 130]
+  vulnerabilities: {
+    expectedData: [20, 25, 31, 24, 15, 30, 35],
+    actualData: [28, 32, 41, 34, 22, 40, 45],
+    title: '漏洞发现趋势'
   },
-  purchases: {
-    expectedData: [80, 100, 121, 104, 105, 90, 100],
-    actualData: [120, 90, 100, 138, 142, 130, 130]
+  protection: {
+    expectedData: [95, 93, 92, 94, 95, 96, 97],
+    actualData: [92, 90, 91, 93, 94, 95, 96],
+    title: '防护成功率趋势'
   },
-  shoppings: {
-    expectedData: [130, 140, 141, 142, 145, 150, 160],
-    actualData: [120, 82, 91, 154, 162, 140, 130]
+  scenarios: {
+    expectedData: [30, 32, 35, 38, 40, 42, 45],
+    actualData: [28, 30, 33, 36, 38, 40, 42],
+    title: '演练场景数量'
   }
 }
 
@@ -66,7 +70,7 @@ export default {
   },
   data() {
     return {
-      lineChartData: lineChartData.newVisitis
+      lineChartData: lineChartData.attackEvents
     }
   },
   methods: {

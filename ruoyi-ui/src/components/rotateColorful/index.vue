@@ -1,5 +1,5 @@
 <!--
- 描述: 旋转多彩图
+ 描述: 系统资源监控
  作者: Jack Chen
  日期: 2020-04-19
 -->
@@ -7,7 +7,7 @@
 <template>
   <div class="wrap-container sn-container"> 
     <div class="sn-content"> 
-      <div class="sn-title">旋转多彩图</div> 
+      <div class="sn-title">系统资源监控</div> 
       <div class="sn-body"> 
         <div class="wrap-container">
           <div class="pie"> 

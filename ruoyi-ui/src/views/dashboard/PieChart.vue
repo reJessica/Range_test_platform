@@ -52,21 +52,21 @@ export default {
         legend: {
           left: 'center',
           bottom: '10',
-          data: ['Industries', 'Technology', 'Forex', 'Gold', 'Forecasts']
+          data: ['SQL注入', 'XSS攻击', 'DDOS攻击', '暴力破解', '其他攻击']
         },
         series: [
           {
-            name: 'WEEKLY WRITE ARTICLES',
+            name: '攻击类型',
             type: 'pie',
             roseType: 'radius',
             radius: [15, 95],
             center: ['50%', '38%'],
             data: [
-              { value: 320, name: 'Industries' },
-              { value: 240, name: 'Technology' },
-              { value: 149, name: 'Forex' },
-              { value: 100, name: 'Gold' },
-              { value: 59, name: 'Forecasts' }
+              { value: 320, name: 'SQL注入' },
+              { value: 240, name: 'XSS攻击' },
+              { value: 180, name: 'DDOS攻击' },
+              { value: 150, name: '暴力破解' },
+              { value: 134, name: '其他攻击' }
             ],
             animationEasing: 'cubicInOut',
             animationDuration: 2600

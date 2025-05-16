@@ -7,7 +7,7 @@
 <template>
   <div class="wrap-container sn-container"> 
     <div class="sn-content"> 
-      <div class="sn-title">动态列表</div> 
+      <div class="sn-title">安全防护模块</div> 
       <div class="sn-body"> 
         <div class="wrap-container pd-info"> 
           <div class="pd-info-center">
@@ -23,7 +23,7 @@
               <div class="y-number-bg animated infinite rotate"></div>
               <div class="y-number-icon"></div>
               <div class="y-number-text">
-                <span>区块链</span>
+                <span>流量监控</span>
                 <span id="number1" class="odometer odometer-theme-digital">
                   <div class="odometer-inside">
                     <span class="odometer-digit">
@@ -44,49 +44,23 @@
             </div>
 
             <div class="y-number y-number-2 animated fadeInLeft">
-              <div class="y-number-bg animated infinite rotateF"></div>
+              <div class="y-number-bg animated infinite rotate"></div>
               <div class="y-number-icon"></div>
               <div class="y-number-text">
-                <span>大数据</span>
+                <span>威胁检测</span>
                 <span id="number2" class="odometer odometer-theme-digital">
-                  <div class="odometer-inside">
-                    <span class="odometer-digit">
-                      <span class="odometer-digit-spacer">8</span>
-                      <span class="odometer-digit-inner">
-                        <span class="odometer-ribbon">
-                          <span class="odometer-ribbon-inner">
-                            <span class="odometer-value">
-                              <countTo :startVal='startVal' :endVal='65321' :duration='6000' separator=""></countTo>
-                            </span>
-                          </span>
-                        </span>
-                      </span>
-                    </span>
-                  </div>
+                  <countTo :startVal='startVal' :endVal='8956' :duration='6000' separator=""></countTo>
                 </span>
               </div>
             </div>
 
             <div class="y-number y-number-3 animated fadeInLeft">
-              <div class="y-number-bg animated infinite rotateF"></div>
+              <div class="y-number-bg animated infinite rotate"></div>
               <div class="y-number-icon"></div>
               <div class="y-number-text">
-                <span>云计算</span>
+                <span>自动防护</span>
                 <span id="number3" class="odometer odometer-theme-digital">
-                  <div class="odometer-inside">
-                    <span class="odometer-digit">
-                      <span class="odometer-digit-spacer">8</span>
-                      <span class="odometer-digit-inner">
-                        <span class="odometer-ribbon">
-                          <span class="odometer-ribbon-inner">
-                            <span class="odometer-value">
-                              <countTo :startVal='startVal' :endVal='8686' :duration='6000' separator=""></countTo>
-                            </span>
-                          </span>
-                        </span>
-                      </span>
-                    </span>
-                  </div>
+                  <countTo :startVal='startVal' :endVal='6589' :duration='6000' separator=""></countTo>
                 </span>
               </div>
             </div>
@@ -95,22 +69,9 @@
               <div class="y-number-bg animated infinite rotate"></div>
               <div class="y-number-icon"></div>
               <div class="y-number-text">
-                <span>人工智能</span>
+                <span>攻防演练</span>
                 <span id="number4" class="odometer odometer-theme-digital">
-                  <div class="odometer-inside">
-                    <span class="odometer-digit">
-                      <span class="odometer-digit-spacer">8</span>
-                      <span class="odometer-digit-inner">
-                        <span class="odometer-ribbon">
-                          <span class="odometer-ribbon-inner">
-                            <span class="odometer-value">
-                              <countTo :startVal='startVal' :endVal='258' :duration='6000' separator=""></countTo>
-                            </span>
-                          </span>
-                        </span>
-                      </span>
-                    </span>
-                  </div>
+                  <countTo :startVal='startVal' :endVal='4258' :duration='6000' separator=""></countTo>
                 </span>
               </div>
             </div>

@@ -1,13 +1,13 @@
 <!--
- 描述: 金字塔趋势
+ 描述: 安全防护层级
  作者: Jack Chen
- 日期: 2020-04-18
+ 日期: 2024-03-21
 -->
 
 <template>
   <div class="wrap-container sn-container"> 
     <div class="sn-content"> 
-      <div class="sn-title">金字塔趋势</div> 
+      <div class="sn-title">安全防护层级</div> 
       <div class="sn-body"> 
         <div class="wrap-container"> 
           <div class="chartsdom" id="chart_ptrend"></div>
@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     dataFormatter(obj) {
-      let pList = ['长沙','湘潭','株洲','岳阳','邵阳','衡阳','益阳','娄底','怀化','湘西','张家界','郴州','常德','永州'];
+      let pList = ['应急响应','威胁检测','入侵防御','访问控制','基础防护'];
       let temp;
       for (let x = 0; x < 3; x++) {
           let max = 0;
@@ -55,13 +55,26 @@ export default {
       let myChart = echarts.init(document.getElementById('chart_ptrend'));
       let itemStyle = {
         barBorderRadius: [15, 0],
-        color: '#0084ff'
+        color: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 1,
+          y2: 0,
+          colorStops: [{
+            offset: 0,
+            color: '#1890ff'
+          }, {
+            offset: 1,
+            color: '#40a9ff'
+          }]
+        }
       }
 
       this.dataMap.dataType = this.dataFormatter({
-        2:[124,145,261,54,195,131,150,39,11,40,23,51,45,88],
-        1:[136,159,205,41,306,7,77,101,24,34,8,15,14,9],
-        0:[118,128,220,47,92,14,9,11,113,61,11,22,33,5],
+        2:[95, 88, 92, 85, 78],  // 当前状态
+        1:[90, 85, 88, 80, 75],  // 上周状态
+        0:[85, 80, 83, 75, 70],  // 上月状态
       });
 
       this.option = {
@@ -70,7 +83,7 @@ export default {
             axisType: 'category',
             autoPlay: true,
             playInterval: 1000,
-            data: ['一类', '二类', '三类'],
+            data: ['本月', '上月', '上上月'],
             left: 80,
             right: 80,
             bottom: 10,
@@ -122,7 +135,7 @@ export default {
             axisLabel: {
               interval: 0
             },
-            data: ['长沙','湘潭','株洲','岳阳','邵阳','衡阳','益阳','娄底','怀化','湘西','张家界','郴州','常德','永州'],
+            data: ['应急响应','威胁检测','入侵防御','访问控制','基础防护'],
             splitLine: { 
               show: false 
             },
@@ -138,7 +151,7 @@ export default {
           }],
           yAxis: [{
             type: 'value',
-            name: '家',
+            name: '%',
             splitLine: {
               show: false
             },
@@ -153,7 +166,7 @@ export default {
             }
           }],
           series: [{
-            name: '一类', 
+            name: '防护等级', 
             type: 'bar',
             barWidth: 15,
             legendHoverLink: true,
@@ -206,6 +219,5 @@ export default {
     height: 100%;
   }
 }
-
 
 </style>

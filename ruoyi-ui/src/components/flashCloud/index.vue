@@ -7,7 +7,7 @@
 <template>
   <div class="wrap-container sn-container"> 
     <div class="sn-content"> 
-      <div class="sn-title">闪动云</div> 
+      <div class="sn-title">安全关键词</div> 
       <div class="sn-body"> 
         <div class="wrap-container cloud"> 
           
@@ -45,37 +45,37 @@ export default {
     return {
       number: 0,
       arrData: [{
-        title: 'JavaScript'
+        title: '漏洞扫描'
       },{
-        title: 'Vue.js'
+        title: '入侵检测'
       },{
-        title: 'React.js'
+        title: '安全防护'
       },{
-        title: 'Node.js'
+        title: '攻防演练'
       },{
-        title: 'Angular'
+        title: '威胁分析'
       },{
-        title: 'HTML5'
+        title: '安全评估'
       },{
-        title: 'CSS3'
+        title: '应急响应'
       },{
-        title: 'jQuery'
+        title: '安全审计'
       },{
-        title: 'Typescript'
+        title: '风险控制'
       },{
-        title: 'Bootstrap'
+        title: '安全运维'
       },{
-        title: 'WebApp'
+        title: '渗透测试'
       },{
-        title: '小程序'
+        title: '安全培训'
       },{
-        title: 'HTTP'
+        title: '态势感知'
       },{
-        title: 'Sass/Less'
+        title: '安全合规'
       },{
-        title: 'Webpack'
+        title: '漏洞修复'
       },{
-        title: 'ES6'
+        title: '安全监控'
       }]
       
     }

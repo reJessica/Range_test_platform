@@ -15,7 +15,6 @@
       <circleRunway />
       <scanRadius />
 
-      <cakeLinkage />
       <pyramidTrend />
       <dynamicLine />
 
@@ -29,9 +28,6 @@
       <colorfulArea />
 
       <rainbow />
-      <gauge />
-      <waterPolo />
-      <circleNesting />
 
       <div class="divider"></div>
 
