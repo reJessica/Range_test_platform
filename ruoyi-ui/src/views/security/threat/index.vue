@@ -226,6 +226,10 @@ export default {
   created() {
     this.getList();
   },
+  mounted() {
+    this.getList();
+    this.initBackgroundEffect();
+  },
   methods: {
     /** 查询威胁检测列表 */
     getList() {
@@ -291,61 +295,312 @@ export default {
         this.$modal.msgSuccess("删除成功");
         this.getList();
       }).catch(() => {});
+    },
+    initBackgroundEffect() {
+        const container = document.querySelector('.app-container');
+        const canvas = document.createElement('canvas');
+        canvas.style.position = 'fixed';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+        canvas.style.zIndex = '-1';
+        canvas.style.opacity = '0.1';
+        container.appendChild(canvas);
+
+        const ctx = canvas.getContext('2d');
+        const hexagons = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        class Hexagon {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 30 + 10;
+                this.rotation = Math.random() * Math.PI;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.01;
+                this.opacity = Math.random() * 0.5;
+            }
+
+            update() {
+                this.rotation += this.rotationSpeed;
+                this.y += 0.2;
+                this.opacity -= 0.001;
+
+                if (this.y > canvas.height + this.size || this.opacity <= 0) {
+                    this.reset();
+                    this.y = -this.size;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.beginPath();
+                for (let i = 0; i < 6; i++) {
+                    const angle = (Math.PI * 2 / 6) * i;
+                    const x = Math.cos(angle) * this.size;
+                    const y = Math.sin(angle) * this.size;
+                    if (i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                ctx.closePath();
+                ctx.strokeStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < 30; i++) {
+            hexagons.push(new Hexagon());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            hexagons.forEach(hexagon => {
+                hexagon.update();
+                hexagon.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
     }
   }
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.app-container {
+  background: linear-gradient(135deg, #1a2b3c 0%, #0c1620 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.box-card {
+  background: rgba(16, 36, 64, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+
+  .clearfix {
+    color: #fff;
+    font-size: 1.5em;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+}
+
 .card-row {
   margin-bottom: 20px;
 }
+
 .stat-card {
+  background: rgba(16, 36, 64, 0.8);
+  border-radius: 15px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  }
+
   .stat-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
-    
+    margin-bottom: 15px;
+
     .stat-title {
-      font-size: 16px;
-      color: #606266;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1em;
     }
-    
+
     .stat-icon {
-      font-size: 24px;
-      color: #409EFF;
+      font-size: 1.5em;
+      color: #fff;
       
-      &.red {
-        color: #F56C6C;
-      }
-      
-      &.orange {
-        color: #E6A23C;
-      }
-      
-      &.blue {
-        color: #409EFF;
-      }
+      &.red { color: #ff4d4f; }
+      &.orange { color: #faad14; }
+      &.blue { color: #1890ff; }
     }
   }
-  
+
   .stat-number {
-    font-size: 24px;
-    font-weight: bold;
-    color: #303133;
+    font-size: 2em;
+    font-weight: 600;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     
-    &.red {
-      color: #F56C6C;
+    &.red { color: #ff4d4f; }
+    &.orange { color: #faad14; }
+    &.blue { color: #1890ff; }
+  }
+}
+
+.el-table {
+  background: transparent !important;
+  margin-top: 20px;
+  
+  &::before {
+    display: none;
+  }
+
+  .el-table__header-wrapper {
+    th {
+      background: rgba(16, 36, 64, 0.9) !important;
+      color: #fff !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
-    
-    &.orange {
-      color: #E6A23C;
-    }
-    
-    &.blue {
-      color: #409EFF;
+  }
+
+  .el-table__body-wrapper {
+    tr {
+      background: rgba(16, 36, 64, 0.6) !important;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(16, 36, 64, 0.8) !important;
+        td {
+          background: transparent !important;
+        }
+      }
+
+      td {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        color: rgba(255, 255, 255, 0.8);
+      }
     }
   }
 }
-</style> 
+
+.el-pagination {
+  text-align: center;
+  margin-top: 20px;
+  
+  .btn-prev,
+  .btn-next,
+  .el-pager li {
+    background: rgba(16, 36, 64, 0.8) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    &:hover {
+      background: rgba(16, 36, 64, 0.9) !important;
+    }
+    
+    &.active {
+      background: #1890ff !important;
+    }
+  }
+}
+
+.el-form {
+  .el-form-item__label {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  .el-input__inner,
+  .el-select .el-input__inner,
+  .el-date-editor {
+    background: rgba(16, 36, 64, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    
+    &:hover,
+    &:focus {
+      border-color: #1890ff;
+    }
+  }
+}
+
+.el-button {
+  &.el-button--primary {
+    background: linear-gradient(45deg, #1890ff, #36cfc9);
+    border: none;
+    
+    &:hover {
+      background: linear-gradient(45deg, #40a9ff, #40d3c2);
+      transform: translateY(-1px);
+    }
+  }
+  
+  &.el-button--danger {
+    background: linear-gradient(45deg, #ff4d4f, #ff7875);
+    border: none;
+    
+    &:hover {
+      background: linear-gradient(45deg, #ff7875, #ffa39e);
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.el-tag {
+  &.el-tag--danger {
+    background: rgba(255, 77, 79, 0.2);
+    border-color: #ff4d4f;
+    color: #ff4d4f;
+  }
+  
+  &.el-tag--warning {
+    background: rgba(250, 173, 20, 0.2);
+    border-color: #faad14;
+    color: #faad14;
+  }
+  
+  &.el-tag--info {
+    background: rgba(24, 144, 255, 0.2);
+    border-color: #1890ff;
+    color: #1890ff;
+  }
+  
+  &.el-tag--success {
+    background: rgba(82, 196, 26, 0.2);
+    border-color: #52c41a;
+    color: #52c41a;
+  }
+}
+
+.el-dialog {
+  background: rgba(16, 36, 64, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  
+  .el-dialog__title {
+    color: #fff;
+  }
+  
+  .el-dialog__body {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  .el-descriptions {
+    background: transparent;
+    
+    .el-descriptions-item__label {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    
+    .el-descriptions-item__content {
+      color: #fff;
+    }
+  }
+}
+</style>
