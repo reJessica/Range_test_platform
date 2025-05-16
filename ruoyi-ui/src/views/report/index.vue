@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app1">
         <div class="input-group">
             <input class="input" id="Email" name="Email" placeholder="请输入网址" autocomplete="off">
             <input class="button--submit" value="开始检测" type="submit">
@@ -14,7 +14,7 @@
     padding: 0;
 }
 
-#app {
+#app1 {
     width: 100%;
     height: 100vh;
     justify-content: center;
@@ -28,13 +28,13 @@
     align-items: center;
     justify-content: center;
     /* height:100%; */
-    margin-top:15%;
+    margin-top: 15%;
 }
 
 .input {
     min-height: 50px;
     max-width: 450px;
-    width:400px;
+    width: 400px;
     padding: 0 1rem;
     color: #fff;
     font-size: 15px;

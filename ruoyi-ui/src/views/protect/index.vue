@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app1">
         <div class="cards">
             <div class="card purple">
                 <p class="tip">安全措施1</p>
@@ -153,7 +153,7 @@ export default {
     padding: 0;
 }
 
-#app {
+#app1 {
     width: 100%;
     height: 100vh;
     /* display: flex; */
