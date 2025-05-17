@@ -7,16 +7,10 @@
         <el-button type="success" size="small" icon="el-icon-download" @click="exportData">导出报表</el-button>
         <el-button type="warning" size="small" icon="el-icon-setting" @click="showSettings">监控设置</el-button>
       </el-button-group>
-      
+
       <div class="time-range">
-        <el-date-picker
-          v-model="timeRange"
-          type="datetimerange"
-          size="small"
-          range-separator="至"
-          start-placeholder="开始时间"
-          end-placeholder="结束时间"
-          :picker-options="pickerOptions"
+        <el-date-picker v-model="timeRange" type="datetimerange" size="small" range-separator="至"
+          start-placeholder="开始时间" end-placeholder="结束时间" :picker-options="pickerOptions"
           @change="handleTimeRangeChange">
         </el-date-picker>
       </div>
@@ -84,27 +78,17 @@
           <div class="title">Top10流量目标IP分布</div>
           <div class="actions">
             <el-button-group>
-              <el-button 
-                size="mini" 
-                :type="activeTab === 'events' ? 'primary' : 'text'"
-                @click="switchTab('events')">
+              <el-button size="mini" :type="activeTab === 'events' ? 'primary' : 'text'" @click="switchTab('events')">
                 监控事件 ({{ stats.totalEvents }})
               </el-button>
-              <el-button 
-                size="mini" 
-                :type="activeTab === 'threats' ? 'primary' : 'text'"
-                @click="switchTab('threats')">
+              <el-button size="mini" :type="activeTab === 'threats' ? 'primary' : 'text'" @click="switchTab('threats')">
                 威胁 ({{ stats.pendingAlerts }})
               </el-button>
-              <el-button 
-                size="mini" 
-                :type="activeTab === 'security' ? 'primary' : 'text'"
+              <el-button size="mini" :type="activeTab === 'security' ? 'primary' : 'text'"
                 @click="switchTab('security')">
                 安全检查 ({{ stats.icmpDetections }})
               </el-button>
-              <el-button 
-                size="mini" 
-                :type="activeTab === 'analysis' ? 'primary' : 'text'"
+              <el-button size="mini" :type="activeTab === 'analysis' ? 'primary' : 'text'"
                 @click="switchTab('analysis')">
                 安全性 ({{ stats.portScans }})
               </el-button>
@@ -114,12 +98,12 @@
             </div>
           </div>
         </div>
-        
+
         <!-- 桑基图 -->
         <div class="chart-container">
           <div class="sankey-chart" ref="sankeyChart"></div>
         </div>
-        
+
         <!-- 趋势图 -->
         <div class="trend-chart-container">
           <div class="chart-title">事件时间趋势</div>
@@ -154,11 +138,7 @@
             </div>
           </div>
           <div class="pagination">
-            <el-pagination
-              small
-              layout="prev, pager, next"
-              :total="50"
-              :page-size="10">
+            <el-pagination small layout="prev, pager, next" :total="50" :page-size="10">
             </el-pagination>
           </div>
         </div>
@@ -193,7 +173,8 @@
           <el-input-number v-model="monitorSettings.updateInterval" :min="1" :max="60"></el-input-number>
         </el-form-item>
         <el-form-item label="流量告警阈值">
-          <el-input-number v-model="monitorSettings.trafficThreshold" :min="100" :max="10000" label="Mbps"></el-input-number>
+          <el-input-number v-model="monitorSettings.trafficThreshold" :min="100" :max="10000"
+            label="Mbps"></el-input-number>
         </el-form-item>
         <el-form-item label="告警等级">
           <el-select v-model="monitorSettings.alertLevel" placeholder="请选择告警等级">
@@ -214,6 +195,43 @@
       <div slot="footer">
         <el-button @click="settingsVisible = false">取消</el-button>
         <el-button type="primary" @click="saveSettings">保存</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- Add event detail dialog -->
+    <el-dialog title="事件详情" :visible.sync="eventDetailVisible" width="500px" custom-class="event-detail-dialog">
+      <div v-if="selectedEvent" class="event-detail">
+        <div class="detail-row">
+          <span class="label">事件ID:</span>
+          <span class="value">#{{ selectedEvent.id }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">源IP:</span>
+          <span class="value">{{ selectedEvent.sourceIp }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">目标IP:</span>
+          <span class="value">{{ selectedEvent.targetIp }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">事件类型:</span>
+          <el-tag :type="selectedEvent.type" size="small">{{ selectedEvent.status }}</el-tag>
+        </div>
+        <div class="detail-row">
+          <span class="label">发生时间:</span>
+          <span class="value">{{ new Date().toLocaleString() }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">详细描述:</span>
+          <div class="description">
+            检测到从 {{ selectedEvent.sourceIp }} 到 {{ selectedEvent.targetIp }} 的{{ selectedEvent.status }}行为，
+            建议进行进一步分析和处理。
+          </div>
+        </div>
+      </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="eventDetailVisible = false">关闭</el-button>
+        <el-button type="primary" @click="handleEvent">处理事件</el-button>
       </div>
     </el-dialog>
   </div>
@@ -359,7 +377,15 @@ export default {
             { source: '未知协议', target: '10.0.0.100', value: 3 }
           ]
         }
-      }
+      },
+      eventDetailVisible: false,
+      selectedEvent: null,
+      // Add color palette for Sankey diagram
+      sankeyColors: [
+        '#409EFF', '#67C23A', '#E6A23C', '#F56C6C', '#909399',
+        '#36CE9E', '#FF9F43', '#8E44AD', '#3498DB', '#E74C3C',
+        '#1ABC9C', '#F1C40F', '#9B59B6', '#2980B9', '#E67E22'
+      ]
     }
   },
   mounted() {
@@ -375,14 +401,14 @@ export default {
         this.updateCharts()
       }, 5000)
     },
-    
+
     updateTrafficData() {
       this.isUpdating = true
-      
+
       const now = new Date()
       const inTraffic = this.generateTrafficData()
       const outTraffic = this.generateTrafficData()
-      
+
       this.trafficData.inbound.push({
         time: now,
         value: inTraffic
@@ -391,45 +417,45 @@ export default {
         time: now,
         value: outTraffic
       })
-      
+
       if (this.trafficData.inbound.length > 360) {
         this.trafficData.inbound.shift()
         this.trafficData.outbound.shift()
       }
-      
-      if (inTraffic > this.alertThresholds.trafficSpike || 
-          outTraffic > this.alertThresholds.trafficSpike) {
+
+      if (inTraffic > this.alertThresholds.trafficSpike ||
+        outTraffic > this.alertThresholds.trafficSpike) {
         this.showWarning = true
         setTimeout(() => {
           this.showWarning = false
         }, 3000)
       }
-      
+
       setTimeout(() => {
         this.isUpdating = false
       }, 1000)
     },
-    
+
     generateTrafficData() {
       const baseTraffic = 500
       const variation = Math.random() * 200 - 100
       return Math.max(0, baseTraffic + variation)
     },
-    
+
     detectAnomalies() {
       const latestInbound = this.trafficData.inbound[this.trafficData.inbound.length - 1]
       const latestOutbound = this.trafficData.outbound[this.trafficData.outbound.length - 1]
-      
+
       if (latestInbound.value > this.alertThresholds.trafficSpike) {
         this.addAnomaly('入站流量异常', latestInbound.value, 'danger')
       }
       if (latestOutbound.value > this.alertThresholds.trafficSpike) {
         this.addAnomaly('出站流量异常', latestOutbound.value, 'danger')
       }
-      
+
       this.stats.trafficAnomalies = this.trafficData.anomalies.length
     },
-    
+
     addAnomaly(type, value, severity) {
       const anomaly = {
         id: Date.now().toString(),
@@ -440,7 +466,7 @@ export default {
         sourceIp: this.generateRandomIp(),
         targetIp: this.generateRandomIp()
       }
-      
+
       this.trafficData.anomalies.push(anomaly)
       this.events.unshift({
         id: anomaly.id,
@@ -449,21 +475,21 @@ export default {
         type: severity,
         status: type
       })
-      
+
       if (this.events.length > 5) {
         this.events.pop()
       }
     },
-    
+
     generateRandomIp() {
       return Array(4).fill(0).map(() => Math.floor(Math.random() * 256)).join('.')
     },
-    
+
     updateStats() {
       this.stats.totalEvents++
       this.stats.handledAlerts = Math.min(this.stats.handledAlerts + Math.floor(Math.random() * 2), 100)
       this.stats.pendingAlerts = Math.max(0, this.stats.pendingAlerts + Math.floor(Math.random() * 3) - 1)
-      
+
       document.querySelectorAll('.stat-card').forEach((card, index) => {
         const value = card.querySelector('.stat-value')
         if (value) {
@@ -482,7 +508,7 @@ export default {
         }
       })
     },
-    
+
     initCharts() {
       this.$nextTick(() => {
         this.initSankeyChart()
@@ -503,10 +529,14 @@ export default {
           emphasis: {
             focus: 'adjacency'
           },
-          data: this.sankeyData.events.nodes,
-          links: this.sankeyData.events.links,
+          data: this.sankeyData[this.activeTab].nodes,
+          links: this.sankeyData[this.activeTab].links.map(link => ({
+            ...link,
+            lineStyle: {
+              color: this.sankeyColors[Math.floor(Math.random() * this.sankeyColors.length)]
+            }
+          })),
           lineStyle: {
-            color: 'gradient',
             curveness: 0.5
           },
           itemStyle: {
@@ -537,12 +567,14 @@ export default {
           data: ['入站流量', '出站流量'],
           textStyle: {
             color: '#fff'
-          }
+          },
+          top: 0
         },
         grid: {
           left: '3%',
           right: '4%',
           bottom: '3%',
+          top: '40px',
           containLabel: true
         },
         xAxis: {
@@ -552,13 +584,21 @@ export default {
             lineStyle: {
               color: '#eee'
             }
+          },
+          axisLabel: {
+            color: '#fff',
+            formatter: (value) => {
+              const date = new Date(value);
+              return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+            }
           }
         },
         yAxis: {
           type: 'value',
           name: '流量 (Mbps)',
           nameTextStyle: {
-            color: '#fff'
+            color: '#fff',
+            padding: [0, 0, 0, 40]
           },
           axisLine: {
             lineStyle: {
@@ -569,13 +609,17 @@ export default {
             lineStyle: {
               color: 'rgba(255,255,255,0.1)'
             }
+          },
+          axisLabel: {
+            color: '#fff'
           }
         },
         series: [
           {
             name: '入站流量',
             type: 'line',
-            stack: 'Total',
+            smooth: true,
+            symbol: 'none',
             areaStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 { offset: 0, color: 'rgba(64,158,255,0.5)' },
@@ -585,12 +629,17 @@ export default {
             emphasis: {
               focus: 'series'
             },
+            lineStyle: {
+              width: 2,
+              color: '#409EFF'
+            },
             data: []
           },
           {
             name: '出站流量',
             type: 'line',
-            stack: 'Total',
+            smooth: true,
+            symbol: 'none',
             areaStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 { offset: 0, color: 'rgba(255,158,64,0.5)' },
@@ -600,11 +649,20 @@ export default {
             emphasis: {
               focus: 'series'
             },
+            lineStyle: {
+              width: 2,
+              color: '#ff9e40'
+            },
             data: []
           }
         ]
       }
       this.charts.trend.setOption(option)
+
+      // 添加自适应
+      window.addEventListener('resize', () => {
+        this.charts.trend.resize()
+      })
     },
     initGaugeChart() {
       this.charts.gauge = echarts.init(this.$refs.gaugeChart)
@@ -668,6 +726,7 @@ export default {
       this.charts.gauge.setOption(option)
     },
     updateCharts() {
+      // 更新趋势图数据
       const trendOption = {
         series: [
           {
@@ -678,8 +737,8 @@ export default {
           }
         ]
       }
-      this.charts.trend.setOption(trendOption)
-      
+      this.charts.trend && this.charts.trend.setOption(trendOption)
+
       const gaugeValue = Math.floor(Math.random() * 100)
       const gaugeOption = {
         series: [{
@@ -692,12 +751,13 @@ export default {
       this.charts.gauge.setOption(gaugeOption)
     },
     goToDetail(id) {
-      this.$router.push(`/monitor/nettraffic/detail/${id}`);
+      this.selectedEvent = this.events.find(event => event.id === id)
+      this.eventDetailVisible = true
     },
     switchTab(tab) {
       this.activeTab = tab;
       // 根据不同tab加载相应数据
-      switch(tab) {
+      switch (tab) {
         case 'events':
           this.loadEventData();
           break;
@@ -720,7 +780,7 @@ export default {
       this.updateStats();
       this.detectAnomalies();
       this.updateCharts();
-      
+
       setTimeout(() => {
         this.isRefreshing = false;
         this.$message.success('数据已更新');
@@ -734,7 +794,7 @@ export default {
         events: this.events,
         trafficData: this.trafficData
       };
-      
+
       // 这里应该调用后端API进行导出
       this.$message.success('报表导出中，请稍候...');
     },
@@ -748,7 +808,7 @@ export default {
       if (this.updateInterval) {
         clearInterval(this.updateInterval);
       }
-      
+
       // 使用新的更新频率
       this.updateInterval = setInterval(() => {
         this.updateTrafficData();
@@ -766,7 +826,7 @@ export default {
 
     handleTimeRangeChange(range) {
       if (!range) return;
-      
+
       const [start, end] = range;
       // 根据时间范围加载历史数据
       this.loadHistoricalData(start, end);
@@ -795,6 +855,11 @@ export default {
     loadHistoricalData(start, end) {
       // 加载指定时间范围的历史数据
       this.$message.info('正在加载历史数据...');
+    },
+
+    handleEvent() {
+      this.$message.success('事件已标记为处理中')
+      this.eventDetailVisible = false
     }
   },
   beforeDestroy() {
@@ -803,6 +868,10 @@ export default {
     }
     Object.values(this.charts).forEach(chart => {
       chart && chart.dispose()
+    })
+    // 移除resize监听
+    window.removeEventListener('resize', () => {
+      this.charts.trend.resize()
     })
   }
 }
@@ -816,18 +885,23 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  
+  height: 100vh;
+  overflow-y: auto;
+  margin-bottom: 30px;
+
   .main-content {
     display: flex;
     gap: 20px;
     min-height: 600px;
-    
+
     .left-panel {
       flex: 2;
       display: flex;
       flex-direction: column;
       gap: 20px;
-      
+      margin-bottom: 30px;
+      height: 1200px;
+
       .chart-container {
         flex: 1;
         min-height: 300px;
@@ -835,31 +909,41 @@ export default {
         border-radius: 4px;
         padding: 20px;
         border: 1px solid rgba(255, 255, 255, 0.1);
-        
+
         .sankey-chart {
           height: 100%;
           min-height: 300px;
         }
       }
-      
+
       .trend-chart-container {
-        height: 300px;
+        height: 400px;
         background: rgba(16, 36, 64, 0.8);
         border-radius: 4px;
         padding: 20px;
         border: 1px solid rgba(255, 255, 255, 0.1);
-        
+
+        .chart-title {
+          font-size: 16px;
+          font-weight: bold;
+          color: #fff;
+          margin-bottom: 20px;
+        }
+
         .trend-chart {
-          height: 100%;
+          height: calc(100% - 40px);
+          width: 100%;
         }
       }
     }
-    
+
     .right-panel {
       flex: 1;
       display: flex;
       flex-direction: column;
       gap: 20px;
+      margin-bottom: 30px;
+      height: 1000px;
     }
   }
 }
@@ -876,13 +960,13 @@ export default {
     border-radius: 4px;
     padding: 20px;
     text-align: center;
-    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
-    
+
     &:hover {
       transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
       border-color: #409EFF;
     }
 
@@ -903,12 +987,12 @@ export default {
       color: #fff;
       margin-bottom: 5px;
       transition: all 0.3s ease;
-      
+
       &.increasing {
         color: #52c41a;
         transform: scale(1.1);
       }
-      
+
       &.decreasing {
         color: #ff4d4f;
         transform: scale(0.9);
@@ -928,9 +1012,11 @@ export default {
       0% {
         box-shadow: 0 0 0 0 rgba(255, 77, 79, 0.4);
       }
+
       70% {
         box-shadow: 0 0 0 10px rgba(255, 77, 79, 0);
       }
+
       100% {
         box-shadow: 0 0 0 0 rgba(255, 77, 79, 0);
       }
@@ -971,7 +1057,7 @@ export default {
           background: rgba(0, 0, 0, 0.2);
           padding: 4px;
           border-radius: 8px;
-          
+
           .el-button {
             position: relative;
             margin: 0 4px;
@@ -979,11 +1065,11 @@ export default {
             background: transparent;
             color: #909399;
             transition: all 0.3s ease;
-            
+
             &.el-button--primary {
               background: rgba(64, 158, 255, 0.1);
               color: #409EFF;
-              
+
               &::after {
                 content: '';
                 position: absolute;
@@ -996,13 +1082,13 @@ export default {
                 border-radius: 1px;
               }
             }
-            
+
             &:hover {
               background: rgba(64, 158, 255, 0.05);
             }
           }
         }
-        
+
         .refresh-btn {
           cursor: pointer;
           width: 32px;
@@ -1013,11 +1099,11 @@ export default {
           justify-content: center;
           background: rgba(64, 158, 255, 0.1);
           transition: all 0.3s ease;
-          
+
           &:hover {
             background: rgba(64, 158, 255, 0.2);
           }
-          
+
           &.rotating {
             animation: rotate 1s linear infinite;
           }
@@ -1093,7 +1179,8 @@ export default {
             border-bottom: none;
           }
 
-          .source, .target {
+          .source,
+          .target {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -1118,6 +1205,7 @@ export default {
               transform: translateX(-100%);
               opacity: 0;
             }
+
             to {
               transform: translateX(0);
               opacity: 1;
@@ -1136,7 +1224,7 @@ export default {
 
 .trend-chart-container {
   position: relative;
-  
+
   .chart-overlay {
     position: absolute;
     top: 0;
@@ -1147,7 +1235,7 @@ export default {
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.3s ease;
-    
+
     &.visible {
       opacity: 1;
     }
@@ -1156,7 +1244,7 @@ export default {
 
 .gauge-chart {
   position: relative;
-  
+
   &::after {
     content: '';
     position: absolute;
@@ -1172,13 +1260,18 @@ export default {
 }
 
 @keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 :deep(.el-button--text) {
   color: rgba(255, 255, 255, 0.7);
-  
+
   &:hover {
     color: #409EFF;
   }
@@ -1204,19 +1297,19 @@ export default {
 
 :deep(.el-pagination) {
   text-align: center;
-  
+
   .btn-prev,
   .btn-next,
   .el-pager li {
     background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: #fff;
-    
+
     &:hover {
       color: #409EFF;
       border-color: #409EFF;
     }
-    
+
     &.active {
       background: #409EFF;
       color: #fff;
@@ -1238,7 +1331,7 @@ export default {
 ::-webkit-scrollbar-thumb {
   background: rgba(24, 144, 255, 0.3);
   border-radius: 3px;
-  
+
   &:hover {
     background: rgba(24, 144, 255, 0.5);
   }
@@ -1258,30 +1351,33 @@ export default {
   align-items: center;
   gap: 10px;
   animation: slide-in-right 0.5s ease-out;
-  
+
   .warning-icon {
     font-size: 20px;
     animation: pulse 1s infinite;
   }
-  
+
   @keyframes slide-in-right {
     from {
       transform: translateX(100%);
       opacity: 0;
     }
+
     to {
       transform: translateX(0);
       opacity: 1;
     }
   }
-  
+
   @keyframes pulse {
     0% {
       transform: scale(1);
     }
+
     50% {
       transform: scale(1.2);
     }
+
     100% {
       transform: scale(1);
     }
@@ -1304,31 +1400,34 @@ export default {
   gap: 5px;
   opacity: 0;
   transition: opacity 0.3s ease;
-  
+
   &.visible {
     opacity: 1;
   }
-  
+
   .loading-dot {
     width: 4px;
     height: 4px;
     background: #fff;
     border-radius: 50%;
     animation: loading-dot 1s infinite;
-    
+
     &:nth-child(2) {
       animation-delay: 0.2s;
     }
-    
+
     &:nth-child(3) {
       animation-delay: 0.4s;
     }
   }
-  
+
   @keyframes loading-dot {
-    0%, 100% {
+
+    0%,
+    100% {
       transform: translateY(0);
     }
+
     50% {
       transform: translateY(-4px);
     }
@@ -1341,12 +1440,12 @@ export default {
       .el-button {
         &.el-button--text {
           color: rgba(255, 255, 255, 0.7);
-          
+
           &:hover {
             color: #409EFF;
           }
         }
-        
+
         &.el-button--primary {
           background: #409EFF;
           border-color: #409EFF;
@@ -1354,7 +1453,7 @@ export default {
         }
       }
     }
-    
+
     .refresh-btn {
       &.rotating {
         animation: rotate 1s linear infinite;
@@ -1367,6 +1466,7 @@ export default {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -1386,11 +1486,11 @@ export default {
     .el-button {
       background: transparent;
       border-color: rgba(255, 255, 255, 0.2);
-      
+
       &:hover {
         background: rgba(255, 255, 255, 0.1);
       }
-      
+
       &.el-button--primary {
         background: #409EFF;
         border-color: #409EFF;
@@ -1402,12 +1502,12 @@ export default {
     .el-date-editor {
       background: transparent;
       border-color: rgba(255, 255, 255, 0.2);
-      
+
       .el-range-input {
         background: transparent;
         color: #fff;
       }
-      
+
       .el-range-separator {
         color: rgba(255, 255, 255, 0.7);
       }
@@ -1418,22 +1518,76 @@ export default {
 :deep(.el-dialog) {
   background: #0d1b2a;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  
+
   .el-dialog__title {
     color: #fff;
   }
-  
+
   .el-dialog__body {
     color: #fff;
   }
-  
+
   .el-form-item__label {
     color: rgba(255, 255, 255, 0.7);
   }
-  
+
   .el-input-number,
   .el-select {
     width: 100%;
+  }
+}
+
+// Add styles for event detail dialog
+.event-detail-dialog {
+  .event-detail {
+    .detail-row {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: flex-start;
+
+      .label {
+        width: 80px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .value {
+        flex: 1;
+        color: #fff;
+      }
+
+      .description {
+        flex: 1;
+        line-height: 1.5;
+        color: #fff;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 10px;
+        border-radius: 4px;
+      }
+    }
+  }
+}
+
+:deep(.event-detail-dialog) {
+  background: rgba(16, 36, 64, 0.95);
+  backdrop-filter: blur(10px);
+
+  .el-dialog__header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px;
+
+    .el-dialog__title {
+      color: #fff;
+    }
+  }
+
+  .el-dialog__body {
+    color: #fff;
+    padding: 20px;
+  }
+
+  .el-dialog__footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px 20px;
   }
 }
 </style>

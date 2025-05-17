@@ -23,14 +23,11 @@
             <div class="protection-groups">
                 <div class="group-header">
                     <h2>自动响应策略</h2>
-                    <el-switch
-                        v-model="autoResponse"
-                        active-text="自动响应"
-                        inactive-text="手动响应"
+                    <el-switch v-model="autoResponse" active-text="自动响应" inactive-text="手动响应"
                         @change="handleAutoResponseChange">
                     </el-switch>
                 </div>
-                
+
                 <div class="cards">
                     <div class="card purple">
                         <p class="tip">流量清洗</p>
@@ -52,7 +49,8 @@
                         </div>
                         <div class="card-footer">
                             <el-switch v-model="trafficClean" @change="updateChart" />
-                            <el-tag :type="trafficClean ? 'success' : 'info'">{{ trafficClean ? '已启用' : '未启用' }}</el-tag>
+                            <el-tag :type="trafficClean ? 'success' : 'info'">{{ trafficClean ? '已启用' : '未启用'
+                                }}</el-tag>
                         </div>
                     </div>
 
@@ -76,7 +74,8 @@
                         </div>
                         <div class="card-footer">
                             <el-switch v-model="deviceIsolation" @change="updateChart" />
-                            <el-tag :type="deviceIsolation ? 'success' : 'info'">{{ deviceIsolation ? '已启用' : '未启用' }}</el-tag>
+                            <el-tag :type="deviceIsolation ? 'success' : 'info'">{{ deviceIsolation ? '已启用' : '未启用'
+                                }}</el-tag>
                         </div>
                     </div>
 
@@ -124,7 +123,8 @@
                         </div>
                         <div class="card-footer">
                             <el-switch v-model="assetProtection" @change="updateChart" />
-                            <el-tag :type="assetProtection ? 'success' : 'info'">{{ assetProtection ? '已启用' : '未启用' }}</el-tag>
+                            <el-tag :type="assetProtection ? 'success' : 'info'">{{ assetProtection ? '已启用' : '未启用'
+                                }}</el-tag>
                         </div>
                     </div>
 
@@ -148,7 +148,8 @@
                         </div>
                         <div class="card-footer">
                             <el-switch v-model="securityAudit" @change="updateChart" />
-                            <el-tag :type="securityAudit ? 'success' : 'info'">{{ securityAudit ? '已启用' : '未启用' }}</el-tag>
+                            <el-tag :type="securityAudit ? 'success' : 'info'">{{ securityAudit ? '已启用' : '未启用'
+                                }}</el-tag>
                         </div>
                     </div>
                 </div>
@@ -163,9 +164,9 @@
                     <tbody>
                         <tr v-for="(event, index) in recentEvents" :key="index">
                             <td>{{ event.time }}</td>
-                            <td>{{ event.type === 'warning' ? '流量清洗' : 
-                                   event.type === 'danger' ? '设备隔离' :
-                                   event.type === 'info' ? '威胁阻断' : '资产加固' }}</td>
+                            <td>{{ event.type === 'warning' ? '流量清洗' :
+                        event.type === 'danger' ? '设备隔离' :
+                            event.type === 'info' ? '威胁阻断' : '资产加固' }}</td>
                             <td>{{ event.content }}</td>
                             <td>已处理</td>
                         </tr>
@@ -176,11 +177,6 @@
             <div class="chart-container">
                 <div class="group-header">
                     <h2>防护效果分析</h2>
-                    <el-radio-group v-model="chartTimeRange" size="small" @change="updateChartTimeRange">
-                        <el-radio-button label="1h">1小时</el-radio-button>
-                        <el-radio-button label="6h">6小时</el-radio-button>
-                        <el-radio-button label="24h">24小时</el-radio-button>
-                    </el-radio-group>
                 </div>
                 <div class="chart">
                     <div id="vulnerabilityChart" style="width: 100%; height:350px;"></div>
@@ -191,7 +187,8 @@
             <el-dialog title="响应策略配置" :visible.sync="dialogVisible" width="50%">
                 <el-form :model="responseConfig" label-width="120px">
                     <el-form-item label="流量清洗阈值">
-                        <el-input-number v-model="responseConfig.trafficThreshold" :min="1" :max="1000" label="Mbps"></el-input-number>
+                        <el-input-number v-model="responseConfig.trafficThreshold" :min="1" :max="1000"
+                            label="Mbps"></el-input-number>
                     </el-form-item>
                     <el-form-item label="设备隔离条件">
                         <el-select v-model="responseConfig.isolationConditions" multiple placeholder="请选择隔离条件">
@@ -201,7 +198,8 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="威胁等级阈值">
-                        <el-slider v-model="responseConfig.threatLevel" :marks="threatLevelMarks" :step="1" :min="1" :max="5"></el-slider>
+                        <el-slider v-model="responseConfig.threatLevel" :marks="threatLevelMarks" :step="1" :min="1"
+                            :max="5"></el-slider>
                     </el-form-item>
                     <el-form-item label="响应优先级">
                         <el-radio-group v-model="responseConfig.priority">
@@ -232,7 +230,7 @@ export default {
             blockedAttacks: 0,
             isolatedDevices: 0,
             responseTime: 0,
-            
+
             // 防护开关
             autoResponse: true,
             trafficClean: false,
@@ -363,7 +361,7 @@ export default {
             // 可以根据需要添加不同类型的提示音
             const audio = new Audio(`/audio/${type}.mp3`);
             audio.volume = 0.3;
-            audio.play().catch(() => {});
+            audio.play().catch(() => { });
         },
 
         updateStats() {
@@ -377,7 +375,7 @@ export default {
                 this.currentTraffic = (parseFloat(this.currentTraffic) + (Math.random() - 0.5) * 10).toFixed(2);
                 this.cleanedTraffic = (parseFloat(this.cleanedTraffic) + Math.random() * 0.5).toFixed(2);
             }
-            
+
             // 更新设备隔离数据
             if (this.deviceIsolation) {
                 this.isolatedDevices = randomChange(this.isolatedDevices || 3, 2);
@@ -414,7 +412,7 @@ export default {
             particle.className = 'warning-particle';
             particle.style.left = Math.random() * 100 + '%';
             container.appendChild(particle);
-            
+
             setTimeout(() => {
                 particle.remove();
             }, 2000);
@@ -629,10 +627,10 @@ export default {
 
             // 添加随机波动
             const randomFluctuation = (Math.random() - 0.5) * 5;
-            
+
             // 计算新的漏洞数量
             let newVulnerability = baseVulnerability - totalReduction + totalIncrease + randomFluctuation;
-            
+
             // 确保漏洞数量在合理范围内
             newVulnerability = Math.max(0, Math.min(100, Math.round(newVulnerability)));
 
@@ -654,17 +652,13 @@ export default {
                 backgroundColor: 'transparent',
                 title: {
                     text: '漏洞数量实时监控',
-                    subtext: '已开启的防护措施越多，漏洞数量越少',
                     textStyle: {
                         color: '#fff',
                         fontSize: 16,
                         fontWeight: 'normal'
                     },
-                    subtextStyle: {
-                        color: 'rgba(255, 255, 255, 0.7)',
-                        fontSize: 12
-                    },
-                    left: 'center'
+                    left: 'center',
+                    top: 10
                 },
                 tooltip: {
                     trigger: 'axis',
@@ -823,7 +817,7 @@ export default {
         startTimer() {
             this.timer = setInterval(() => {
                 this.updateChart();
-            }, 5000);
+            }, 3000);
         },
         initBackgroundEffect() {
             const canvas = document.createElement('canvas');
@@ -863,7 +857,7 @@ export default {
                     this.x += this.speedX;
                     this.y += this.speedY;
 
-                    if (this.x > canvas.width || this.x < 0 || 
+                    if (this.x > canvas.width || this.x < 0 ||
                         this.y > canvas.height || this.y < 0) {
                         this.reset();
                     }
@@ -899,493 +893,526 @@ export default {
         if (this.timer) {
             clearInterval(this.timer);
         }
+        if (this.time) {
+            clearTimeout(this.timer);
+        }
     },
 };
 </script>
 <style lang="scss" scoped>
 .container-div {
-  height: calc(100vh - 84px);
-  overflow-y: auto;
-  padding: 0;
-  background: transparent;
+    height: calc(100vh - 84px);
+    overflow-y: auto;
+    padding: 0;
+    background: transparent;
+    overflow-y: auto;
 }
 
 #app1 {
-  min-height: 100%;
-  width: 100%;
-  background: linear-gradient(135deg, #0a192f 0%, #0d1b2a 100%);
-  position: relative;
-  padding: 20px;
-  box-sizing: border-box;
+    min-height: 100%;
+    width: 100%;
+    background: linear-gradient(135deg, #0a192f 0%, #0d1b2a 100%);
+    position: relative;
+    padding: 20px;
+    box-sizing: border-box;
 
-  &::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      linear-gradient(90deg, rgba(24, 144, 255, 0.1) 1px, transparent 1px),
-      linear-gradient(rgba(24, 144, 255, 0.1) 1px, transparent 1px);
-    background-size: 30px 30px;
-    mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
-    z-index: 1;
-    animation: grid-animation 20s linear infinite;
-    pointer-events: none;
-  }
+    &::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background:
+            linear-gradient(90deg, rgba(24, 144, 255, 0.1) 1px, transparent 1px),
+            linear-gradient(rgba(24, 144, 255, 0.1) 1px, transparent 1px);
+        background-size: 30px 30px;
+        mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
+        z-index: 1;
+        animation: grid-animation 20s linear infinite;
+        pointer-events: none;
+    }
 
-  &::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(24, 144, 255, 0.1), transparent 80%);
-    z-index: 2;
-    pointer-events: none;
-  }
+    &::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 50% 50%, rgba(24, 144, 255, 0.1), transparent 80%);
+        z-index: 2;
+        pointer-events: none;
+    }
 }
 
 .header-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
-  margin-bottom: 30px;
-  position: relative;
-  z-index: 3;
-  width: 100%;
-
-  .stat-item {
-    background: rgba(16, 36, 64, 0.8);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(24, 144, 255, 0.2);
-    border-radius: 12px;
-    padding: 20px;
-    text-align: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-
-    &:hover {
-      transform: translateY(-5px);
-      border-color: rgba(24, 144, 255, 0.5);
-      box-shadow: 0 12px 48px rgba(24, 144, 255, 0.2);
-    }
-
-    .stat-value {
-      font-size: 32px;
-      font-weight: bold;
-      color: #1890ff;
-      margin-bottom: 8px;
-      text-shadow: 0 0 10px rgba(24, 144, 255, 0.3);
-    }
-
-    .stat-label {
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 14px;
-    }
-  }
-}
-
-.protection-groups {
-  position: relative;
-  z-index: 3;
-  margin-bottom: 30px;
-  width: 100%;
-
-  .group-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-
-    h2 {
-      color: #fff;
-      font-size: 24px;
-      margin: 0;
-    }
-  }
-
-  .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 20px;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 3;
     width: 100%;
 
-    .card {
-      background: rgba(16, 36, 64, 0.8);
-      backdrop-filter: blur(10px);
-      border-radius: 12px;
-      padding: 20px;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      position: relative;
-      overflow: hidden;
-
-      .card-content {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-      }
-
-      .stats-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
-        margin: 15px 0;
-        opacity: 0;
-        height: 0;
+    .stat-item {
+        background: rgba(16, 36, 64, 0.8);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(24, 144, 255, 0.2);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
         transition: all 0.3s ease;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 
-        &.active {
-          opacity: 1;
-          height: auto;
-          margin: 15px 0;
+        &:hover {
+            transform: translateY(-5px);
+            border-color: rgba(24, 144, 255, 0.5);
+            box-shadow: 0 12px 48px rgba(24, 144, 255, 0.2);
         }
 
-        .stat-box {
-          background: rgba(13, 27, 42, 0.6);
-          border-radius: 8px;
-          padding: 12px;
-          text-align: center;
-
-          .stat-value {
-            color: #00ff9d;
-            font-size: 20px;
-            font-weight: 500;
-            margin-bottom: 4px;
-            font-family: Monaco, monospace;
-          }
-
-          .stat-label {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 12px;
-          }
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1890ff;
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px rgba(24, 144, 255, 0.3);
         }
-      }
 
-      .tip {
-        color: #fff;
-        font-size: 16px;
-        margin-bottom: 10px;
-        font-weight: 500;
-      }
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+        }
+    }
+}
 
-      .second-text {
-        color: rgba(255, 255, 255, 0.6);
-        font-size: 14px;
-        line-height: 1.5;
-        margin-bottom: 15px;
-      }
+.protection-groups {
+    position: relative;
+    z-index: 3;
+    margin-bottom: 30px;
+    width: 100%;
 
-      .card-footer {
+    .group-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-top: auto;
-      }
+        margin-bottom: 20px;
 
-      &::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: linear-gradient(
-          45deg,
-          transparent,
-          rgba(255, 255, 255, 0.1),
-          transparent
-        );
-        transform: rotate(45deg);
-        animation: shine 3s infinite;
-      }
-
-      &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 48px rgba(24, 144, 255, 0.2);
-      }
-
-      .icon-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 120px;
-        margin: 15px 0;
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.05);
-        transition: all 0.3s ease;
-
-        &.active {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 15px;
-          padding: 10px;
-
-          .data-item {
-            text-align: center;
-            padding: 10px;
-            background: rgba(13, 27, 42, 0.6);
-            border-radius: 6px;
-
-            .value {
-              font-size: 24px;
-              color: #00ff9d;
-              font-family: Monaco, monospace;
-              margin-bottom: 5px;
-            }
-
-            .label {
-              font-size: 12px;
-              color: rgba(255, 255, 255, 0.7);
-            }
-          }
+        h2 {
+            color: #fff;
+            font-size: 24px;
+            margin: 0;
         }
-
-        i {
-          font-size: 48px;
-          color: rgba(255, 255, 255, 0.8);
-          transition: all 0.3s ease;
-        }
-      }
-
-      &.purple { border-color: rgba(149, 104, 255, 0.3); }
-      &.brown { border-color: rgba(255, 191, 0, 0.3); }
-      &.red { border-color: rgba(255, 77, 79, 0.3); }
-      &.blue { border-color: rgba(24, 144, 255, 0.3); }
-      &.green { border-color: rgba(82, 196, 26, 0.3); }
-
-      &.purple .icon-container:hover i { color: #9d6eff; }
-      &.brown .icon-container:hover i { color: #ffbf00; }
-      &.red .icon-container:hover i { color: #ff4d4f; }
-      &.blue .icon-container:hover i { color: #1890ff; }
-      &.green .icon-container:hover i { color: #52c41a; }
     }
-  }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+        width: 100%;
+
+        .card {
+            background: rgba(16, 36, 64, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+
+            .card-content {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+
+            .stats-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+                margin: 15px 0;
+                opacity: 0;
+                height: 0;
+                transition: all 0.3s ease;
+
+                &.active {
+                    opacity: 1;
+                    height: auto;
+                    margin: 15px 0;
+                }
+
+                .stat-box {
+                    background: rgba(13, 27, 42, 0.6);
+                    border-radius: 8px;
+                    padding: 12px;
+                    text-align: center;
+
+                    .stat-value {
+                        color: #00ff9d;
+                        font-size: 20px;
+                        font-weight: 500;
+                        margin-bottom: 4px;
+                        font-family: Monaco, monospace;
+                    }
+
+                    .stat-label {
+                        color: rgba(255, 255, 255, 0.7);
+                        font-size: 12px;
+                    }
+                }
+            }
+
+            .tip {
+                color: #fff;
+                font-size: 16px;
+                margin-bottom: 10px;
+                font-weight: 500;
+            }
+
+            .second-text {
+                color: rgba(255, 255, 255, 0.6);
+                font-size: 14px;
+                line-height: 1.5;
+                margin-bottom: 15px;
+            }
+
+            .card-footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: auto;
+            }
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: linear-gradient(45deg,
+                        transparent,
+                        rgba(255, 255, 255, 0.1),
+                        transparent);
+                transform: rotate(45deg);
+                animation: shine 3s infinite;
+            }
+
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 12px 48px rgba(24, 144, 255, 0.2);
+            }
+
+            .icon-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 120px;
+                margin: 15px 0;
+                border-radius: 8px;
+                background: rgba(255, 255, 255, 0.05);
+                transition: all 0.3s ease;
+
+                &.active {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 15px;
+                    padding: 10px;
+
+                    .data-item {
+                        text-align: center;
+                        padding: 10px;
+                        background: rgba(13, 27, 42, 0.6);
+                        border-radius: 6px;
+
+                        .value {
+                            font-size: 24px;
+                            color: #00ff9d;
+                            font-family: Monaco, monospace;
+                            margin-bottom: 5px;
+                        }
+
+                        .label {
+                            font-size: 12px;
+                            color: rgba(255, 255, 255, 0.7);
+                        }
+                    }
+                }
+
+                i {
+                    font-size: 48px;
+                    color: rgba(255, 255, 255, 0.8);
+                    transition: all 0.3s ease;
+                }
+            }
+
+            &.purple {
+                border-color: rgba(149, 104, 255, 0.3);
+            }
+
+            &.brown {
+                border-color: rgba(255, 191, 0, 0.3);
+            }
+
+            &.red {
+                border-color: rgba(255, 77, 79, 0.3);
+            }
+
+            &.blue {
+                border-color: rgba(24, 144, 255, 0.3);
+            }
+
+            &.green {
+                border-color: rgba(82, 196, 26, 0.3);
+            }
+
+            &.purple .icon-container:hover i {
+                color: #9d6eff;
+            }
+
+            &.brown .icon-container:hover i {
+                color: #ffbf00;
+            }
+
+            &.red .icon-container:hover i {
+                color: #ff4d4f;
+            }
+
+            &.blue .icon-container:hover i {
+                color: #1890ff;
+            }
+
+            &.green .icon-container:hover i {
+                color: #52c41a;
+            }
+        }
+    }
 }
 
 .recent-events {
-  position: relative;
-  z-index: 3;
-  background: rgba(13, 27, 42, 0.6);
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 30px;
-  width: 100%;
-  min-height: 200px;
-  overflow-y: auto;
-
-  .event-table {
+    position: relative;
+    z-index: 3;
+    background: rgba(13, 27, 42, 0.6);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
     width: 100%;
-    border-spacing: 0;
-    border-collapse: separate;
+    min-height: 200px;
+    overflow-y: auto;
 
-    tr {
-      width: 100%;
-      transition: all 0.3s;
+    .event-table {
+        width: 100%;
+        border-spacing: 0;
+        border-collapse: separate;
 
-      &:hover {
-        background: rgba(16, 36, 64, 0.6);
-      }
+        tr {
+            width: 100%;
+            transition: all 0.3s;
 
-      td {
-        padding: 12px 16px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        color: #ffffff;
-        font-size: 14px;
+            &:hover {
+                background: rgba(16, 36, 64, 0.6);
+            }
 
-        &:first-child {
-          color: #00ff9d;
-          width: 100px;
-          font-family: Monaco, monospace;
+            td {
+                padding: 12px 16px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                color: #ffffff;
+                font-size: 14px;
+
+                &:first-child {
+                    color: #00ff9d;
+                    width: 100px;
+                    font-family: Monaco, monospace;
+                }
+
+                &:nth-child(2) {
+                    width: 100px;
+                    color: rgba(255, 255, 255, 0.7);
+                }
+
+                &:last-child {
+                    text-align: right;
+                    width: 80px;
+                    color: #00ff9d;
+                }
+            }
         }
-
-        &:nth-child(2) {
-          width: 100px;
-          color: rgba(255, 255, 255, 0.7);
-        }
-
-        &:last-child {
-          text-align: right;
-          width: 80px;
-          color: #00ff9d;
-        }
-      }
-    }
-  }
-
-  .group-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-
-    h2 {
-      color: #fff;
-      font-size: 16px;
-      margin: 0;
-      font-weight: normal;
     }
 
-    .clear-btn {
-      color: #00ff9d;
-      font-size: 14px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
+    .group-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
 
-      &:hover {
-        opacity: 0.8;
-      }
+        h2 {
+            color: #fff;
+            font-size: 16px;
+            margin: 0;
+            font-weight: normal;
+        }
+
+        .clear-btn {
+            color: #00ff9d;
+            font-size: 14px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
     }
-  }
 }
 
 .chart-container {
-  position: relative;
-  z-index: 3;
-  background: rgba(16, 36, 64, 0.8);
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
-  padding: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  width: 100%;
-  margin-bottom: 20px;
-
-  .group-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    position: relative;
+    z-index: 3;
+    background: rgba(16, 36, 64, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
     margin-bottom: 20px;
 
-    h2 {
-      color: #fff;
-      font-size: 24px;
-      margin: 0;
-    }
-  }
+    .group-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
 
-  .chart {
-    height: 350px;
-    width: 100%;
-  }
+        h2 {
+            color: #fff;
+            font-size: 24px;
+            margin: 0;
+        }
+    }
+
+    .chart {
+        height: 350px;
+        width: 100%;
+    }
 }
 
 // 添加响应式布局
 @media screen and (max-width: 1400px) {
-  .cards {
-    grid-template-columns: repeat(3, 1fr);
-  }
+    .cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 @media screen and (max-width: 1200px) {
-  .cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .header-stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .header-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media screen and (max-width: 768px) {
-  .cards {
-    grid-template-columns: 1fr;
-  }
-  
-  .header-stats {
-    grid-template-columns: 1fr;
-  }
-  
-  #app1 {
-    padding: 10px;
-  }
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .header-stats {
+        grid-template-columns: 1fr;
+    }
+
+    #app1 {
+        padding: 10px;
+    }
 }
 
 @keyframes grid-animation {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(30px);
-  }
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(30px);
+    }
 }
 
 @keyframes shine {
-  0% {
-    transform: rotate(45deg) translateX(-100%);
-  }
-  100% {
-    transform: rotate(45deg) translateX(100%);
-  }
+    0% {
+        transform: rotate(45deg) translateX(-100%);
+    }
+
+    100% {
+        transform: rotate(45deg) translateX(100%);
+    }
 }
 
 :deep(.el-switch__core) {
-  background: rgba(255, 255, 255, 0.1) !important;
-  border-color: rgba(255, 255, 255, 0.2) !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
 :deep(.el-switch.is-checked .el-switch__core) {
-  background: #1890ff !important;
-  border-color: #1890ff !important;
+    background: #1890ff !important;
+    border-color: #1890ff !important;
 }
 
 :deep(.el-timeline-item__node) {
-  background-color: #1890ff;
+    background-color: #1890ff;
 }
 
 :deep(.el-timeline-item__wrapper) {
-  padding-left: 28px;
+    padding-left: 28px;
 }
 
 :deep(.el-timeline-item__content) {
-  color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 :deep(.el-timeline-item__timestamp) {
-  color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.5);
 }
 
 :deep(.el-radio-button__inner) {
-  background: rgba(16, 36, 64, 0.8);
-  border-color: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.8);
+    background: rgba(16, 36, 64, 0.8);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
 
-  &:hover {
-    color: #1890ff;
-  }
+    &:hover {
+        color: #1890ff;
+    }
 }
 
 :deep(.el-radio-button__orig-radio:checked + .el-radio-button__inner) {
-  background-color: #1890ff;
-  border-color: #1890ff;
-  box-shadow: -1px 0 0 0 #1890ff;
-  color: #fff;
+    background-color: #1890ff;
+    border-color: #1890ff;
+    box-shadow: -1px 0 0 0 #1890ff;
+    color: #fff;
 }
 
 .warning-particle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: #ff4d4f;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 10;
-  animation: particle-rise 2s ease-out forwards;
-  box-shadow: 0 0 10px #ff4d4f;
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #ff4d4f;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10;
+    animation: particle-rise 2s ease-out forwards;
+    box-shadow: 0 0 10px #ff4d4f;
 }
 
 @keyframes particle-rise {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-100px) scale(0);
-    opacity: 0;
-  }
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-100px) scale(0);
+        opacity: 0;
+    }
 }
 </style>
