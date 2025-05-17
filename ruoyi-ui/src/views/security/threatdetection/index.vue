@@ -474,7 +474,19 @@ export default {
   color: #e4e9f2;
   position: relative;
   overflow-y: auto;
-  height: calc(100vh - 50px);
+  height: 100%;
+  margin: 0;
+  box-sizing: border-box;
+
+  // 确保内容区域也有背景色
+  .app-container {
+    background: linear-gradient(135deg, #1a1f3c 0%, #0a0f1f 100%);
+    min-height: calc(100vh - 40px); // 减去padding的高度
+    margin: -20px;  // 抵消父元素的padding
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+  }
 
   // 添加科技感网格背景
   &::before {
@@ -1014,5 +1026,14 @@ export default {
     max-height: 500px;
     overflow-y: auto;
   }
+}
+
+// 添加全局样式以确保页面没有多余的空白
+:deep(body),
+:deep(html) {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #0a0f1f;
 }
 </style>

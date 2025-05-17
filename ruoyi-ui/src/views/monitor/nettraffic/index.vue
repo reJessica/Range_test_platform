@@ -879,28 +879,24 @@ export default {
 
 <style lang="scss" scoped>
 .app-container {
-  min-height: 100vh;
+  min-height: calc(100vh - 84px);
   padding: 20px;
   background: #0d1b2a;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  height: 100vh;
   overflow-y: auto;
-  margin-bottom: 30px;
 
   .main-content {
     display: flex;
     gap: 20px;
-    min-height: 600px;
+    flex: 1;
 
     .left-panel {
       flex: 2;
       display: flex;
       flex-direction: column;
       gap: 20px;
-      margin-bottom: 30px;
-      height: 1200px;
 
       .chart-container {
         flex: 1;
@@ -942,8 +938,6 @@ export default {
       display: flex;
       flex-direction: column;
       gap: 20px;
-      margin-bottom: 30px;
-      height: 1000px;
     }
   }
 }
