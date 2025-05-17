@@ -11,8 +11,8 @@
     <div class="question">
       <input v-model="msg" type="text" @keyup.enter="sendMsg" @confirm="sendMsg" confirm-type="search"
         placeholder-class="my-neirong-sm" placeholder="用一句简短的话描述您的问题" />
-      <button @click="sendMsg" :disabled="msgLoad">{{ sentext }}</button>
-      <button @click="clearMsg">清除对话</button>
+      <button class="send-btn" @click="sendMsg" :disabled="msgLoad">{{ sentext }}</button>
+      <button class="clear-btn" @click="clearMsg">清除对话</button>
     </div>
   </div>
 </template>
@@ -112,82 +112,166 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .ChatBoxe {
   width: 90vw;
+  max-width: 1200px;
   height: 88vh;
-  background: #ffffffa9;
-  border-radius: 1%;
+  background: rgba(16, 36, 64, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(24, 144, 255, 0.2);
+  border-radius: 12px;
   overflow: hidden;
-  padding: 1%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.content {
+  flex: 1;
+  font-size: 1.1rem;
+  overflow: auto;
+  padding: 10px;
+  margin-bottom: 20px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(24, 144, 255, 0.3);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+  }
 }
 
 .question {
   width: 100%;
-  background: #ffffffd8;
-  border-radius: 1rem;
+  background: rgba(13, 27, 42, 0.6);
+  border-radius: 8px;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  border: 1px solid rgba(24, 144, 255, 0.2);
+
+  input {
+    flex: 1;
+    height: 50px;
+    border: none;
+    background: rgba(16, 36, 64, 0.5);
+    font-size: 1rem;
+    outline: none;
+    color: #fff;
+    padding: 0 15px;
+    border-radius: 6px;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  button {
+    height: 50px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &.send-btn {
+      background: #1890ff;
+      color: #fff;
+
+      &:hover:not(:disabled) {
+        background: #40a9ff;
+        transform: translateY(-2px);
+      }
+
+      &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+    }
+
+    &.clear-btn {
+      background: rgba(255, 77, 79, 0.2);
+      color: #ff4d4f;
+
+      &:hover {
+        background: rgba(255, 77, 79, 0.3);
+        transform: translateY(-2px);
+      }
+    }
+  }
 }
 
-.question input {
-  width: 80%;
-  margin-left: 15px;
-  height: 60px;
-  border: none;
-  background: none;
-  font-size: 1.2rem;
-  outline: none;
-}
+.show,
+.onshow {
+  display: flex;
+  margin-bottom: 1rem;
+  align-items: flex-start;
 
-.question button {
-  width: 8%;
-  height: 60px;
-  background-color: #f0f0f0;
-  border: none;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #cd22eb;
-}
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(24, 144, 255, 0.3);
+  }
 
-.content {
-  height: 90%;
-  font-size: 1.2rem;
-  overflow: auto;
-}
-
-.content img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  .con {
+    background: rgba(13, 27, 42, 0.6);
+    padding: 1rem;
+    margin: 0 1rem;
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 80%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(24, 144, 255, 0.2);
+  }
 }
 
 .show {
-  color: #000;
-  display: flex;
-  margin-bottom: 1rem;
-  /* align-items: center; */
+  .con {
+    border-radius: 0 12px 12px 12px;
+  }
 }
 
 .onshow {
-  display: flex;
-  color: #cd22eb;
   flex-direction: row-reverse;
-  margin-bottom: 1rem;
-  /* align-items: center; */
+
+  .con {
+    border-radius: 12px 0 12px 12px;
+    background: rgba(24, 144, 255, 0.2);
+    border-color: rgba(24, 144, 255, 0.3);
+  }
 }
 
-.con {
-  background: #fff;
-  padding: 1rem;
-  margin: 1rem;
-  border-radius: 0px 30px 30px 30px;
-}
+@media screen and (max-width: 768px) {
+  .ChatBoxe {
+    width: 95vw;
+    height: 85vh;
+    padding: 10px;
+  }
 
-.show>.con {
-  border-radius: 0px 30px 30px 30px;
-}
+  .question {
+    flex-wrap: wrap;
 
-.onshow>.con {
-  border-radius: 30px 0px 30px 30px;
+    input {
+      width: 100%;
+    }
+
+    button {
+      flex: 1;
+      min-width: 120px;
+    }
+  }
 }
 </style>
