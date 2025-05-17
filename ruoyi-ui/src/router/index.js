@@ -88,20 +88,7 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/monitor',
-    component: Layout,
-    name: 'Monitor',
-    meta: { title: '监控管理', icon: 'monitor' },
-    children: [
-      {
-        path: 'nettraffic',
-        component: () => import('@/views/monitor/nettraffic/index'),
-        name: 'NetTraffic',
-        meta: { title: '网络流量监控', icon: 'chart' }
-      }
-    ]
-  }
+
 ]
 
 // 动态路由，基于用户权限动态去加载
