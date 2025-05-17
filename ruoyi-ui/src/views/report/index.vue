@@ -25,7 +25,7 @@
                     <h2>漏洞扫描</h2>
                 </div>
                 <div class="input-group">
-                    <input class="input" id="scanUrl" v-model="scanUrl" placeholder="请输入网址" autocomplete="off">
+                    <input class="input" id="scanUrl" v-model="scanUrl" placeholder="请输入网址以生成报告" autocomplete="off">
                     <button class="button--submit" @click="startScan">开始扫描</button>
                 </div>
             </div>
