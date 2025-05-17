@@ -1,175 +1,297 @@
 <template>
   <div class="app-container">
-    <div id="app1">
-      <el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <span>行为挖掘与威胁检测</span>
-          <div class="header-operations">
-            <span class="refresh-time">上次更新: {{ lastRefreshTime }}</span>
-            <el-tooltip content="自动刷新" placement="top">
-              <el-switch
-                v-model="autoRefresh"
-                @change="handleAutoRefreshChange"
-                class="refresh-switch"
-              />
-            </el-tooltip>
-            <el-tooltip content="立即刷新" placement="top">
-              <i 
-                class="el-icon-refresh refresh-icon" 
-                :class="{ 'is-loading': loading }"
-                @click="handleManualRefresh"
-              ></i>
-            </el-tooltip>
+    <!-- 顶部统计卡片 -->
+    <el-row :gutter="20" class="card-row">
+      <el-col :span="6" v-for="(stat, index) in statistics" :key="index">
+        <el-card shadow="hover" class="stat-card" :class="stat.type">
+          <div class="stat-header">
+            <div class="stat-title">{{ stat.title }}</div>
+            <div class="stat-icon">
+              <i :class="stat.icon"></i>
+            </div>
           </div>
-        </div>
-
-        <!-- 搜索和过滤区域 -->
-        <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
-          <el-form-item label="威胁类型" prop="threatType">
-            <el-select v-model="queryParams.threatType" placeholder="请选择威胁类型" clearable size="small">
-              <el-option label="恶意软件" value="malware" />
-              <el-option label="网络攻击" value="attack" />
-              <el-option label="数据泄露" value="leak" />
-              <el-option label="异常行为" value="abnormal" />
-            </el-select>
-          </el-form-item>
-          <el-form-item label="风险等级" prop="riskLevel">
-            <el-select v-model="queryParams.riskLevel" placeholder="请选择风险等级" clearable size="small">
-              <el-option label="高" value="high" />
-              <el-option label="中" value="medium" />
-              <el-option label="低" value="low" />
-            </el-select>
-          </el-form-item>
-          <el-form-item label="时间范围" prop="timeRange">
-            <el-date-picker
-              v-model="queryParams.timeRange"
-              type="datetimerange"
-              size="small"
-              range-separator="至"
-              start-placeholder="开始时间"
-              end-placeholder="结束时间"
+          <div class="stat-number">
+            <count-to
+              :start-val="0"
+              :end-val="stat.value"
+              :duration="2000"
+              separator=","
             />
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-          </el-form-item>
-        </el-form>
+          </div>
+          <div class="stat-trend" v-if="stat.trend">
+            <i :class="stat.trend > 0 ? 'el-icon-top' : 'el-icon-bottom'"></i>
+            <span>{{ Math.abs(stat.trend) }}%</span>
+            <span class="trend-label">较上周</span>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
 
-        <!-- 操作按钮区域 -->
-        <el-row :gutter="10" class="mb8">
-          <el-col :span="1.5">
-            <el-button
-              type="danger"
-              plain
-              icon="el-icon-delete"
-              size="mini"
-              :disabled="multiple"
-              @click="handleDelete"
-              v-hasPermi="['security:threat:remove']"
-            >删除</el-button>
-          </el-col>
-          <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-        </el-row>
+    <!-- 威胁分布图表 -->
+    <el-row :gutter="20" style="margin-top: 20px">
+      <el-col :span="12">
+        <el-card class="box-card chart-card">
+          <div slot="header" class="clearfix">
+            <span>威胁类型分布</span>
+          </div>
+          <div class="chart-container" ref="threatTypeChart"></div>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card class="box-card chart-card">
+          <div slot="header" class="clearfix">
+            <span>威胁趋势分析</span>
+          </div>
+          <div class="chart-container" ref="threatTrendChart"></div>
+        </el-card>
+      </el-col>
+    </el-row>
 
-        <!-- 威胁统计卡片 -->
-        <el-row :gutter="20" class="card-row">
-          <el-col :span="6" v-for="(stat, index) in statistics" :key="index">
-            <el-card shadow="hover" class="stat-card">
-              <div class="stat-header">
-                <div class="stat-title">{{ stat.title }}</div>
-                <div class="stat-icon">
-                  <i :class="stat.icon"></i>
-                </div>
-              </div>
-              <div class="stat-number">{{ stat.value }}</div>
-            </el-card>
-          </el-col>
-        </el-row>
+    <!-- 搜索和过滤区域 -->
+    <el-card class="box-card" style="margin-top: 20px">
+      <div slot="header" class="clearfix">
+        <span>威胁检测列表</span>
+        <div class="header-operations">
+          <span class="refresh-time">上次更新: {{ lastRefreshTime }}</span>
+          <el-tooltip content="自动刷新" placement="top">
+            <el-switch
+              v-model="autoRefresh"
+              @change="handleAutoRefreshChange"
+              class="refresh-switch"
+            />
+          </el-tooltip>
+          <el-tooltip content="立即刷新" placement="top">
+            <i 
+              class="el-icon-refresh refresh-icon" 
+              :class="{ 'is-loading': loading }"
+              @click="handleManualRefresh"
+            ></i>
+          </el-tooltip>
+        </div>
+      </div>
 
-        <!-- 威胁检测列表 -->
-        <el-table
-          v-loading="loading"
-          :data="threatList"
-          @selection-change="handleSelectionChange"
-        >
-          <el-table-column type="selection" width="55" align="center" />
-          <el-table-column label="序号" align="center" prop="id" width="80" />
-          <el-table-column label="威胁类型" align="center" prop="threatType" />
-          <el-table-column label="风险等级" align="center" prop="riskLevel">
-            <template slot-scope="scope">
-              <el-tag :type="scope.row.riskLevel === 'high' ? 'danger' : scope.row.riskLevel === 'medium' ? 'warning' : 'info'">
-                {{ scope.row.riskLevel === 'high' ? '高' : scope.row.riskLevel === 'medium' ? '中' : '低' }}
+      <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" class="search-form">
+        <el-form-item label="威胁类型" prop="threatType">
+          <el-select v-model="queryParams.threatType" placeholder="请选择威胁类型" clearable size="small">
+            <el-option
+              v-for="item in threatTypes"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+              <i :class="item.icon" class="threat-type-icon"></i>
+              {{ item.label }}
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="风险等级" prop="riskLevel">
+          <el-select v-model="queryParams.riskLevel" placeholder="请选择风险等级" clearable size="small">
+            <el-option
+              v-for="item in riskLevels"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+              <el-tag :type="item.type" size="mini">{{ item.label }}</el-tag>
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="时间范围" prop="timeRange">
+          <el-date-picker
+            v-model="queryParams.timeRange"
+            type="datetimerange"
+            size="small"
+            range-separator="至"
+            start-placeholder="开始时间"
+            end-placeholder="结束时间"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            :picker-options="pickerOptions">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        </el-form-item>
+      </el-form>
+
+      <!-- 操作按钮区域 -->
+      <el-row :gutter="10" class="mb8">
+        <el-col :span="1.5">
+          <el-button
+            type="danger"
+            plain
+            icon="el-icon-delete"
+            size="mini"
+            :disabled="multiple"
+            @click="handleDelete"
+            v-hasPermi="['security:threat:remove']"
+          >删除</el-button>
+        </el-col>
+        <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      </el-row>
+
+      <!-- 威胁列表 -->
+      <el-table
+        v-loading="loading"
+        :data="threatList"
+        @selection-change="handleSelectionChange"
+        class="threat-table">
+        <el-table-column type="selection" width="55" align="center" />
+        <el-table-column label="威胁等级" align="center" width="100">
+          <template slot-scope="scope">
+            <div class="threat-level-indicator">
+              <el-tag
+                :type="getThreatLevelType(scope.row.riskLevel)"
+                effect="dark"
+                size="mini">
+                {{ scope.row.riskLevel }}
               </el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column label="威胁描述" align="center" prop="description" :show-overflow-tooltip="true" />
-          <el-table-column label="源IP" align="center" prop="sourceIp" />
-          <el-table-column label="目标IP" align="center" prop="targetIp" />
-          <el-table-column label="发现时间" align="center" prop="time" width="180">
-            <template slot-scope="scope">
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="威胁类型" align="center" prop="threatType">
+          <template slot-scope="scope">
+            <div class="threat-type">
+              <i :class="getThreatTypeIcon(scope.row.threatType)"></i>
+              <span>{{ scope.row.threatType }}</span>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="威胁描述" align="left" prop="description" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <div class="threat-description">
+              <el-tooltip :content="scope.row.description" placement="top">
+                <span>{{ scope.row.description }}</span>
+              </el-tooltip>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="来源/目标" align="center" width="250">
+          <template slot-scope="scope">
+            <div class="ip-flow">
+              <span class="source-ip">{{ scope.row.sourceIp }}</span>
+              <i class="el-icon-right flow-arrow"></i>
+              <span class="target-ip">{{ scope.row.targetIp }}</span>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="发现时间" align="center" width="180">
+          <template slot-scope="scope">
+            <div class="discovery-time">
+              <i class="el-icon-time"></i>
               <span>{{ parseTime(scope.row.time) }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="状态" align="center" prop="status">
-            <template slot-scope="scope">
-              <el-tag :type="scope.row.status === '已处理' ? 'success' : 'danger'">
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="状态" align="center" width="100">
+          <template slot-scope="scope">
+            <div class="threat-status">
+              <el-tag
+                :type="scope.row.status === '已处理' ? 'success' : 'danger'"
+                effect="dark"
+                size="mini">
                 {{ scope.row.status }}
               </el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-            <template slot-scope="scope">
-              <el-button
-                size="mini"
-                type="text"
-                icon="el-icon-view"
-                @click="handleView(scope.row)"
-                v-hasPermi="['security:threat:query']"
-              >查看</el-button>
-              <el-button
-                size="mini"
-                type="text"
-                icon="el-icon-edit"
-                @click="handleUpdate(scope.row)"
-                v-hasPermi="['security:threat:handle']"
-              >处理</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-        
-        <pagination
-          v-show="total>0"
-          :total="total"
-          :page.sync="queryParams.pageNum"
-          :limit.sync="queryParams.pageSize"
-          @pagination="getList"
-        />
-      </el-card>
-    </div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" align="center" width="150">
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              type="text"
+              icon="el-icon-view"
+              @click="handleView(scope.row)"
+            >详情</el-button>
+            <el-button
+              size="mini"
+              type="text"
+              icon="el-icon-check"
+              v-if="scope.row.status !== '已处理'"
+              @click="handleUpdate(scope.row)"
+            >处理</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
 
-    <!-- 查看威胁详情对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="700px" append-to-body>
-      <el-descriptions class="margin-top" title="威胁详情" :column="2" border>
-        <el-descriptions-item label="威胁类型">{{ form.threatType }}</el-descriptions-item>
-        <el-descriptions-item label="风险等级">{{ form.riskLevel }}</el-descriptions-item>
-        <el-descriptions-item label="源IP">{{ form.sourceIp }}</el-descriptions-item>
-        <el-descriptions-item label="目标IP">{{ form.targetIp }}</el-descriptions-item>
-        <el-descriptions-item label="发现时间">{{ form.time }}</el-descriptions-item>
-        <el-descriptions-item label="状态">{{ form.status }}</el-descriptions-item>
-        <el-descriptions-item label="威胁描述" :span="2">{{ form.description }}</el-descriptions-item>
-        <el-descriptions-item label="处理建议" :span="2">{{ form.suggestion }}</el-descriptions-item>
+      <pagination
+        v-show="total > 0"
+        :total="total"
+        :page.sync="queryParams.pageNum"
+        :limit.sync="queryParams.pageSize"
+        @pagination="getList"
+      />
+    </el-card>
+
+    <!-- 威胁详情对话框 -->
+    <el-dialog
+      :title="title"
+      :visible.sync="open"
+      width="700px"
+      append-to-body
+      class="threat-detail-dialog">
+      <el-descriptions class="threat-details" :column="2" border>
+        <el-descriptions-item label="威胁类型">
+          <div class="threat-type">
+            <i :class="getThreatTypeIcon(form.threatType)"></i>
+            <span>{{ form.threatType }}</span>
+          </div>
+        </el-descriptions-item>
+        <el-descriptions-item label="风险等级">
+          <el-tag :type="getThreatLevelType(form.riskLevel)" effect="dark">
+            {{ form.riskLevel }}
+          </el-tag>
+        </el-descriptions-item>
+        <el-descriptions-item label="来源IP">
+          <div class="ip-address">
+            <i class="el-icon-location"></i>
+            {{ form.sourceIp }}
+          </div>
+        </el-descriptions-item>
+        <el-descriptions-item label="目标IP">
+          <div class="ip-address">
+            <i class="el-icon-location"></i>
+            {{ form.targetIp }}
+          </div>
+        </el-descriptions-item>
+        <el-descriptions-item label="发现时间">
+          <div class="discovery-time">
+            <i class="el-icon-time"></i>
+            {{ form.time }}
+          </div>
+        </el-descriptions-item>
+        <el-descriptions-item label="状态">
+          <el-tag :type="form.status === '已处理' ? 'success' : 'danger'" effect="dark">
+            {{ form.status }}
+          </el-tag>
+        </el-descriptions-item>
+        <el-descriptions-item label="威胁描述" :span="2">
+          {{ form.description }}
+        </el-descriptions-item>
+        <el-descriptions-item label="处理建议" :span="2">
+          <div class="suggestion-content">
+            <i class="el-icon-warning-outline"></i>
+            {{ form.suggestion }}
+          </div>
+        </el-descriptions-item>
       </el-descriptions>
       <div slot="footer" class="dialog-footer">
         <el-button @click="open = false">关 闭</el-button>
+        <el-button type="primary" v-if="form.status !== '已处理'" @click="handleUpdate(form)">
+          立即处理
+        </el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
+import * as echarts from 'echarts'
+import CountTo from 'vue-count-to'
+
 export default {
   name: "ThreatDetection",
+  components: {
+    CountTo
+  },
   data() {
     return {
       // 遮罩层
@@ -205,59 +327,279 @@ export default {
         {
           title: "总威胁数",
           value: 156,
-          icon: "el-icon-warning"
+          icon: "el-icon-warning",
+          type: "total",
+          trend: 12
         },
         {
           title: "高风险",
           value: 23,
-          icon: "el-icon-danger red"
+          icon: "el-icon-danger",
+          type: "high",
+          trend: -5
         },
         {
           title: "中风险",
           value: 45,
-          icon: "el-icon-warning orange"
+          icon: "el-icon-warning",
+          type: "medium",
+          trend: 8
         },
         {
           title: "低风险",
           value: 88,
-          icon: "el-icon-info blue"
+          icon: "el-icon-info",
+          type: "low",
+          trend: 15
         }
       ],
-      // 新增数据
+      // 威胁类型选项
+      threatTypes: [
+        { value: 'malware', label: '恶意软件', icon: 'el-icon-warning' },
+        { value: 'attack', label: '网络攻击', icon: 'el-icon-remove-outline' },
+        { value: 'leak', label: '数据泄露', icon: 'el-icon-document' },
+        { value: 'abnormal', label: '异常行为', icon: 'el-icon-warning-outline' }
+      ],
+      // 风险等级选项
+      riskLevels: [
+        { value: 'high', label: '高', type: 'danger' },
+        { value: 'medium', label: '中', type: 'warning' },
+        { value: 'low', label: '低', type: 'info' }
+      ],
+      // 日期选择器配置
+      pickerOptions: {
+        shortcuts: [{
+          text: '最近一小时',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近一天',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近一周',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', [start, end]);
+          }
+        }]
+      },
+      // 图表实例
+      threatTypeChart: null,
+      threatTrendChart: null,
+      // 自动刷新相关
       lastRefreshTime: this.formatDateTime(new Date()),
       autoRefresh: false,
       refreshInterval: null,
-      refreshRate: 30000, // 30秒刷新一次
+      refreshRate: 30000 // 30秒刷新一次
     };
   },
   created() {
     this.getList();
   },
   mounted() {
-    this.getList();
-    this.initBackgroundEffect();
+    this.initCharts();
+    window.addEventListener('resize', this.resizeCharts);
   },
   beforeDestroy() {
     this.clearRefreshInterval();
+    window.removeEventListener('resize', this.resizeCharts);
+    if (this.threatTypeChart) {
+      this.threatTypeChart.dispose();
+    }
+    if (this.threatTrendChart) {
+      this.threatTrendChart.dispose();
+    }
   },
   methods: {
+    getThreatTypeIcon(type) {
+      const typeMap = {
+        '恶意软件': 'el-icon-warning',
+        '网络攻击': 'el-icon-remove-outline',
+        '数据泄露': 'el-icon-document',
+        '异常行为': 'el-icon-warning-outline'
+      };
+      return typeMap[type] || 'el-icon-warning';
+    },
+    getThreatLevelType(level) {
+      const levelMap = {
+        '高': 'danger',
+        '中': 'warning',
+        '低': 'info'
+      };
+      return levelMap[level] || 'info';
+    },
+    formatDateTime(date) {
+      return new Date(date).toLocaleString();
+    },
+    handleAutoRefreshChange(value) {
+      if (value) {
+        this.refreshInterval = setInterval(() => {
+          this.getList();
+        }, this.refreshRate);
+      } else {
+        this.clearRefreshInterval();
+      }
+    },
+    clearRefreshInterval() {
+      if (this.refreshInterval) {
+        clearInterval(this.refreshInterval);
+        this.refreshInterval = null;
+      }
+    },
+    handleManualRefresh() {
+      this.getList();
+    },
+    resizeCharts() {
+      if (this.threatTypeChart) {
+        this.threatTypeChart.resize();
+      }
+      if (this.threatTrendChart) {
+        this.threatTrendChart.resize();
+      }
+    },
+    initCharts() {
+      // 初始化威胁类型分布图表
+      this.threatTypeChart = echarts.init(this.$refs.threatTypeChart);
+      this.threatTypeChart.setOption({
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left',
+          textStyle: {
+            color: '#e4e9f2'
+          }
+        },
+        series: [{
+          name: '威胁类型',
+          type: 'pie',
+          radius: ['50%', '70%'],
+          avoidLabelOverlap: false,
+          itemStyle: {
+            borderRadius: 10,
+            borderColor: '#fff',
+            borderWidth: 2
+          },
+          label: {
+            show: false,
+            position: 'center'
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: '20',
+              fontWeight: 'bold'
+            }
+          },
+          labelLine: {
+            show: false
+          },
+          data: [
+            { value: 35, name: '恶意软件' },
+            { value: 25, name: '网络攻击' },
+            { value: 20, name: '数据泄露' },
+            { value: 15, name: '异常行为' }
+          ]
+        }]
+      });
+
+      // 初始化威胁趋势图表
+      this.threatTrendChart = echarts.init(this.$refs.threatTrendChart);
+      this.threatTrendChart.setOption({
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        legend: {
+          data: ['高风险', '中风险', '低风险'],
+          textStyle: {
+            color: '#e4e9f2'
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [{
+          type: 'category',
+          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+          axisLine: {
+            lineStyle: {
+              color: '#e4e9f2'
+            }
+          }
+        }],
+        yAxis: [{
+          type: 'value',
+          axisLine: {
+            lineStyle: {
+              color: '#e4e9f2'
+            }
+          },
+          splitLine: {
+            lineStyle: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            }
+          }
+        }],
+        series: [
+          {
+            name: '高风险',
+            type: 'bar',
+            stack: 'total',
+            emphasis: {
+              focus: 'series'
+            },
+            data: [12, 15, 8, 23, 17, 10, 13]
+          },
+          {
+            name: '中风险',
+            type: 'bar',
+            stack: 'total',
+            emphasis: {
+              focus: 'series'
+            },
+            data: [22, 18, 25, 20, 15, 19, 21]
+          },
+          {
+            name: '低风险',
+            type: 'bar',
+            stack: 'total',
+            emphasis: {
+              focus: 'series'
+            },
+            data: [35, 42, 30, 38, 25, 32, 40]
+          }
+        ]
+      });
+    },
     /** 查询威胁检测列表 */
     async getList() {
       this.loading = true;
       try {
         // 这里添加获取数据的API调用
-        // await listThreats(this.queryParams).then(response => {
-        //   this.threatList = response.rows;
-        //   this.total = response.total;
-        // });
-        
-        // 模拟数据
         await new Promise(resolve => setTimeout(resolve, 1000));
         this.threatList = [
           {
             id: 1,
             threatType: '网络攻击',
-            riskLevel: 'high',
+            riskLevel: '高',
             description: 'DDoS攻击尝试',
             sourceIp: '192.168.1.100',
             targetIp: '192.168.1.1',
@@ -267,6 +609,7 @@ export default {
           }
         ];
         this.total = 1;
+        this.lastRefreshTime = this.formatDateTime(new Date());
       } catch (error) {
         console.error('获取数据失败:', error);
         this.$message.error('获取数据失败，请稍后重试');
@@ -293,7 +636,7 @@ export default {
     /** 查看按钮操作 */
     handleView(row) {
       this.form = row;
-      this.title = "查看威胁详情";
+      this.title = "威胁详情";
       this.open = true;
     },
     /** 处理按钮操作 */
@@ -309,412 +652,172 @@ export default {
         this.$modal.msgSuccess("删除成功");
         this.getList();
       }).catch(() => {});
-    },
-    initBackgroundEffect() {
-        const container = document.querySelector('.app-container');
-        const canvas = document.createElement('canvas');
-        canvas.style.position = 'fixed';
-        canvas.style.top = '0';
-        canvas.style.left = '0';
-        canvas.style.width = '100%';
-        canvas.style.height = '100%';
-        canvas.style.zIndex = '-1';
-        canvas.style.opacity = '0.1';
-        container.appendChild(canvas);
-
-        const ctx = canvas.getContext('2d');
-        const hexagons = [];
-
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resize();
-        window.addEventListener('resize', resize);
-
-        class Hexagon {
-            constructor() {
-                this.reset();
-            }
-
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 30 + 10;
-                this.rotation = Math.random() * Math.PI;
-                this.rotationSpeed = (Math.random() - 0.5) * 0.01;
-                this.opacity = Math.random() * 0.5;
-            }
-
-            update() {
-                this.rotation += this.rotationSpeed;
-                this.y += 0.2;
-                this.opacity -= 0.001;
-
-                if (this.y > canvas.height + this.size || this.opacity <= 0) {
-                    this.reset();
-                    this.y = -this.size;
-                }
-            }
-
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.rotation);
-                ctx.beginPath();
-                for (let i = 0; i < 6; i++) {
-                    const angle = (Math.PI * 2 / 6) * i;
-                    const x = Math.cos(angle) * this.size;
-                    const y = Math.sin(angle) * this.size;
-                    if (i === 0) {
-                        ctx.moveTo(x, y);
-                    } else {
-                        ctx.lineTo(x, y);
-                    }
-                }
-                ctx.closePath();
-                ctx.strokeStyle = `rgba(255, 255, 255, ${this.opacity})`;
-                ctx.stroke();
-                ctx.restore();
-            }
-        }
-
-        for (let i = 0; i < 30; i++) {
-            hexagons.push(new Hexagon());
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            hexagons.forEach(hexagon => {
-                hexagon.update();
-                hexagon.draw();
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
-    },
-    /** 格式化日期时间 */
-    formatDateTime(date) {
-      const pad = (num) => String(num).padStart(2, '0');
-      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
-    },
-
-    /** 更新刷新时间 */
-    updateRefreshTime() {
-      this.lastRefreshTime = this.formatDateTime(new Date());
-    },
-
-    /** 手动刷新 */
-    async handleManualRefresh() {
-      if (this.loading) return;
-      await this.getList();
-      this.updateRefreshTime();
-      this.$message({
-        message: '数据已更新',
-        type: 'success'
-      });
-    },
-
-    /** 处理自动刷新变化 */
-    handleAutoRefreshChange(value) {
-      if (value) {
-        this.refreshInterval = setInterval(async () => {
-          await this.getList();
-          this.updateRefreshTime();
-        }, this.refreshRate);
-      } else {
-        this.clearRefreshInterval();
-      }
-    },
-
-    /** 清除刷新定时器 */
-    clearRefreshInterval() {
-      if (this.refreshInterval) {
-        clearInterval(this.refreshInterval);
-        this.refreshInterval = null;
-      }
-    },
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .app-container {
-  height: calc(100vh - 84px);
-  overflow-y: auto;
-  padding: 0;
-  background: transparent;
-}
-
-#app1 {
-  min-height: 100%;
-  width: 100%;
-  background: linear-gradient(135deg, #0a192f 0%, #0d1b2a 100%);
-  position: relative;
+  background: linear-gradient(135deg, #1a1f3c 0%, #152238 100%);
+  min-height: 100vh;
   padding: 20px;
-  box-sizing: border-box;
-}
+  color: #e4e9f2;
 
-.box-card {
-  background: rgba(16, 36, 64, 0.8);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+  .box-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 
-  .el-card__body {
-    padding: 20px;
-  }
-
-  .clearfix {
-    color: #fff;
-    font-size: 1.5em;
-    font-weight: 600;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-  }
-}
-
-.card-row {
-  margin-bottom: 20px;
-}
-
-.stat-card {
-  background: rgba(16, 36, 64, 0.8);
-  border-radius: 15px;
-  padding: 20px;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
-  }
-
-  .stat-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-
-    .stat-title {
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 1em;
-    }
-
-    .stat-icon {
-      font-size: 1.5em;
+    .clearfix {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       color: #fff;
-      
-      &.red { color: #ff4d4f; }
-      &.orange { color: #faad14; }
-      &.blue { color: #1890ff; }
-    }
-  }
+      font-size: 18px;
+      font-weight: 500;
 
-  .stat-number {
-    font-size: 2em;
-    font-weight: 600;
-    color: #fff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    
-    &.red { color: #ff4d4f; }
-    &.orange { color: #faad14; }
-    &.blue { color: #1890ff; }
-  }
-}
+      .header-operations {
+        display: flex;
+        align-items: center;
+        gap: 15px;
 
-.el-table {
-  background: transparent !important;
-  margin-top: 20px;
-  height: auto !important;
-  max-height: none !important;
-  
-  .el-table__body-wrapper {
-    height: auto !important;
-    max-height: none !important;
-    overflow-y: auto;
-  }
+        .refresh-time {
+          color: #8f9bb3;
+          font-size: 14px;
+        }
 
-  .el-table__header-wrapper {
-    th {
-      background: rgba(16, 36, 64, 0.9) !important;
-      color: #fff !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-  }
+        .refresh-icon {
+          font-size: 20px;
+          cursor: pointer;
+          transition: all 0.3s;
+          color: #409EFF;
 
-  .el-table__body-wrapper {
-    tr {
-      background: rgba(16, 36, 64, 0.6) !important;
-      transition: all 0.3s ease;
+          &:hover {
+            transform: rotate(180deg);
+          }
 
-      &:hover {
-        background: rgba(16, 36, 64, 0.8) !important;
-        td {
-          background: transparent !important;
+          &.is-loading {
+            animation: rotating 2s linear infinite;
+          }
         }
       }
+    }
+  }
 
-      td {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        color: rgba(255, 255, 255, 0.8);
+  .stat-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+
+      .stat-title {
+        color: #8f9bb3;
+        font-size: 14px;
+      }
+
+      .stat-icon {
+        font-size: 24px;
+        
+        i {
+          &.red { color: #ff4d4f; }
+          &.orange { color: #faad14; }
+          &.blue { color: #409EFF; }
+        }
+      }
+    }
+
+    .stat-number {
+      font-size: 28px;
+      font-weight: 600;
+      color: #fff;
+      margin-top: 10px;
+    }
+  }
+
+  .el-table {
+    background: transparent;
+    margin-top: 20px;
+
+    &::before {
+      display: none;
+    }
+
+    .el-table__header-wrapper {
+      th {
+        background: rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+      }
+    }
+
+    .el-table__body-wrapper {
+      tr {
+        background: transparent;
+        transition: all 0.3s;
+
+        &:hover > td {
+          background: rgba(255, 255, 255, 0.05) !important;
+        }
+
+        td {
+          background: transparent;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          color: #e4e9f2;
+        }
       }
     }
   }
-}
 
-.el-pagination {
-  margin: 20px 0;
-  padding-bottom: 20px;
-  position: relative;
-  bottom: 0;
-  width: 100%;
-  
-  .btn-prev,
-  .btn-next,
-  .el-pager li {
-    background: rgba(16, 36, 64, 0.8) !important;
-    color: #fff !important;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    
-    &:hover {
-      background: rgba(16, 36, 64, 0.9) !important;
-    }
-    
-    &.active {
-      background: #1890ff !important;
-    }
-  }
-}
-
-.el-form {
-  .el-form-item__label {
-    color: rgba(255, 255, 255, 0.8);
-  }
-  
-  .el-input__inner,
-  .el-select .el-input__inner,
-  .el-date-editor {
-    background: rgba(16, 36, 64, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  .el-pagination {
+    margin-top: 20px;
+    text-align: right;
     color: #fff;
-    
-    &:hover,
-    &:focus {
-      border-color: #1890ff;
-    }
-  }
-}
 
-.el-button {
-  &.el-button--primary {
-    background: linear-gradient(45deg, #1890ff, #36cfc9);
-    border: none;
-    
-    &:hover {
-      background: linear-gradient(45deg, #40a9ff, #40d3c2);
-      transform: translateY(-1px);
-    }
-  }
-  
-  &.el-button--danger {
-    background: linear-gradient(45deg, #ff4d4f, #ff7875);
-    border: none;
-    
-    &:hover {
-      background: linear-gradient(45deg, #ff7875, #ffa39e);
-      transform: translateY(-1px);
-    }
-  }
-}
-
-.el-tag {
-  &.el-tag--danger {
-    background: rgba(255, 77, 79, 0.2);
-    border-color: #ff4d4f;
-    color: #ff4d4f;
-  }
-  
-  &.el-tag--warning {
-    background: rgba(250, 173, 20, 0.2);
-    border-color: #faad14;
-    color: #faad14;
-  }
-  
-  &.el-tag--info {
-    background: rgba(24, 144, 255, 0.2);
-    border-color: #1890ff;
-    color: #1890ff;
-  }
-  
-  &.el-tag--success {
-    background: rgba(82, 196, 26, 0.2);
-    border-color: #52c41a;
-    color: #52c41a;
-  }
-}
-
-.el-dialog {
-  background: rgba(16, 36, 64, 0.95);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  
-  .el-dialog__title {
-    color: #fff;
-  }
-  
-  .el-dialog__body {
-    color: rgba(255, 255, 255, 0.8);
-  }
-  
-  .el-descriptions {
-    background: transparent;
-    
-    .el-descriptions-item__label {
-      color: rgba(255, 255, 255, 0.6);
-    }
-    
-    .el-descriptions-item__content {
+    .btn-prev,
+    .btn-next,
+    .el-pager li {
+      background: transparent;
       color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+
+      &:hover {
+        color: #409EFF;
+      }
+
+      &.active {
+        background: #409EFF;
+        color: #fff;
+      }
     }
   }
-}
 
-.chart-container {
-  width: 100%;
-  height: 300px;
-  margin: 20px 0;
-}
-
-.header-operations {
-  float: right;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-
-  .refresh-time {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 14px;
-  }
-
-  .refresh-switch {
-    margin: 0 10px;
-  }
-
-  .refresh-icon {
-    font-size: 20px;
-    color: #fff;
-    cursor: pointer;
-    transition: all 0.3s ease;
-
-    &:hover {
-      color: #409EFF;
-      transform: rotate(180deg);
+  .el-form {
+    .el-form-item__label {
+      color: #e4e9f2;
     }
 
-    &.is-loading {
-      animation: rotating 2s linear infinite;
+    .el-input__inner,
+    .el-select .el-input__inner,
+    .el-date-editor {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
     }
   }
 }
@@ -728,14 +831,130 @@ export default {
   }
 }
 
-// 优化开关样式
-:deep(.el-switch__core) {
-  background-color: rgba(255, 255, 255, 0.2) !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
+.el-dialog {
+  background: linear-gradient(135deg, #1a1f3c 0%, #152238 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+
+  .el-dialog__title {
+    color: #fff;
+  }
+
+  .el-dialog__body {
+    color: #e4e9f2;
+  }
+
+  .el-descriptions {
+    background: transparent;
+    
+    .el-descriptions__label {
+      color: #8f9bb3;
+    }
+
+    .el-descriptions__content {
+      color: #e4e9f2;
+    }
+  }
 }
 
-:deep(.el-switch.is-checked .el-switch__core) {
-  background-color: #409EFF !important;
-  border-color: #409EFF !important;
+.chart-card {
+  .chart-container {
+    height: 300px;
+  }
+}
+
+.threat-table {
+  .threat-type {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    i {
+      font-size: 16px;
+    }
+  }
+
+  .ip-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    .flow-arrow {
+      color: #409EFF;
+    }
+  }
+
+  .discovery-time {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    i {
+      color: #8f9bb3;
+    }
+  }
+}
+
+.threat-detail-dialog {
+  .threat-details {
+    .suggestion-content {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+
+      i {
+        color: #e6a23c;
+        font-size: 16px;
+        margin-top: 2px;
+      }
+    }
+  }
+}
+
+.stat-card {
+  .stat-trend {
+    margin-top: 10px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    i {
+      &.el-icon-top {
+        color: #67C23A;
+      }
+      &.el-icon-bottom {
+        color: #F56C6C;
+      }
+    }
+
+    .trend-label {
+      color: #8f9bb3;
+      margin-left: 5px;
+    }
+  }
+
+  &.total {
+    background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+  }
+
+  &.high {
+    background: linear-gradient(135deg, #c62828 0%, #d32f2f 100%);
+  }
+
+  &.medium {
+    background: linear-gradient(135deg, #f57c00 0%, #fb8c00 100%);
+  }
+
+  &.low {
+    background: linear-gradient(135deg, #0288d1 0%, #039be5 100%);
+  }
+}
+
+.search-form {
+  .threat-type-icon {
+    margin-right: 8px;
+  }
 }
 </style>
