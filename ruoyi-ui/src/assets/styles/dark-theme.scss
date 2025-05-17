@@ -1,0 +1,120 @@
+// 深色主题变量
+$dark-bg: #1a1a1a;
+$dark-card-bg: #242424;
+$primary-blue: #409EFF;
+$secondary-blue: #1989fa;
+$glow-blue: rgba(64, 158, 255, 0.2);
+
+// 深色主题全局样式
+.dark-theme {
+  background-color: $dark-bg;
+  color: #ffffff;
+
+  // 卡片样式
+  .el-card {
+    background-color: $dark-card-bg;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(64, 158, 255, 0.2);
+    }
+  }
+
+  // 发光效果
+  .glow-effect {
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border-radius: inherit;
+      background: linear-gradient(45deg, $primary-blue, $secondary-blue);
+      opacity: 0;
+      z-index: -1;
+      transition: opacity 0.3s ease;
+    }
+    
+    &:hover::after {
+      opacity: 0.15;
+    }
+  }
+
+  // 渐变背景
+  .gradient-bg {
+    background: linear-gradient(135deg, $dark-bg, $dark-card-bg);
+  }
+
+  // 动画过渡
+  .fade-transition {
+    transition: all 0.3s ease;
+  }
+
+  // 数据展示卡片
+  .data-card {
+    padding: 20px;
+    border-radius: 8px;
+    background: rgba(36, 36, 36, 0.8);
+    backdrop-filter: blur(10px);
+    
+    .card-title {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 16px;
+    }
+    
+    .card-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: $primary-blue;
+      margin-bottom: 8px;
+    }
+  }
+
+  // 状态标签
+  .status-tag {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    
+    &.success {
+      background: rgba(103, 194, 58, 0.2);
+      color: #67C23A;
+    }
+    
+    &.warning {
+      background: rgba(230, 162, 60, 0.2);
+      color: #E6A23C;
+    }
+    
+    &.danger {
+      background: rgba(245, 108, 108, 0.2);
+      color: #F56C6C;
+    }
+  }
+
+  // 时间轴样式
+  .el-timeline {
+    .el-timeline-item__node {
+      background-color: $primary-blue;
+    }
+    
+    .el-timeline-item__tail {
+      border-left-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  // 图表样式覆盖
+  .echarts-container {
+    background: transparent;
+    
+    .echarts {
+      background: transparent;
+    }
+  }
+} 

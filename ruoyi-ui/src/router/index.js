@@ -183,6 +183,20 @@ export const dynamicRoutes = [
         hidden: true
       }
     ]
+  },
+  {
+    path: '/range',
+    component: Layout,
+    name: 'Range',
+    meta: { title: '靶场管理', icon: 'monitor' },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/range/index'),
+        name: 'RangeIndex',
+        meta: { title: '靶场管理', icon: 'dashboard' }
+      }
+    ]
   }
 ]
 

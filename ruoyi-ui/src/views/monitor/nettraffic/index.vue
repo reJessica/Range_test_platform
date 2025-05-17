@@ -199,39 +199,113 @@
     </el-dialog>
 
     <!-- Add event detail dialog -->
-    <el-dialog title="事件详情" :visible.sync="eventDetailVisible" width="500px" custom-class="event-detail-dialog">
+    <el-dialog title="事件详情" :visible.sync="eventDetailVisible" width="650px" custom-class="event-detail-dialog">
       <div v-if="selectedEvent" class="event-detail">
-        <div class="detail-row">
-          <span class="label">事件ID:</span>
-          <span class="value">#{{ selectedEvent.id }}</span>
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <div class="detail-section">
+              <div class="section-title">基本信息</div>
+              <div class="detail-row">
+                <span class="label">事件ID:</span>
+                <span class="value">#{{ selectedEvent.id }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="label">事件类型:</span>
+                <el-tag :type="selectedEvent.type" size="small">{{ selectedEvent.status }}</el-tag>
+              </div>
+              <div class="detail-row">
+                <span class="label">发生时间:</span>
+                <span class="value">{{ new Date().toLocaleString() }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="label">处理状态:</span>
+                <el-tag type="warning" size="small">待处理</el-tag>
+              </div>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="detail-section">
+              <div class="section-title">网络信息</div>
+              <div class="detail-row">
+                <span class="label">源IP:</span>
+                <el-tooltip :content="'位置: ' + getIpLocation(selectedEvent.sourceIp)" placement="top">
+                  <span class="value highlight">{{ selectedEvent.sourceIp }}</span>
+                </el-tooltip>
+              </div>
+              <div class="detail-row">
+                <span class="label">目标IP:</span>
+                <el-tooltip :content="'位置: ' + getIpLocation(selectedEvent.targetIp)" placement="top">
+                  <span class="value highlight">{{ selectedEvent.targetIp }}</span>
+                </el-tooltip>
+              </div>
+              <div class="detail-row">
+                <span class="label">协议类型:</span>
+                <span class="value">TCP</span>
+              </div>
+              <div class="detail-row">
+                <span class="label">端口:</span>
+                <span class="value">443</span>
+              </div>
+            </div>
+          </el-col>
+        </el-row>
+
+        <div class="detail-section">
+          <div class="section-title">事件详情</div>
+          <div class="detail-content">
+            <div class="description">
+              <p>检测到从 {{ selectedEvent.sourceIp }} 到 {{ selectedEvent.targetIp }} 的{{ selectedEvent.status }}行为。</p>
+              <template v-if="selectedEvent.status === '异常流量'">
+                <p>- 流量峰值: 2.5 GB/s</p>
+                <p>- 持续时间: 5分钟</p>
+                <p>- 异常类型: 突发大流量</p>
+              </template>
+              <template v-else-if="selectedEvent.status === '可疑行为'">
+                <p>- 行为特征: 高频访问</p>
+                <p>- 请求频率: 1000次/分钟</p>
+                <p>- 可疑等级: 中度</p>
+              </template>
+              <template v-else>
+                <p>- 连接类型: 非常规端口访问</p>
+                <p>- 影响范围: 局部网络</p>
+                <p>- 风险等级: 高</p>
+              </template>
+            </div>
+            <div class="risk-assessment">
+              <div class="risk-title">风险评估</div>
+              <el-progress :percentage="getRiskLevel(selectedEvent)" :color="getRiskColor(selectedEvent)">
+                <span>风险度: {{ getRiskLevel(selectedEvent) }}%</span>
+              </el-progress>
+            </div>
+          </div>
         </div>
-        <div class="detail-row">
-          <span class="label">源IP:</span>
-          <span class="value">{{ selectedEvent.sourceIp }}</span>
-        </div>
-        <div class="detail-row">
-          <span class="label">目标IP:</span>
-          <span class="value">{{ selectedEvent.targetIp }}</span>
-        </div>
-        <div class="detail-row">
-          <span class="label">事件类型:</span>
-          <el-tag :type="selectedEvent.type" size="small">{{ selectedEvent.status }}</el-tag>
-        </div>
-        <div class="detail-row">
-          <span class="label">发生时间:</span>
-          <span class="value">{{ new Date().toLocaleString() }}</span>
-        </div>
-        <div class="detail-row">
-          <span class="label">详细描述:</span>
-          <div class="description">
-            检测到从 {{ selectedEvent.sourceIp }} 到 {{ selectedEvent.targetIp }} 的{{ selectedEvent.status }}行为，
-            建议进行进一步分析和处理。
+
+        <div class="detail-section">
+          <div class="section-title">处理建议</div>
+          <div class="suggestions">
+            <template v-if="selectedEvent.status === '异常流量'">
+              <p><i class="el-icon-warning"></i> 建议立即进行流量清洗</p>
+              <p><i class="el-icon-s-operation"></i> 调整流量监控阈值</p>
+              <p><i class="el-icon-document"></i> 保存流量日志用于分析</p>
+            </template>
+            <template v-else-if="selectedEvent.status === '可疑行为'">
+              <p><i class="el-icon-warning"></i> 临时限制源IP访问频率</p>
+              <p><i class="el-icon-s-operation"></i> 开启深度包检测</p>
+              <p><i class="el-icon-document"></i> 记录行为特征用于分析</p>
+            </template>
+            <template v-else>
+              <p><i class="el-icon-warning"></i> 立即阻断相关连接</p>
+              <p><i class="el-icon-s-operation"></i> 加强端口安全策略</p>
+              <p><i class="el-icon-document"></i> 进行安全漏洞扫描</p>
+            </template>
           </div>
         </div>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="eventDetailVisible = false">关闭</el-button>
-        <el-button type="primary" @click="handleEvent">处理事件</el-button>
+        <el-button size="small" @click="eventDetailVisible = false">关闭</el-button>
+        <el-button size="small" type="info" @click="addToWhitelist">加入白名单</el-button>
+        <el-button size="small" type="warning" @click="blockIP">阻断IP</el-button>
+        <el-button size="small" type="primary" @click="handleEvent">处理事件</el-button>
       </div>
     </el-dialog>
   </div>
@@ -860,6 +934,44 @@ export default {
     handleEvent() {
       this.$message.success('事件已标记为处理中')
       this.eventDetailVisible = false
+    },
+
+    getIpLocation(ip) {
+      // 这里可以接入真实的IP地理位置查询服务
+      return '中国 浙江省 杭州市'
+    },
+    getRiskLevel(event) {
+      // 根据事件类型返回风险等级
+      switch (event.status) {
+        case '异常流量':
+          return 85
+        case '可疑行为':
+          return 65
+        case '异常连接':
+          return 75
+        default:
+          return 50
+      }
+    },
+    getRiskColor(event) {
+      const level = this.getRiskLevel(event)
+      if (level >= 80) return '#F56C6C'
+      if (level >= 60) return '#E6A23C'
+      return '#67C23A'
+    },
+    addToWhitelist() {
+      this.$message.success('已添加到白名单')
+      this.eventDetailVisible = false
+    },
+    blockIP() {
+      this.$confirm('确定要阻断该IP吗？', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message.success('已成功阻断IP')
+        this.eventDetailVisible = false
+      }).catch(() => {})
     }
   },
   beforeDestroy() {
@@ -1534,54 +1646,200 @@ export default {
 // Add styles for event detail dialog
 .event-detail-dialog {
   .event-detail {
-    .detail-row {
-      margin-bottom: 15px;
-      display: flex;
-      align-items: flex-start;
+    .detail-section {
+      margin-bottom: 20px;
+      background: rgba(16, 36, 64, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      padding: 15px;
+      transition: all 0.3s ease;
 
-      .label {
-        width: 80px;
-        color: rgba(255, 255, 255, 0.7);
+      &:hover {
+        border-color: rgba(64, 158, 255, 0.3);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       }
 
-      .value {
-        flex: 1;
-        color: #fff;
+      .section-title {
+        font-size: 16px;
+        font-weight: bold;
+        color: #409EFF;
+        margin-bottom: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 8px;
       }
 
-      .description {
-        flex: 1;
-        line-height: 1.5;
+      .detail-row {
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+
+        .label {
+          width: 80px;
+          color: rgba(255, 255, 255, 0.7);
+        }
+
+        .value {
+          flex: 1;
+          color: #fff;
+
+          &.highlight {
+            color: #409EFF;
+            cursor: pointer;
+            &:hover {
+              color: #66b1ff;
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+
+      .detail-content {
+        .description {
+          color: #fff;
+          line-height: 1.8;
+          margin-bottom: 15px;
+          background: rgba(0, 0, 0, 0.2);
+          padding: 12px;
+          border-radius: 4px;
+
+          p {
+            margin: 5px 0;
+          }
+        }
+
+        .risk-assessment {
+          margin-top: 15px;
+          
+          .risk-title {
+            color: #fff;
+            margin-bottom: 10px;
+          }
+        }
+      }
+
+      .suggestions {
         color: #fff;
-        background: rgba(255, 255, 255, 0.05);
-        padding: 10px;
-        border-radius: 4px;
+        
+        p {
+          margin: 10px 0;
+          display: flex;
+          align-items: center;
+          padding: 8px;
+          border-radius: 4px;
+          background: rgba(0, 0, 0, 0.2);
+          transition: all 0.3s ease;
+
+          &:hover {
+            background: rgba(0, 0, 0, 0.3);
+            transform: translateX(5px);
+          }
+          
+          i {
+            margin-right: 8px;
+            color: #409EFF;
+          }
+        }
       }
     }
   }
 }
 
 :deep(.event-detail-dialog) {
-  background: rgba(16, 36, 64, 0.95);
-  backdrop-filter: blur(10px);
+  background: #0d1b2a;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 
   .el-dialog__header {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding: 20px;
+    background: rgba(16, 36, 64, 0.8);
 
     .el-dialog__title {
       color: #fff;
+      font-weight: bold;
+    }
+
+    .el-dialog__headerbtn {
+      .el-dialog__close {
+        color: rgba(255, 255, 255, 0.7);
+        &:hover {
+          color: #409EFF;
+        }
+      }
     }
   }
 
   .el-dialog__body {
-    color: #fff;
-    padding: 20px;
+    padding: 20px !important;
   }
 
   .el-dialog__footer {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding: 15px 20px;
+    background: rgba(16, 36, 64, 0.8);
+  }
+
+  .el-button {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    
+    &:hover {
+      border-color: #409EFF;
+      color: #409EFF;
+      background: rgba(64, 158, 255, 0.1);
+    }
+
+    &.el-button--primary {
+      background: #409EFF;
+      border-color: #409EFF;
+      color: #fff;
+      
+      &:hover {
+        background: #66b1ff;
+        border-color: #66b1ff;
+      }
+    }
+
+    &.el-button--warning {
+      background: transparent;
+      border-color: #e6a23c;
+      color: #e6a23c;
+      
+      &:hover {
+        background: rgba(230, 162, 60, 0.1);
+      }
+    }
+
+    &.el-button--info {
+      background: transparent;
+      border-color: #909399;
+      color: #909399;
+      
+      &:hover {
+        background: rgba(144, 147, 153, 0.1);
+      }
+    }
+  }
+}
+
+:deep(.el-progress) {
+  margin-top: 10px;
+}
+
+:deep(.el-tag) {
+  background: transparent;
+  border: 1px solid currentColor;
+}
+
+// 添加弹窗动画效果
+.el-dialog__wrapper {
+  .el-dialog {
+    transform: translateY(-20px);
+    transition: transform 0.3s ease-out;
+    
+    &.dialog-fade-enter-active {
+      transform: translateY(0);
+    }
   }
 }
 </style>
